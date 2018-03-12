@@ -10,6 +10,7 @@ let g:pymode_run_bind='…'
 set runtimepath^=~/.vim/bundle/formatvim-4.3/
 set runtimepath^=~/.vim/bundle/ZyX_I-frawor-52d18a3895c9/
 "let g:pandoc#folding#foldryaml = 1
+source ~/.vim/private.vim
 call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim       " Load plugins
 call plug#end()
@@ -713,11 +714,11 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "
 
 let g:ale_linters = {
-                    \   'python': ['flake8', 'mypy', 'pylint'],
-                    \   'zsh':    ['shell'],
-                    \   'c':      ['gcc'],
-                    \   'cpp':    ['g++'],
-                    \   'rust':   ['rls', 'rustfmt'],
+                    \ 'python': ['mypy', 'pylint'],
+                    \ 'zsh':    ['shell'],
+                    \ 'c':      ['gcc'],
+                    \ 'cpp':    ['g++'],
+                    \ 'rust':   ['rls', 'rustfmt'],
                     \}
 "let g:ale_echo_msg_format = '<%linter%:%severity%> %code: '
 nnoremap t :ALEGoToDefinition<CR>
@@ -790,7 +791,7 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 0
 ":: thesaurus_query.vim
-nnoremap zt :ThesaurusQueryReplaceCurrentWord<CR>
+nnoremap d<Tab> :ThesaurusQueryReplaceCurrentWord<CR>
 ":: python-mode
 let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>B'
@@ -1068,6 +1069,7 @@ nnoremap Å :Bdelete!<CR>
 nnoremap å :x<CR>
 nnoremap ˙ :Bdelete!<CR>:x<CR>
 ":: github-dashboard
+let g:github_dashboard = { 'username': g:github_username, 'password': g:github_password }
 nnoremap gh :GHActivity<CR>
 ":: ctrlp-funky
 nnoremap <Leader>p :CtrlPFunky<CR>
