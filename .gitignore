@@ -1,16 +1,25 @@
 # Ignore everything
-*
+/*
 
-# But not these files...
-!/.vimrc
-!/.gvimrc
-!/.zshrc
-!/.zsh_profile
-!/.bashrc
-!/.bash_profile
-!/.tmux.conf
-!/.gdbrc
-!/.config
-!/.gitignore
-!/.less
-!/.cheat-sheet
+# Except for these files...
+!.vimrc
+!.gvimrc
+!.zshrc
+!.zsh_profile
+!.bashrc
+!.bash_profile
+!.tmux.conf
+!.gdbrc
+!.gitignore
+!.less
+!.cheat-sheet
+
+# Whitelist config
+
+!.config
+
+# Whitelist vim
+
+!.vim/
+.vim/*
+!.vim/plugins.vim
