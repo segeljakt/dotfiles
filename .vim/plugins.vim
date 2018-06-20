@@ -1,10 +1,16 @@
 "+----------------------------------------------------------------------------+
 "|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
 "+----------------------------------------------------------------------------+
+": My plugins
+Plug 'klassegeljakt/vim-sentencer'
 ": General-purpose
-"Plug 'goldfeld/vim-seek'                   " f search with 2 characters
-"Plug 'jeetsukumaran/vim-buffergator'       " Buffers (REMAPS EVERYTHING)
-"Plug 'ensime/ensime-vim'                   " IDE stuff
+Plug 'junegunn/fzf'                        " Fuzzy file finder
+Plug 'airblade/vim-matchquote'             " % match quotes
+Plug 'rhysd/clever-f.vim'                  " f{char} f
+Plug 'tommcdo/vim-exchange'                " Swap two visual selections
+Plug 'osyo-manga/vim-over'                 " Substitute preview
+Plug 'sodapopcan/vim-twiggy'               " Git integration
+Plug 'dougbeney/pickachu'                  " Pick file/date/color
 Plug 'wesq3/vim-windowswap'                " Swap buffers
 Plug 'godlygeek/tabular'                   " Align stuff
 Plug 'chrisbra/unicode.vim'                " Insert unicode characters
@@ -19,19 +25,19 @@ Plug 'vim-scripts/anwolib'                 " KeepView when doing commands
 Plug 'skywind3000/asyncrun.vim'            " Run commands asynchronously
 Plug 'itchyny/lightline.vim'               " Better airline
 Plug 'shougo/unite.vim'                    " GUI
+Plug 'shougo/denite.nvim'                  " GUI - Better?
 Plug 'embear/vim-foldsearch'               " Fold non-matching lines of search
 Plug 'taiansu/nerdtree-ag'                 " Search for
 Plug 'rking/ag.vim'                        " Silver searcher
 Plug 'mhinz/vim-startify'                  " Start-screen
 Plug 'conradirwin/vim-bracketed-paste'     " Indent text when it is pasted
 Plug 'seagoj/last-position.vim'            " Goto last position when opening
-Plug 'gioele/vim-autoswap'                 " Corrected autoswap
 Plug 'vim-scripts/TextFormat'              " Align and format text
 Plug 'sk1418/blockit'                      " Wrap lines in a block
 Plug 'mbbill/undotree'                     " undo history
 Plug 'scrooloose/nerdtree'                 " File system navigator
 Plug 'dhruvasagar/vim-table-mode'          " Draw tables
-Plug 'sirver/ultisnips'                    " Snippets
+"Plug 'sirver/ultisnips'                    " Snippets
 Plug 'wellle/targets.vim'                  " Additional text objects
 Plug 'danro/rename.vim'                    " Rename current buffer
 Plug 'nelstrom/vim-visual-star-search'     " Search by visual block
@@ -46,8 +52,16 @@ Plug 'vim-scripts/ingo-library'            " Blockwise-repeat
 Plug 'tpope/vim-surround'                  " Change surrounding parentheses
 Plug 'rargo/vim-line-jump'                 " Jump to lines in NERDTree or tagbar
 Plug 'easymotion/vim-easymotion'           " Move batween words
+Plug 'drzel/vim-line-no-indicator'         " Line number indicator
 "::------------ DISABLED ------------
-"Plug 'kovetskiy/next-indentation'          " Move with indentation (Only py2)
+"Plug 'goldfeld/vim-seek'                   " f search with 2 characters
+"Plug 'jeetsukumaran/vim-buffergator'       " Buffers (REMAPS EVERYTHING)
+"Plug 'ensime/ensime-vim'                   " IDE stuff (Needs python 3)
+"Plug 'yggdroot/indentline'                 " Indent guides (Not what I wanted)
+"Plug 'nathanaelkane/vim-indent-guides'     " Indent guides (Not what I wanted)
+"Plug 'kana/vim-textobj-entire'             " Select whole buffer (Doesnt work)
+"Plug 'gioele/vim-autoswap'                " Corrected autoswap (Only works with terminal)
+"Plug 'kovetskiy/next-indentation'         " Move with indentation (Only py2)
 "Plug 'fisadev/dragvisuals.vim'            " Drag visual block and visual line
 "Plug 'justincampbell/vim-eighties'        " Automatic resizing of windows
 "Plug 'chrisbra/improvedft'                " Make f t F T move between lines (rebinds t)
@@ -107,6 +121,43 @@ Plug 'davidbeckingsale/writegood.vim'      " Highlight common writing problems
 "Plug 'jamestomasino/vim-writingsyntax'    " Adjectives, weasel words, passive language
 "Plug 'rlofc/vorg'                         " Plaintext organizer
 ": Programming
+Plug 'sbdchd/neoformat'                    " Format code
+Plug 'w0rp/ale'                            " Async linting
+Plug 'majutsushi/tagbar'                   " Display tags of window
+Plug 'bkad/camelcasemotion'                " camelCaseMotion and snake_case_motion
+Plug 'ajh17/vimcompletesme'                " Tabcompletion
+Plug 'andrewradev/sideways.vim'            " Move arguments sideways
+Plug 'foosoft/vim-argwrap'                 " Wrap/unwrap arguments
+Plug 'scrooloose/nerdcommenter'            " Commenting plugin
+Plug 'ararslan/license-to-vim'             " Add lincense information
+Plug 'tacahiroy/ctrlp-funky'               " Function navigator
+Plug 'gabesoft/vim-ags'                    " Silver searcher, find code
+Plug 'jiangmiao/auto-pairs'                " Insert pairs of separators
+"--> Rust
+Plug 'racer-rust/vim-racer'                " Rust completions
+Plug 'timonv/vim-cargo'                    " Cargo bindings
+"--> C
+Plug 'justinmk/vim-syntax-extra'           " Better syntax highlighting for C
+"Plug 'vim-scripts/CRefVim'                 " C documentation
+"Plug 'hari-rangarajan/cctree'              " C dependency tree
+Plug 'vim-scripts/a.vim'                   " Toggle between header and source
+"Plug 'ujihisa/quicklearn'                  " Show assembly code from C
+"--> C++
+Plug 'tenfyzhong/vim-gencode-cpp'          " Generate Declaration/Definition
+"--> Java
+Plug 'artur-shaik/vim-javacomplete2'       " Java code completion
+Plug 'apalmer1377/factorus'                " Java and python automated refactoring
+"--> Python
+"Plug 'klen/python-mode'                    " Python-mode
+"--> Git
+Plug 'zivyangll/git-blame.vim'             " Show git-blame
+Plug 'cohama/agit.vim'                     " View git log
+Plug 'tpope/vim-fugitive'                  " Git wrapper
+Plug 'junegunn/vim-github-dashboard'       " Github dashboard
+Plug 'airblade/vim-gitgutter'              " Show changes in git
+"::---------- DISABLED ----------
+"Plug 'yggdroot/hipairs'                    " Show enclosing pairs
+"Plug 'joonty/vdebug'                       " Debugging for Python, Ruby, Perl, etc
 "Plug 'autozimu/LanguageClient-neovim', {
       "\ 'branch': 'next',
       "\ 'do': 'bash install.sh',
@@ -117,35 +168,7 @@ Plug 'davidbeckingsale/writegood.vim'      " Highlight common writing problems
 "Plug 'roxma/nvim-yarp'                     " Dependency to deoplete.vim
 "Plug 'roxma/vim-hug-neovim-rpc'            " Dependency to deoplete.vim
 "Plug 'sebastianmarkow/deoplete-rust'       " deoplete.vim for Rust
-Plug 'racer-rust/vim-racer'                " Rust completions
-Plug 'timonv/vim-cargo'                    " Cargo bindings
-Plug 'junegunn/fzf'                        " Fuzzy file finder
-Plug 'justinmk/vim-syntax-extra'           " Better syntax highlighting for C
-Plug 'hari-rangarajan/cctree'              " C dependency tree
-Plug 'majutsushi/tagbar'                   " Display tags of window
-Plug 'vim-scripts/CRefVim'                 " C documentation
-Plug 'w0rp/ale'                            " Async linting
-Plug 'klen/python-mode'                    " Python-mode
-Plug 'bkad/camelcasemotion'                " camelCaseMotion and snake_case_motion
-Plug 'joonty/vdebug'                       " Debugging for Python, Ruby, Perl, etc
-Plug 'ajh17/vimcompletesme'                " Tabcompletion
-Plug 'cohama/agit.vim'                     " View git log
-Plug 'vim-scripts/a.vim'                   " Toggle between header and source
-Plug 'tenfyzhong/vim-gencode-cpp'          " Generate Declaration/Definition
-Plug 'piec/man.vim'                        " Manual pages in vim
-Plug 'tpope/vim-fugitive'                  " Git wrapper
-Plug 'andrewradev/sideways.vim'            " Move arguments sideways
-Plug 'foosoft/vim-argwrap'                 " Wrap/unwrap arguments
-Plug 'scrooloose/nerdcommenter'            " Commenting plugin
-Plug 'junegunn/vim-github-dashboard'       " Github dashboard
-Plug 'airblade/vim-gitgutter'              " Show changes in git
-Plug 'ararslan/license-to-vim'             " Add lincense information
-Plug 'tacahiroy/ctrlp-funky'               " Function navigator
-Plug 'gabesoft/vim-ags'                    " Silver searcher, find code
-Plug 'jiangmiao/auto-pairs'                " DOES NOT WORK WITH åÄö
-Plug 'ujihisa/quicklearn'                  " Show assembly code from C
-Plug 'apalmer1377/factorus'                " Java and python automated refactoring
-"::---------- DISABLED ----------
+"Plug 'gcmt/wildfire.vim'                   " Select closest text object (Bad mappings)
 "Plug 'kien/rainbow_parentheses.vim'        " Pretty parentheses
 "Plug 'vim-scripts/AutoComplPop'            " Automatically open completion menu
 "Plug 'rsslldnphy/vim-exercism'            " Exercises
@@ -184,6 +207,7 @@ Plug 'apalmer1377/factorus'                " Java and python automated refactori
 "Plug 'deonponcini/includefixer'           " Complete #include
 "Plug 'git-time-metric/gtm'                " Git time tracking
 ": Filetype
+Plug 'cespare/vim-toml'                    " .toml
 "::---------- DISABLED ----------
 "Plug 'valloric/matchtagalways'            " .xml/.html
 "Plug 'elzr/vim-json'                      " .json
@@ -194,8 +218,9 @@ Plug 'apalmer1377/factorus'                " Java and python automated refactori
 "Plug 'darfink/vim-plist'                  " .plist
 "Plug 'wannesm/wmnusmv.vim'                " .nusmv
 ": Syntax
-Plug 'cespare/vim-toml'
-Plug 'vim-scripts/SyntaxAttr.vim'
+Plug 'vim-scripts/SyntaxAttr.vim'          " Show :hi attributes
+Plug 'sheerun/vim-polyglot'
+Plug 'milad14000/vim_p4'
 ":: DISABLED
 "Plug 'TagHighlight'                       " Highlight C typedefs and enums
 "Plug 'reinh/vim-makegreen'                " Show if code compiled successfully
@@ -213,6 +238,7 @@ Plug 'vim-scripts/TaskList.vim'            " Task management
 Plug 'wakatime/vim-wakatime'               " Monitor programming statistics
 Plug 't9md/vim-macvim-transparency'        " Macvim window transparency
 Plug 'konfekt/fastfold'                    " Reduce performance loss from folding
+Plug 'itchyny/calendar.vim'                " Calendar
 "::---------- DISABLED ----------
 "Plug 'rosenfeld/conque-term'              " Terminal inside vim
 "Plug 'vim-scripts/morse.vim'              " Write morse code
@@ -223,7 +249,6 @@ Plug 'konfekt/fastfold'                    " Reduce performance loss from foldin
 "Plug 'sunaku/vim-shortcut'                " Search for shortcuts
 "Plug 'luchermitte/mu-template'            " Vim templates expander
 "Plug 'Floobits/floobits-vim'              " Collaborative editing
-"Plug 'itchyny/calendar.vim'               " Calendar
 "Plug 'sunitha/skypeshell'                 " Skype chat
 "Plug 'VimIRC.vim'                         " irc chat
 "Plug 'MailApp'                            " mail
@@ -240,6 +265,7 @@ Plug 'konfekt/fastfold'                    " Reduce performance loss from foldin
 ": Colorschemes
 Plug 'morhetz/gruvbox'
 "::---------- DISABLED ----------
+"Plug 'hauleth/blame.vim'
 "Plug 'xolox/vim-colorscheme-switcher'
 "Plug 'xolox/vim-misc'
 "Plug 'reedes/vim-thematic'

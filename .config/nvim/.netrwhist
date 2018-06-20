@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/Klas/Thesis/experiments/clones/rust-bison-grammar'
+let g:netrw_dirhist_2='/Users/Klas/Thesis/experiments/interpolate/test'
+let g:netrw_dirhist_3='/Users/Klas/Git/writing/markdown-filters'
+let g:netrw_dirhist_4='/Users/Klas/Thesis/experiments/rust-ast-parser/src'
+let g:netrw_dirhist_5='/Users/Klas/.config'

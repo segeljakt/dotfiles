@@ -9,52 +9,55 @@
 if [ "$TMUX" = "" ]; then /usr/local/bin/tmux; exit; fi
 stty -ixon -ixoff # ixon = allow <C-s>, ixoff = allow <C-q>
 ################################### PATHS #####################################
-PATH="/usr/local/bin:$PATH"
-PATH="/usr/local/sbin:$PATH"
-PATH="/usr/local/Cellar/ctags/5.8_1/bin:$PATH"
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:$PATH"
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH"
-PATH="/usr/local/opt/ncurses/bin:$PATH"
-PATH="/Library/TeX/texbin:$PATH"
-PATH="/Users/Klas/.cargo/bin:$PATH"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+PATH="$PATH:/usr/local/opt/bison/bin"
+PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
+PATH="$PATH:/Users/Klas/.cargo/bin"
+PATH="$PATH:/Library/TeX/texbin"
+PATH="$PATH:/usr/local/opt/ncurses/bin"
+PATH="$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin"
+PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.4/bin"
+PATH="$PATH:/usr/local/Cellar/ctags/5.8_1/bin"
+PATH="$PATH:/usr/local/sbin"
+PATH="$PATH:/usr/local/bin"
 GOPATH="$HOME/Git/go/"
 PKG_CONFIG_PATH="/usr/local/Cellar/cairo/1.12.16/lib/pkgconfig/:$PKG_CONFIG_PATH"
 PKG_CONFIG_PATH="/usr/X11/lib/pkgconfig:$PKG_CONFIG_PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export PATH
 export GOPATH
 export PKG_CONFIG_PATH
 export CPATH
 export MANPATH
 ################################ OH-MY-ZSH ####################################
-export ZSH=$HOME/.oh-my-zsh
-CASE_SENSITIVE="true"
-HYPHEN_INSENSITIVE="true"
-#ENABLE_CORRECTION="true"
-#COMPLETION_WAITING_DOTS="true"
-plugins=(
-  sudo # Press <ESC> twice for sudo
-  autojump # Jump to frequently used directories
-  git # Adds many git aliases
-  gitfast # Faster git completions
-  git-extras # Autofill authors/
-  osx # tab, ofd, pfd, pfs, cdf, pushdf, quick-look, showfiles, spotify
-  gem # Completion for gem (Ruby)
-  pip # Completion for pip (Python)
-  npm # Completion for npm (Javascript)
-  #alias-tips # Remind about aliases (LAG)
-  #chucknorris # Chucknorris quotes
-  #nyan # Nyancat
-)
-source $ZSH/oh-my-zsh.sh
-#[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-bindkey -M menuselect '^M' .accept-line # Press enter once on autocomplete
+#export ZSH=$HOME/.oh-my-zsh
+#CASE_SENSITIVE="true"
+#HYPHEN_INSENSITIVE="true"
+##ENABLE_CORRECTION="true"
+##COMPLETION_WAITING_DOTS="true"
+#plugins=(
+#  sudo # Press <ESC> twice for sudo
+#  autojump # Jump to frequently used directories
+#  git # Adds many git aliases
+#  gitfast # Faster git completions
+#  git-extras # Autofill authors/
+#  osx # tab, ofd, pfd, pfs, cdf, pushdf, quick-look, showfiles, spotify
+#  gem # Completion for gem (Ruby)
+#  pip # Completion for pip (Python)
+#  npm # Completion for npm (Javascript)
+#  #alias-tips # Remind about aliases (LAG)
+#  #chucknorris # Chucknorris quotes
+#  #nyan # Nyancat
+#)
+#source $ZSH/oh-my-zsh.sh
+##[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+#bindkey -M menuselect '^M' .accept-line # Press enter once on autocomplete
 setopt menu_complete; # Press tab twice to autocomplete
 ###################################### ZSH ####################################
 export LESS="--ignore-case"
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 #unsetopt listambiguous
+setopt noautoremoveslash
 ############################## VISUAL APPEARANCE ##############################
 # Visual appearance
 #export PS1="- "
@@ -62,6 +65,7 @@ export PS1="%F{red}%D{%H:%M:%S}%f "
 export TERM=xterm-color
 ################################### ALIASES ###################################
 # Fixes
+alias note="nvim ~/Thesis/papers/quick-notes.md"
 alias gdb="sudo gdb" # gdb
 alias cgdb="sudo cgdb"
 alias htop="sudo htop" # htop
@@ -69,6 +73,7 @@ alias bug="nvim ~/.bugs" # Report bugs
 alias mkdir="mkdir -pv" # Make parent directories
 alias make="clear && make"
 alias zathura="zathura --fork" # Run zathura in background
+alias re="mvim ~/Thesis/docs/report/README.md"
 # Overrides
 alias ls="exa"
 alias grep="rg"
@@ -82,7 +87,8 @@ alias anw="ansiweather -l Stockholm -f 3 -a 1 -s 1" # Weather
 alias ip="ifconfig | grep \"inet \" | grep -v 127.0.0.1" # IP
 alias sl="~/Git/my-projects/tsl/tsl Hallonbergen Kista" # Time to school
 alias tsl="~/Git/my-projects/tsl/tsl" # Time to somewhere else
-alias t="trans" # translate
+alias t="synonyms" # translate
+alias tt="trans" # translate
 alias u="brew upgrade --cleanup && rustup update && cargo install-update -a" # Update
 alias i="~/Git/my-projects/brew/brewbox.sh" # Brew info
 alias a="brew search" # Brew search
@@ -98,7 +104,8 @@ alias pk="~/Git/other-projects/pancake/pk" # Pancake
 alias pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
 alias pubpi="ssh pi@79.142.73.16" # Raspberry pi ssh
 alias g="scp -r pi@192.168.1.4:'/media/pi/TeraDrive/finished/uncategorized/*' ~/Torrents/ && ssh pi@192.168.1.4 'rm -rf /media/pi/TeraDrive/finished/uncategorized/*'"
-alias hi="pbpaste | highlight --syntax=rs -O rtf | pbcopy" # Highlight code
+alias hir="pbpaste | highlight --syntax=rs -O rtf | pbcopy" # Highlight code
+alias his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight code
 alias o="n-options"
 alias clip="pbpaste > clip.c && gcc clip.c && ./a.out && rm clip.c a.out"
 alias j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
@@ -159,3 +166,4 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/h
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
 #source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#eval "$(pandoc --bash-completion)"
