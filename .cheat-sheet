@@ -1,3 +1,12 @@
 <C-x><C-e> : Edit command in Vim
 2 : cd -2
 **<Tab> : Recursive
+
+# Skim
+<C-r> Toggle regex
+# Tally
+# Exa
+# rg
+# fd
+# xpanes
+# runiq

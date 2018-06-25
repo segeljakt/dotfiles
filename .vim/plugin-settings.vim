@@ -187,6 +187,44 @@ let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands'
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 0
+let g:num_items = 3
+let g:startify_fortune_use_unicode = 1
+let g:startify_enable_unsafe = 1
+autocmd VimEnter * let t:startify_new_tab = 1
+autocmd BufEnter *
+  \ if !exists('t:startify_new_tab') && empty(expand('%')) |
+  \   let t:startify_new_tab = 1 |
+  \   Startify |
+  \ endif
+let g:startify_skiplist = [
+    \   '\.vim',
+    \   '/usr/*',
+    \   '\.todo',
+    \ ]
+let g:startify_custom_header =
+      \ startify#fortune#cowsay('', '═','║','╔','╗','╝','╚')
+fun! s:list_commits(repo)
+  let commits = systemlist('git -C '.a:repo.' log | head -n'.g:num_items)
+  return map(commits, '{'.
+    \   '"line": matchstr(v:val, "\\s\\zs.*"),'.
+    \   '"cmd": "Git -C '.a:repo.' show ". matchstr(v:val, "^\\x\\+")'.
+    \ '}')
+endfun
+"[1]: Todo
+fun! s:list_todos()
+  let todos = systemlist('cat ~/.todo | head -n'.g:num_items)
+  return map(todos, '{'.
+    \   '"line": matchstr(v:val, "\\s*\\[.*\\]:\\s*\\zs.*"),'.
+    \   '"cmd": "edit ~/.todo"'.
+    \ '}')
+endfun
+let g:startify_lists = [
+    \   { 'header': ['   MRU'],             'type': 'files' },
+    \   { 'header': ['   Commits to '.getcwd()],    'type': function('s:list_commits', [getcwd()]) },
+    \   { 'header': ['   Commits to arc'],           'type': function('s:list_commits', ['~/Git/cda/arc/']) },
+    \   { 'header': ['   Commits to jobmanagement'], 'type': function('s:list_commits', ['~/Git/cda/jobmanagement/']) },
+    \   { 'header': ['   TODO'],            'type': function('s:list_todos') },
+    \ ]
 ": thesaurus_query.vim
 "let g:tq_openoffice_en_file="~/.vim/thesaurus/th_en_US_v2"
 let tq_enabled_backends=["thesaurus_com", "openoffice_en", "datamuse_com"]
@@ -546,7 +584,7 @@ vmap <expr> ++ VMATH_YankAndAnalyse()
 nmap        ++ vip++
 ": vim-table-mode
 inoremap <C-Q> <Esc>:TableModeToggle<CR><Esc>:TableModeRealign<CR>li
-inoremap <Leader>r :TableModeRealign<CR>
+"inoremap <Leader>r :TableModeRealign<CR>
 ": bbye
 nnoremap Å :Bdelete!<CR>
 nnoremap å :x<CR>

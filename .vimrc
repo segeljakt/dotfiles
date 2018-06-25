@@ -58,7 +58,7 @@ set formatoptions=rownlj        " r: Comment on Enter
 set mps=(:),{:},[:],<:>,":"     " Separators
 set shell=/usr/local/bin/zsh    " Shell program
 set emoji                       " Emoji characters are full-width
-set autochdir                   " Change directory to file in buffer
+"set autochdir                   " Change directory to file in buffer ERROR: bugs other stuff
 set maxmempattern=2000000       " More memory for pattern matching
 set maxmem=2000000              " Max mem for buffers
 set maxmemtot=2000000           " Max mem for all buffers combined
@@ -556,6 +556,7 @@ aug BufEnterGroup | au!
   " Close NERDTree if it is the last window
   au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   au BufEnter * set formatoptions=rownlj " Fix shit
+  "au BufEnter * if &ft !~ '^nerdtree$' | silent! lcd %:p:h | endif " autochdir
 aug END
 aug BufReadPostGroup | au!
   " Reformat
