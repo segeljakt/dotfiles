@@ -1,0 +1,17 @@
+[user]
+	email = klasseg@kth.se
+	name = Klas
+[credential]
+	helper = osxkeychain
+[diff]
+	tool = mvimdiff
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+[core]
+	pager = less -R
+[log]
+	date = format:%b %d %H:%M
+[format]
+	pretty = format:%C(auto,yellow)%h %<(3,trunc)%aN %C(auto,blue)%>(12,trunc)%ad - %C(auto,green)%C(auto,reset)%s%C(auto,red)% gD

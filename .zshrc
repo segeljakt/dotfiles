@@ -38,7 +38,7 @@ alias  find="fd --no-ignore"
 alias  tree="tree-rs"
 alias  time="tally"
 alias   top="htop"
-alias   cat="bat --theme TwoDark"
+alias   cat="bat --theme TwoDark --style=plain"
 # Shortcuts
 alias    xp="xpanes"
 alias     v="nvim"
@@ -56,7 +56,8 @@ alias     r="brew cleanup --force"
 alias     c="clear"
 alias     z="nvim ~/.zshrc"
 alias    zz="nvim ~/.tmux.conf"
-alias   zzz="nvim ~/.cheat-sheet"
+alias   zzz="nvim ~/.config/nvim/init.vim"
+alias  zzzz="nvim ~/.cheat-sheet"
 alias    rv="source ~/.zshrc"
 alias avril="ssh klasseg@avril.sys.ict.kth.se" # avril
 alias    pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
@@ -67,7 +68,7 @@ alias     o="n-options"
 alias    j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
 alias    j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 ############################### SYSTEM VARIABLES ##############################
-export         LESS="--ignore-case"
+export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
 export         TERM=xterm-color
 export       EDITOR=nvim
@@ -105,9 +106,22 @@ function fetch_downloads {
   scp -r pi@192.168.1.4:'/media/pi/TeraDrive/finished/uncategorized/*' ~/Torrents/ \
   && ssh pi@192.168.1.4 'rm -rf /media/pi/TeraDrive/finished/uncategorized/*'
 }
-function w-clear-ls  { [[ -o zle ]] && zle -I; clear; ls; }
-function w-fg        { [[ -o zle ]] && zle -I; fg; }
-function w-cd-parent { [[ -o zle ]] && zle -I; cd ..; clear; pwd; ls; }
+function w-clear-ls   { [[ -o zle ]] && zle -I; clear; ls;             }
+function w-fg         { [[ -o zle ]] && zle -I; fg;                    }
+function w-cd-parent  { [[ -o zle ]] && zle -I; cd ..; clear; pwd; ls; }
+function w-git-status { [[ -o zle ]] && zle -I; clear; git status;     }
+function w-help       { [[ -o zle ]] && zle -I; cat ~/.help;           }
+function w-todo       { [[ -o zle ]] && zle -I; nvim ~/.todo;          }
+function w-git-log    {
+  if [[ $#BUFFER == 0 ]]; then
+    [[ -o zle ]] && zle -I
+    clear
+    git log
+  else
+    BUFFER="$BUFFER'"
+    CURSOR=$CURSOR+1
+  fi
+}
 function w-cd-or-expand {
   if [[ $#BUFFER == 0 ]]; then
     BUFFER="cd "
@@ -117,25 +131,27 @@ function w-cd-or-expand {
     zle expand-or-complete
   fi
 }
-zle -N w-cd-or-expand
-zle -N w-clear-ls
-zle -N w-fg
-zle -N w-cd-parent
+zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;   zle -N w-cd-parent;
+zle -N w-git-status;   zle -N w-git-log;  zle -N w-help; zle -N w-todo;
 ################################# KEYBINDS ####################################
-bindkey '\eq' push-input
-bindkey '^b' vi-backward-blank-word
-bindkey '^w' vi-forward-blank-word
-bindkey '^j' history-beginning-search-forward
-bindkey '^k' history-beginning-search-backward
-bindkey '^O' accept-line
-bindkey '^U' undo
-bindkey '^l' w-clear-ls
-bindkey '^f' w-fg
-#bindkey -s '^p' "sk --ansi -c 'fd --no-ignore' \C-m"
-#bindkey -s '^p' "$(fzf) \C-m"
-#bindkey -s '^g' "sk --ansi --exact -c 'rg --color=always --line-number \"{}\"' \C-m"
+bindkey '\eq'  push-input
+bindkey '^b'   vi-backward-blank-word
+bindkey '^w'   vi-forward-blank-word
+bindkey '^j'   history-beginning-search-forward
+bindkey '^k'   history-beginning-search-backward
+bindkey '^O'   accept-line
+bindkey '^U'   undo
+bindkey '^l'   w-clear-ls
+bindkey '^f'   w-fg
 bindkey '^[[Z' w-cd-parent
-bindkey '^I' w-cd-or-expand
+bindkey '^I'   w-cd-or-expand
+bindkey "'"    w-git-status
+bindkey '¨'    w-git-log
+#bindkey '"'    w-help
+#bindkey ','    w-todo
 bindkey -s '^N' "ranger ^M"
 bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
 bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
+#bindkey -s '^p' "sk --ansi -c 'fd --no-ignore' \C-m"
+#bindkey -s '^p' "$(fzf) \C-m"
+#bindkey -s '^g' "sk --ansi --exact -c 'rg --color=always --line-number \"{}\"' \C-m"
