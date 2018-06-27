@@ -106,19 +106,40 @@ function fetch_downloads {
   scp -r pi@192.168.1.4:'/media/pi/TeraDrive/finished/uncategorized/*' ~/Torrents/ \
   && ssh pi@192.168.1.4 'rm -rf /media/pi/TeraDrive/finished/uncategorized/*'
 }
-function w-clear-ls   { [[ -o zle ]] && zle -I; clear; ls;             }
-function w-fg         { [[ -o zle ]] && zle -I; fg;                    }
-function w-cd-parent  { [[ -o zle ]] && zle -I; cd ..; clear; pwd; ls; }
-function w-git-status { [[ -o zle ]] && zle -I; clear; git status;     }
-function w-help       { [[ -o zle ]] && zle -I; cat ~/.help;           }
-function w-todo       { [[ -o zle ]] && zle -I; nvim ~/.todo;          }
-function w-git-log    {
+function w-clear-ls  { zle -I; clear; ls             }
+function w-fg        { zle -I; fg                    }
+function w-cd-parent { zle -I; cd ..; clear; pwd; ls }
+function w-help      { zle -I; cat ~/.help           }
+function w-todo      { zle -I; nvim ~/.todo          }
+function w-dot { # Support for ascending directories
+  PREFIX=$BUFFER[1,$CURSOR]
+  POSTFIX=$BUFFER[$CURSOR+1,-1]
+  if [[ $BUFFER == "" || $PREFIX =~ ".* $" ]]; then
+    BUFFER="$PREFIX./$POSTFIX";       CURSOR=$CURSOR+2; zle list-choices # " "
+  elif [[ $PREFIX =~ ".*\.\./$" ]]; then
+    BUFFER="$PREFIX../$POSTFIX";      CURSOR=$CURSOR+3; zle list-choices # ../
+  elif [[ $BUFFER[1,$CURSOR] =~ ".*\./$" ]]; then
+    BUFFER="$PREFIX[1,-2]./$POSTFIX"; CURSOR=$CURSOR+1; zle list-choices # ./
+  else
+    BUFFER="$PREFIX.$POSTFIX";        CURSOR=$CURSOR+1 # Default
+  fi
+}
+function w-git-status {
   if [[ $#BUFFER == 0 ]]; then
-    [[ -o zle ]] && zle -I
-    clear
+    zle -I; clear
     git log
   else
     BUFFER="$BUFFER'"
+    CURSOR=$CURSOR+1
+  fi
+}
+function w-git-log {
+  if [[ $#BUFFER == 0 ]]; then
+    zle -I
+    clear
+    git status
+  else
+    BUFFER="$BUFFER¨"
     CURSOR=$CURSOR+1
   fi
 }
@@ -133,6 +154,7 @@ function w-cd-or-expand {
 }
 zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;   zle -N w-cd-parent;
 zle -N w-git-status;   zle -N w-git-log;  zle -N w-help; zle -N w-todo;
+zle -N w-dot
 ################################# KEYBINDS ####################################
 bindkey '\eq'  push-input
 bindkey '^b'   vi-backward-blank-word
@@ -147,11 +169,92 @@ bindkey '^[[Z' w-cd-parent
 bindkey '^I'   w-cd-or-expand
 bindkey "'"    w-git-status
 bindkey '¨'    w-git-log
-#bindkey '"'    w-help
-#bindkey ','    w-todo
+bindkey '.'    w-dot
 bindkey -s '^N' "ranger ^M"
 bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
 bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
 #bindkey -s '^p' "sk --ansi -c 'fd --no-ignore' \C-m"
 #bindkey -s '^p' "$(fzf) \C-m"
 #bindkey -s '^g' "sk --ansi --exact -c 'rg --color=always --line-number \"{}\"' \C-m"
+
+
+FZF_CTRL_P_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+# CTRL-P - Paste the selected file path(s), based on contents, into the command line
+__fsel-contents() {
+  local cmd="${FZF_CTRL_P_COMMAND}"
+  setopt localoptions pipefail 2> /dev/null
+  eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read item; do
+    echo -n "${(q)item} "
+  done
+  local ret=$?
+  echo
+  return $ret
+}
+
+__fzf_use_tmux__() {
+  [ -n "$TMUX_PANE" ] && [ "${FZF_TMUX:-0}" != 0 ] && [ ${LINES:-40} -gt 15 ]
+}
+
+__fzfcmd() {
+  __fzf_use_tmux__ &&
+    echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
+}
+
+fzf-file-widget() {
+  LBUFFER="${LBUFFER}$(__fsel)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle     -N   fzf-file-widget
+bindkey '^T' fzf-file-widget
+
+# Ensure precmds are run after cd
+fzf-redraw-prompt() {
+  local precmd
+  for precmd in $precmd_functions; do
+    $precmd
+  done
+  zle reset-prompt
+}
+zle -N fzf-redraw-prompt
+
+# ALT-C - cd into the selected directory
+fzf-cd-widget() {
+  local cmd="${FZF_ALT_C_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+    -o -type d -print 2> /dev/null | cut -b3-"}"
+  setopt localoptions pipefail 2> /dev/null
+  local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) +m)"
+  if [[ -z "$dir" ]]; then
+    zle redisplay
+    return 0
+  fi
+  cd "$dir"
+  local ret=$?
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle     -N    fzf-cd-widget
+bindkey '\ec' fzf-cd-widget
+
+# CTRL-R - Paste the selected command from history into the command line
+fzf-history-widget() {
+  local selected num
+  setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+  selected=( $(fc -rl 1 |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+  local ret=$?
+  if [ -n "$selected" ]; then
+    num=$selected[1]
+    if [ -n "$num" ]; then
+      zle vi-fetch-history -n $num
+    fi
+  fi
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
