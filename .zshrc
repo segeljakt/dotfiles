@@ -39,6 +39,8 @@ alias  tree="tree-rs"
 alias  time="tally"
 alias   top="htop"
 alias   cat="bat --theme TwoDark --style=plain"
+alias    vi="nvim"
+alias   vim="nvim"
 # Shortcuts
 alias    xp="xpanes"
 alias     v="nvim"
@@ -171,13 +173,16 @@ bindkey "'"    w-git-status
 bindkey '¨'    w-git-log
 bindkey '.'    w-dot
 bindkey -s '^N' "ranger ^M"
+
+alias fzff="rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --algo=v1 | parallel -C: -X -N 2 -j 1 --tty nvim +{2} {1}"
+alias fzfff="rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --algo=v1 | awk -F':' '{print $1 \" +\"$2}' | xargs -o nvim"
 bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
 bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
 #bindkey -s '^p' "sk --ansi -c 'fd --no-ignore' \C-m"
 #bindkey -s '^p' "$(fzf) \C-m"
 #bindkey -s '^g' "sk --ansi --exact -c 'rg --color=always --line-number \"{}\"' \C-m"
 
-bindkey -s '^P' "rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --algo=v1\C-m"
+bindkey -s '^P' "fzff\C-m"
 #bindkey -s '^P' "rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --preview='tail -n +{2} {1}' \C-m"
 
 #FZF_CTRL_P_COMMAND='rg --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
