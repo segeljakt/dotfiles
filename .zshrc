@@ -113,7 +113,7 @@ function w-fg        { zle -I; fg                    }
 function w-cd-parent { zle -I; cd ..; clear; pwd; ls }
 function w-help      { zle -I; cat ~/.help           }
 function w-todo      { zle -I; nvim ~/.todo          }
-function w-dot { # Support for ascending directories
+function w-dot {
   PREFIX=$BUFFER[1,$CURSOR]
   POSTFIX=$BUFFER[$CURSOR+1,-1]
   if [[ $BUFFER == "" || $PREFIX =~ ".* $" ]]; then
@@ -123,30 +123,29 @@ function w-dot { # Support for ascending directories
   elif [[ $BUFFER[1,$CURSOR] =~ ".*\./$" ]]; then
     BUFFER="$PREFIX[1,-2]./$POSTFIX"; CURSOR=$CURSOR+1; zle list-choices # ./
   else
-    BUFFER="$PREFIX.$POSTFIX";        CURSOR=$CURSOR+1 # Default
+    BUFFER="$PREFIX.$POSTFIX";        CURSOR=$CURSOR+1                   # Default
   fi
 }
 function w-git-status {
-  if [[ $#BUFFER == 0 ]]; then
-    zle -I; clear
-    git log
+  if [[ $BUFFER == "" ]]; then
+    zle -I; clear; git status
   else
-    BUFFER="$BUFFER'"
-    CURSOR=$CURSOR+1
+    PREFIX=$BUFFER[1,$CURSOR]
+    POSTFIX=$BUFFER[$CURSOR+1,-1]
+    BUFFER="$PREFIX'$POSTFIX"; CURSOR=$CURSOR+1
   fi
 }
 function w-git-log {
-  if [[ $#BUFFER == 0 ]]; then
-    zle -I
-    clear
-    git status
+  if [[ $BUFFER == "" ]]; then
+    zle -I; clear; git log
   else
-    BUFFER="$BUFFER¨"
-    CURSOR=$CURSOR+1
+    PREFIX=$BUFFER[1,$CURSOR]
+    POSTFIX=$BUFFER[$CURSOR+1,-1]
+    BUFFER="$PREFIX¨$POSTFIX"; CURSOR=$CURSOR+1
   fi
 }
 function w-cd-or-expand {
-  if [[ $#BUFFER == 0 ]]; then
+  if [[ $BUFFER == "" ]]; then
     BUFFER="cd "
     CURSOR=3
     zle list-choices
@@ -154,9 +153,34 @@ function w-cd-or-expand {
     zle expand-or-complete
   fi
 }
-zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;   zle -N w-cd-parent;
-zle -N w-git-status;   zle -N w-git-log;  zle -N w-help; zle -N w-todo;
-zle -N w-dot
+function w-ranger {
+  ranger < $tty
+}
+function w-ncdu {
+  ncdu < $tty
+}
+function w-contents() {
+  rg --color=never           \
+     --no-ignore             \
+     --with-filename         \
+     --no-heading            \
+     --line-number           \
+     -g '*.{h,c,rust,scala}' \
+     "" . | \
+  fzf --delimiter=:  \
+      --height=20    \
+      --reverse      \
+      --tabstop=2    \
+      --nth=3        \
+      --algo=v2 |    \
+  awk -F':' '{print $1 " +"$2}' | \
+  xargs -o nvim
+  zle redisplay
+}
+zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;       zle -N w-cd-parent;
+zle -N w-git-status;   zle -N w-git-log;  zle -N w-help;     zle -N w-todo;
+zle -N w-dot;          zle -N w-contents; zle -N w-contents; zle -N w-ranger;
+zle -N w-ncdu;
 ################################# KEYBINDS ####################################
 bindkey '\eq'  push-input
 bindkey '^b'   vi-backward-blank-word
@@ -171,48 +195,10 @@ bindkey '^[[Z' w-cd-parent
 bindkey '^I'   w-cd-or-expand
 bindkey "'"    w-git-status
 bindkey '¨'    w-git-log
-bindkey '.'    w-dot
-bindkey -s '^N' "ranger ^M"
-
-alias fzff="rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --algo=v1 | parallel -C: -X -N 2 -j 1 --tty nvim +{2} {1}"
-alias fzfff="rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --algo=v1 | awk -F':' '{print $1 \" +\"$2}' | xargs -o nvim"
+bindkey '…'    w-dot
+bindkey '^R'   w-ranger
+bindkey '^P'   w-contents
+bindkey '‘'    w-ncdu
+bindkey '^Q'   push-line-or-edit
 bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
 bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
-#bindkey -s '^p' "sk --ansi -c 'fd --no-ignore' \C-m"
-#bindkey -s '^p' "$(fzf) \C-m"
-#bindkey -s '^g' "sk --ansi --exact -c 'rg --color=always --line-number \"{}\"' \C-m"
-
-bindkey -s '^P' "fzff\C-m"
-#bindkey -s '^P' "rg --color=never --no-ignore --with-filename --no-heading --line-number "" . | fzf --delimiter=: --height 20 --reverse --tabstop=2 --nth=3 --preview='tail -n +{2} {1}' \C-m"
-
-#FZF_CTRL_P_COMMAND='rg --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-#
-## CTRL-P - Paste the selected file path(s), based on contents, into the command line
-#__fsel-contents() {
-#  local cmd="${FZF_CTRL_P_COMMAND}"
-#  setopt localoptions pipefail 2> /dev/null
-#  eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read item; do
-#    echo -n "${(q)item} "
-#  done
-#  local ret=$?
-#  echo
-#  return $ret
-#}
-#
-#__fzf_use_tmux__() {
-#  [ -n "$TMUX_PANE" ] && [ "${FZF_TMUX:-0}" != 0 ] && [ ${LINES:-40} -gt 15 ]
-#}
-#
-#__fzfcmd() {
-#  __fzf_use_tmux__ && echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
-#}
-#
-#fzf-file-contents-widget() {
-#  LBUFFER="${LBUFFER}$(__fsel-contents)"
-#  local ret=$?
-#  zle redisplay
-#  typeset -f zle-line-init >/dev/null && zle zle-line-init
-#  return $ret
-#}
-#zle     -N   fzf-file-contents-widget
-#bindkey '^P' fzf-file-contents-widget
