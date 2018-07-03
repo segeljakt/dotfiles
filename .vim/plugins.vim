@@ -10,12 +10,12 @@ Plug 'rhysd/clever-f.vim'                  " f{char} f
 Plug 'tommcdo/vim-exchange'                " Swap two visual selections
 Plug 'osyo-manga/vim-over'                 " Substitute preview
 Plug 'sodapopcan/vim-twiggy'               " Git integration
-Plug 'dougbeney/pickachu'                  " Pick file/date/color
+"Plug 'dougbeney/pickachu'                  " Pick file/date/color
 Plug 'wesq3/vim-windowswap'                " Swap buffers
 Plug 'godlygeek/tabular'                   " Align stuff
 Plug 'chrisbra/unicode.vim'                " Insert unicode characters
 Plug 'seydoggy/vim-watchforchanges'        " Autoread files
-Plug 'rykka/colorv.vim'                    " Color viewer
+"Plug 'rykka/colorv.vim'                    " Color viewer
 Plug 'zirrostig/vim-schlepp'               " Drag visual block and visual line
 Plug 'vim-scripts/ZoomWin'                 " Put all focus on one window
 Plug 'ap/vim-css-color'                    " Highlight colors

@@ -72,6 +72,7 @@ alias    j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 ############################### SYSTEM VARIABLES ##############################
 export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
+export         RPS1=""
 export         TERM=xterm-color
 export       EDITOR=nvim
 export       LC_ALL=en_US.UTF-8
@@ -102,6 +103,27 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export SKIM_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Commands
+preview-file() {
+  file=$1; line=$2; num_lines=$3; half=$(($num_lines/2))
+  if [[ $line -le $half ]]; then
+    start=1
+  else
+    start=$(($line-$half))
+  fi
+  stop=$(($start+$num_lines))
+  highlight --force -O ansi $file | \
+    awk -v line=$line -v start=$start -v stop=$stop '{
+    if (NR == line) {
+      gsub(/\x1B\[[0-9;]*[JKmsu]/,"",$0);
+      print "\033[41m" $0 "\033[0m"
+    } else if (NR >= stop) {
+      exit 1
+    } else if (NR >= start && NR < stop) {
+      print $0
+    }
+  }'
+}
 ################################### Widgets ###################################
 function upgrade_all { xpanes -d -e "brew upgrade --cleanup" "rustup update" "cargo install-update -a" }
 function fetch_downloads {

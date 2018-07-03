@@ -191,11 +191,11 @@ let g:num_items = 3
 let g:startify_fortune_use_unicode = 1
 let g:startify_enable_unsafe = 1
 autocmd VimEnter * let t:startify_new_tab = 1
-autocmd BufEnter *
-  \ if !exists('t:startify_new_tab') && empty(expand('%')) |
-  \   let t:startify_new_tab = 1 |
-  \   Startify |
-  \ endif
+"autocmd BufEnter *
+  "\ if !exists('t:startify_new_tab') && empty(expand('%')) |
+  "\   let t:startify_new_tab = 1 |
+  "\   Startify |
+  "\ endif
 let g:startify_skiplist = [
     \   '\.vim',
     \   '/usr/*',
