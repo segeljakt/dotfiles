@@ -71,8 +71,8 @@ alias    j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
 alias    j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 ############################### SYSTEM VARIABLES ##############################
 export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
-export          PS1="%F{red}%D{%H:%M:%S}%f "
-export         RPS1=""
+export          PS1="%F{red}%D{%H:%M:%S}%f %F{yellow}$(git branch | grep -e "^*" | cut -d' ' -f 2)%f "
+#export         RPS1=""
 export         TERM=xterm-color
 export       EDITOR=nvim
 export       LC_ALL=en_US.UTF-8
