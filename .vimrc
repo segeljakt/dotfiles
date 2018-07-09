@@ -31,7 +31,9 @@ set fileignorecase              " Always do the above
 set fillchars=vert:\│           " Borders
 set foldclose="all"             " Autoclose folds
 set guicursor+=a:blinkon0       " Disable blinking
-set guifont=Menlo\ for\ Powerline:h11
+"set guifont=Menlo\ for\ Powerline:h11
+set guifont=Menlo\ Regular\ Nerd\ Font\ Complete:h11
+set directory^=$HOME/.vim/swapfiles// " Centralize swapfiles
 set hlsearch                    " Highlight matches of search
 set ignorecase                  " Ignore case when searching
 set incsearch                   " Highlight pattern while searching
@@ -563,7 +565,7 @@ aug BufReadPostGroup | au!
   au BufReadPost * if &modifiable | retab | endif
   au BufReadPost *.c,*.h,*.rs if HasTemplate_gcc() == 0 | call NewTemplate_c() | endif
   " Filter (Fix indentation on lines except comments and dots (struct assignment))
-  au BufReadPost *.c,*.h,*.cpp exe 'normal mz' | exe 'g!/^\(\*\|\/\| *\.\| *&\| *\/\)/normal ==' | exe 'normal `z'
+  au BufReadPost *.c,*.h,*.cpp exe 'normal mz' | exe 'g!/^\(\*\|\/\| *\.\| *&\| *\/\\| *{\| *\"\| *\/\)/normal ==' | exe 'normal `z'
   au BufReadPost .vimrc exe 'set nowrap'
   " Find important files
   au BufReadPost * let b:makefile_path = findfile('makefile'  , ';')

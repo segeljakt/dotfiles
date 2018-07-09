@@ -4,6 +4,7 @@
 ": My plugins
 Plug 'klassegeljakt/vim-sentencer'
 ": General-purpose
+Plug 'edkolev/tmuxline.vim'                " Tmux+lightline
 Plug 'junegunn/fzf'                        " Fuzzy file finder
 Plug 'airblade/vim-matchquote'             " % match quotes
 Plug 'rhysd/clever-f.vim'                  " f{char} f
@@ -121,6 +122,7 @@ Plug 'davidbeckingsale/writegood.vim'      " Highlight common writing problems
 "Plug 'jamestomasino/vim-writingsyntax'    " Adjectives, weasel words, passive language
 "Plug 'rlofc/vorg'                         " Plaintext organizer
 ": Programming
+Plug 'ryanoasis/vim-devicons'             " Development icons for NERDTree
 Plug 'sbdchd/neoformat'                    " Format code
 Plug 'w0rp/ale'                            " Async linting
 Plug 'majutsushi/tagbar'                   " Display tags of window
@@ -154,7 +156,8 @@ Plug 'zivyangll/git-blame.vim'             " Show git-blame
 Plug 'cohama/agit.vim'                     " View git log
 Plug 'tpope/vim-fugitive'                  " Git wrapper
 Plug 'junegunn/vim-github-dashboard'       " Github dashboard
-Plug 'airblade/vim-gitgutter'              " Show changes in git
+Plug 'mhinz/vim-signify'                   " Replacement for gitgutter
+"Plug 'airblade/vim-gitgutter'              " Show changes in git
 "::---------- DISABLED ----------
 "Plug 'yggdroot/hipairs'                    " Show enclosing pairs
 "Plug 'joonty/vdebug'                       " Debugging for Python, Ruby, Perl, etc
@@ -180,7 +183,6 @@ Plug 'airblade/vim-gitgutter'              " Show changes in git
 "Plug 'ervandew/supertab'                  " Code completion
 "Plug 'shougo/vimshell.vim'                " Shell in vim
 "Plug 'xuyuanp/nerdtree-git-plugin'        " Show git status of files
-"Plug 'ryanoasis/vim-devicons'             " Development icons for NERDTree
 "Plug 'vim-scripts/toggle_comment'         " Toggle comments
 "Plug 'lastsupertim/vimsuperdebug'         " Debugging for C
 "Plug 'gilligan/vim-lldb'                  " Debugging for C

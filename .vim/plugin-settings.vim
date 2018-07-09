@@ -3,6 +3,8 @@ let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
 nnoremap ı :PlugInstall<CR>
 nnoremap ü :PlugUpdate<CR>
+": Vim-devicons
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 ": Rust
 let g:rust_recommended_style = 0
 ": Java
@@ -107,6 +109,9 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "let g:ale_c_build_dir_names += 'obj'
 "o
 "
+let g:ale_sign_error = '🔥'
+let g:ale_sign_warning = '💀'
+
 
 let g:ale_linters = {
                     \ 'python': ['mypy', 'pylint'],
@@ -123,9 +128,9 @@ let g:ale_rust_rls_toolchain = 'stable'
 ":: C
 let g:ale_c_clang_executable = 'clang'
 let g:ale_c_clang_options = '-std=c11 -Wall               -I /Users/Klas/Git/my-projects/adpc/src/'
-let g:ale_c_clang_options = '-std=c11 -Wall            -I /Users/Klas/Git/my-projects/mario-ascii/src/'
-let g:ale_c_gcc_executable = 'gcc-7'
-let g:ale_c_gcc_options = '-std=c11 -Wall -fms-extensions /Users/Klas/Git/my-projects/mario-ascii/src/'
+"let g:ale_c_clang_options = '-std=c11 -Wall            -I /Users/Klas/Git/my-projects/mario-ascii/src/'
+let g:ale_c_gcc_executable = 'gcc-8'
+let g:ale_c_gcc_options = '-std=c11 -Wall -fms-extensions -I /Users/Klas/Git/my-projects/mario-ascii/src/ -I /Users/Klas/Git/my-projects/mario-ascii/lib/'
 ":: CPP
 let g:ale_cpp_clang_executable = 'clang'
 let g:ale_cpp_clang_options = '-std=c++14 -Wall -I/usr/local/opt/openssl/include'
@@ -305,7 +310,9 @@ let g:lightline = {
       \   },
       \   'component_function': {
       \     'readonly': 'LightlineReadonly',
-      \     'fugitive': 'LightlineFugitive'
+      \     'fugitive': 'LightlineFugitive',
+      \     'filetype': 'MyFiletype',
+      \     'fileformat': 'MyFileformat',
       \   },
       \   'component_visible_condition': {
       \     'modified': '&modified||!&modifiable',
@@ -357,6 +364,12 @@ fun! LightlineFugitive()
   endif
   return ''
 endfun
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype.' '.WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 ": NERDTree
 let g:NERDTreeWinSize = 15
 let g:NERDTreeChDirMode = 1

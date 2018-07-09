@@ -70,8 +70,10 @@ alias     o="n-options"
 alias    j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
 alias    j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 ############################### SYSTEM VARIABLES ##############################
-export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
-export          PS1="%F{red}%D{%H:%M:%S}%f %F{yellow}$(git branch | grep -e "^*" | cut -d' ' -f 2)%f "
+#export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
+export          LESS="-R"
+#export          PS1="%F{red}%D{%H:%M:%S}%f %F{yellow}$(git branch | grep -e "^*" | cut -d' ' -f 2)%f "
+export          PS1="%F{red}%D{%H:%M:%S}%f "
 #export         RPS1=""
 export         TERM=xterm-color
 export       EDITOR=nvim
@@ -199,20 +201,25 @@ function w-contents() {
   xargs -o nvim
   zle redisplay
 }
+function w-ctrl-z() {
+  if [ $(jobs | head -c1 | wc -c) -ne 0 ]; then
+    zle -I; fg >/dev/null 2>&1
+  fi
+}
 zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;       zle -N w-cd-parent;
 zle -N w-git-status;   zle -N w-git-log;  zle -N w-help;     zle -N w-todo;
 zle -N w-dot;          zle -N w-contents; zle -N w-contents; zle -N w-ranger;
-zle -N w-ncdu;
+zle -N w-ncdu;         zle -N w-ctrl-z;
 ################################# KEYBINDS ####################################
 bindkey '\eq'  push-input
-bindkey '^b'   vi-backward-blank-word
-bindkey '^w'   vi-forward-blank-word
-bindkey '^j'   history-beginning-search-forward
-bindkey '^k'   history-beginning-search-backward
+bindkey '^B'   vi-backward-blank-word
+bindkey '^W'   vi-forward-blank-word
+bindkey '^J'   history-beginning-search-forward
+bindkey '^K'   history-beginning-search-backward
 bindkey '^O'   accept-line
 bindkey '^U'   undo
-bindkey '^l'   w-clear-ls
-bindkey '^f'   w-fg
+bindkey '^L'   w-clear-ls
+#bindkey '^F'   w-fg
 bindkey '^[[Z' w-cd-parent
 bindkey '^I'   w-cd-or-expand
 bindkey "'"    w-git-status
@@ -221,6 +228,7 @@ bindkey '…'    w-dot
 bindkey '^R'   w-ranger
 bindkey '^P'   w-contents
 bindkey '‘'    w-ncdu
+bindkey '^Z'   w-ctrl-z # ^F
 bindkey '^Q'   push-line-or-edit
 bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
 bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
