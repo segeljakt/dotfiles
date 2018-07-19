@@ -1,10 +1,10 @@
 [user]
-	email = klasseg@kth.se
-	name = Klas
+	email = klass@spotify.com
+	name = Klas Segeljakt
 [credential]
 	helper = osxkeychain
 [diff]
-	tool = mvimdiff
+	tool = nvim -d
 [difftool]
 	prompt = false
 [alias]
@@ -12,6 +12,7 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 [core]
 	pager = less -R
+	hooksPath = ~/.githooks
 [log]
 	date = format:%b %d %H:%M
 [format]

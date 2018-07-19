@@ -1,11 +1,10 @@
-############################### STARTUP COMMANDS ##############################
+#: STARTUP
 if [ "$TMUX" = "" ]; then /usr/local/bin/tmux; exit; fi
-stty -ixon -ixoff # Ubbind <C-s> and <C-q>
-stty werase undef # Unbind <C-w>
-################################### PATHS #####################################
+stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
+#: PATHS
 export PATH="$PATH:/usr/local/opt/bison/bin"
 export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
-export PATH="$PATH:/Users/Klas/.cargo/bin"
+export PATH="$PATH:/Users/klassegeljakt/.cargo/bin"
 export PATH="$PATH:/Library/TeX/texbin"
 export PATH="$PATH:/usr/local/opt/ncurses/bin"
 export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin"
@@ -18,11 +17,16 @@ export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/X11/lib/pkgconfig"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/cairo/1.12.16/lib/pkgconfig/"
 export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
-################################### ALIASES ###################################
+#: HOOKS
+function chpwd() {
+  emulate -L zsh
+  tmux refresh-client
+  #ls
+  #export PS1="%F{yellow}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)%f$ "
+}
+#: ALIASES
 # Files
 alias   bug="nvim ~/.bugs"
-alias  note="nvim ~/Thesis/papers/quick-notes.md"
-alias    re="mvim ~/Thesis/docs/report/README.md"
 alias  todo="nvim ~/.todo"
 # Fixes
 alias   gdb="sudo gdb"
@@ -31,6 +35,11 @@ alias  htop="sudo htop"
 alias mkdir="mkdir -pv" # Make parent directories
 alias  make="clear && make"
 alias  zath="zathura --fork" # Run zathura in background
+# Git
+alias    gp="git push"
+alias    gc="git commit"
+alias   gcl="git clone"
+alias    gg="git pull"
 # Overrides
 alias    ls="exa --group-directories-first"
 alias  grep="rg"
@@ -42,17 +51,16 @@ alias   cat="bat --theme TwoDark --style=plain"
 alias    vi="nvim"
 alias   vim="nvim"
 # Shortcuts
+alias   ...=../..
+alias  ....=../../..
+alias .....=../../../..
+alias  comp="~/.zsh/zsh-completion-generator/help2comp.py"
 alias    xp="xpanes"
 alias     v="nvim"
-alias   anw="ansiweather -l Stockholm -f 3 -a 1 -s 1" # Weather
-alias    ip="ifconfig | grep \"inet \" | grep -v 127.0.0.1" # IP
-alias    sl="~/Git/my-projects/tsl/tsl Hallonbergen Kista" # Time to school
-alias   tsl="~/Git/my-projects/tsl/tsl" # Time to somewhere else
-alias     t="synonyms" # translate
-alias    tt="trans" # translate
-alias     u="upgrade_all"
-alias     i="~/Git/my-projects/brew/brewbox.sh" # Brew info
+alias     t="trans" # translate
+alias     u="w-upgrade-all"
 alias     a="brew search"
+alias     i="brew info"
 alias    ii="brew install"
 alias     r="brew cleanup --force"
 alias     c="clear"
@@ -60,22 +68,19 @@ alias     z="nvim ~/.zshrc"
 alias    zz="nvim ~/.tmux.conf"
 alias   zzz="nvim ~/.config/nvim/init.vim"
 alias  zzzz="nvim ~/.cheat-sheet"
+alias    zx="nvim ~/.zsh/widgets.zsh"
 alias    rv="source ~/.zshrc"
 alias avril="ssh klasseg@avril.sys.ict.kth.se" # avril
 alias    pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
 alias     g="fetch_downloads"
-alias   hir="pbpaste | highlight --syntax=rs -O rtf | pbcopy" # Highlight code (Rust)
+alias   hir="pbpaste | highlight --syntax=rs    -O rtf | pbcopy" # Highlight code (Rust)
 alias   his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight code (Scala)
 alias     o="n-options"
-alias    j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
-alias    j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
-############################### SYSTEM VARIABLES ##############################
+#: SYSTEM VARIABLES
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
-export          LESS="-R"
-#export          PS1="%F{red}%D{%H:%M:%S}%f %F{yellow}$(git branch | grep -e "^*" | cut -d' ' -f 2)%f "
+export         LESS="-R"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
-#export         RPS1=""
-export         TERM=xterm-color
+#export         TERM=xterm-color
 export       EDITOR=nvim
 export       LC_ALL=en_US.UTF-8
 export         LANG=en_US.UTF-8
@@ -83,152 +88,84 @@ export HISTFILESIZE=1000
 export     HISTSIZE=$HISTFILESIZE
 export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
-############################# ZSH options #####################################
-setopt HIST_IGNORE_SPACE;    # Do not save commands starting with space to history
+#: OPTIONS
+setopt AUTO_CD;              # CD to directory
+setopt CDABLE_VARS;          # Prepend ~
+setopt NO_AUTOREMOVESLASH;
+setopt MENU_COMPLETE;        # Press tab twice to autocomplete
+setopt INC_APPEND_HISTORY;
+setopt LIST_PACKED;
+setopt HIST_IGNORE_SPACE;    # Don't save commands starting with space to history
 setopt HIST_IGNORE_ALL_DUPS; # Ignore all duplicate commands
-setopt noautoremoveslash
-setopt menu_complete;        # Press tab twice to autocomplete
-# Completion
+#setopt EXTENDED_HISTORY;     # Store time of each command
+setopt HIST_FCNTL_LOCK;      # Faster history performance
+setopt HIST_NO_FUNCTIONS;    # Do not store function definitions in history
+setopt HIST_REDUCE_BLANKS;   # Remove whitespace from history commands
+setopt HIST_SAVE_NO_DUPS;    # Omit saving old commands
+setopt SHARE_HISTORY;        # Share history between shells
+#setopt CORRECT;              # Try to correct spelling errors
+#setopt CORRECT_ALL;          # Even for arguments
+setopt INTERACTIVE_COMMENTS; # Allow interactive comments in shell
+setopt PROMPT_SUBST;         # Allow stuff in prompts
+setopt TRANSIENT_RPROMPT;    # Clear RPS1 when accepting command
+#: CUSTOM OPTIONS
+FZF_HEIGHT=20
+
+#: COMPLETION
+fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 zmodload zsh/complist
-fpath+=~/.zfunc
 compinit
+zstyle ":completion:*:" format "%B%d%b"
+zstyle ':completion:*' menu select=2
 zstyle ':completion:*' special-dirs true      # Tabcomplete parent dir
 zstyle ':completion:*' menu select            # Show menu selection
-zstyle ':completion:*' verbose true           # Verbose completion results
+#zstyle ':completion:*' verbose true           # Verbose completion results
 zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#: SOURCES
+source ~/.zsh/widgets.zsh
+source ~/.zsh/scripts/alien.zsh
+source ~/.zsh/scripts/start-spotify.zsh
+source ~/Git/github/zsh-autopair/autopair.zsh
 source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
-################################### FZF / SKIM ################################
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export SKIM_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# Commands
-preview-file() {
-  file=$1; line=$2; num_lines=$3; half=$(($num_lines/2))
-  if [[ $line -le $half ]]; then
-    start=1
-  else
-    start=$(($line-$half))
-  fi
-  stop=$(($start+$num_lines))
-  highlight --force -O ansi $file | \
-    awk -v line=$line -v start=$start -v stop=$stop '{
-    if (NR == line) {
-      gsub(/\x1B\[[0-9;]*[JKmsu]/,"",$0);
-      print "\033[41m" $0 "\033[0m"
-    } else if (NR >= stop) {
-      exit 1
-    } else if (NR >= start && NR < stop) {
-      print $0
-    }
-  }'
-}
-################################### Widgets ###################################
-function upgrade_all { xpanes -d -e "brew upgrade --cleanup" "rustup update" "cargo install-update -a" }
-function fetch_downloads {
-  scp -r pi@192.168.1.4:'/media/pi/TeraDrive/finished/uncategorized/*' ~/Torrents/ \
-  && ssh pi@192.168.1.4 'rm -rf /media/pi/TeraDrive/finished/uncategorized/*'
-}
-function w-clear-ls  { zle -I; clear; ls             }
-function w-fg        { zle -I; fg                    }
-function w-cd-parent { zle -I; cd ..; clear; pwd; ls }
-function w-help      { zle -I; cat ~/.help           }
-function w-todo      { zle -I; nvim ~/.todo          }
-function w-dot {
-  PREFIX=$BUFFER[1,$CURSOR]
-  POSTFIX=$BUFFER[$CURSOR+1,-1]
-  if [[ $BUFFER == "" || $PREFIX =~ ".* $" ]]; then
-    BUFFER="$PREFIX./$POSTFIX";       CURSOR=$CURSOR+2; zle list-choices # " "
-  elif [[ $PREFIX =~ ".*\.\./$" ]]; then
-    BUFFER="$PREFIX../$POSTFIX";      CURSOR=$CURSOR+3; zle list-choices # ../
-  elif [[ $BUFFER[1,$CURSOR] =~ ".*\./$" ]]; then
-    BUFFER="$PREFIX[1,-2]./$POSTFIX"; CURSOR=$CURSOR+1; zle list-choices # ./
-  else
-    BUFFER="$PREFIX.$POSTFIX";        CURSOR=$CURSOR+1                   # Default
-  fi
-}
-function w-git-status {
-  if [[ $BUFFER == "" ]]; then
-    zle -I; clear; git status
-  else
-    PREFIX=$BUFFER[1,$CURSOR]
-    POSTFIX=$BUFFER[$CURSOR+1,-1]
-    BUFFER="$PREFIX'$POSTFIX"; CURSOR=$CURSOR+1
-  fi
-}
-function w-git-log {
-  if [[ $BUFFER == "" ]]; then
-    zle -I; clear; git log
-  else
-    PREFIX=$BUFFER[1,$CURSOR]
-    POSTFIX=$BUFFER[$CURSOR+1,-1]
-    BUFFER="$PREFIX¨$POSTFIX"; CURSOR=$CURSOR+1
-  fi
-}
-function w-cd-or-expand {
-  if [[ $BUFFER == "" ]]; then
-    BUFFER="cd "
-    CURSOR=3
-    zle list-choices
-  else
-    zle expand-or-complete
-  fi
-}
-function w-ranger {
-  ranger < $tty
-}
-function w-ncdu {
-  ncdu < $tty
-}
-function w-contents() {
-  rg --color=never           \
-     --no-ignore             \
-     --with-filename         \
-     --no-heading            \
-     --line-number           \
-     -g '*.{h,c,rust,scala}' \
-     "" . | \
-  fzf --delimiter=:  \
-      --height=20    \
-      --reverse      \
-      --tabstop=2    \
-      --nth=3        \
-      --algo=v2 |    \
-  awk -F':' '{print $1 " +"$2}' | \
-  xargs -o nvim
-  zle redisplay
-}
-function w-ctrl-z() {
-  if [ $(jobs | head -c1 | wc -c) -ne 0 ]; then
-    zle -I; fg >/dev/null 2>&1
-  fi
-}
-zle -N w-cd-or-expand; zle -N w-clear-ls; zle -N w-fg;       zle -N w-cd-parent;
-zle -N w-git-status;   zle -N w-git-log;  zle -N w-help;     zle -N w-todo;
-zle -N w-dot;          zle -N w-contents; zle -N w-contents; zle -N w-ranger;
-zle -N w-ncdu;         zle -N w-ctrl-z;
-################################# KEYBINDS ####################################
+source ~/.zsh/zsh-completion-generator/zsh-completion-generator.plugin.zsh
+source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+#: KEYBINDS
+# Custom widgets
+bindkey '^O'   w-bin
+bindkey '^I'   w-cd-or-expand
+bindkey '^L'   w-clear-ls
+bindkey '^Z'   w-fg
+bindkey '^[[Z' w-cd-parent
+bindkey "'"    w-git-status
+bindkey '¨'    w-git-log
+bindkey '…'    w-dot
+bindkey '^P'   w-contents
+bindkey '^R'   w-ranger
+bindkey '^T'   w-file
+bindkey 'ä'    w-cal-agenda
+bindkey 'Ä'    w-cal-week
+bindkey '^M'   w-enter
+bindkey '^Y'   w-copy
+bindkey '.'    w-single-dot
+bindkey '~'    w-working-dir
+bindkey 'ü'    w-upgrade-all
+bindkey '/'    w-slash
+bindkey '°'    w-toggle-exact
+bindkey 'ı'    w-clear # <C-I>
+bindkey '’'    w-clear # <C-M> TODO: Mail
+bindkey '^N'   w-clear # TODO: IRC
+# Builtin widgets
 bindkey '\eq'  push-input
+bindkey '^Q'   push-line-or-edit
 bindkey '^B'   vi-backward-blank-word
 bindkey '^W'   vi-forward-blank-word
 bindkey '^J'   history-beginning-search-forward
 bindkey '^K'   history-beginning-search-backward
-bindkey '^O'   accept-line
-bindkey '^U'   undo
-bindkey '^L'   w-clear-ls
-#bindkey '^F'   w-fg
-bindkey '^[[Z' w-cd-parent
-bindkey '^I'   w-cd-or-expand
-bindkey "'"    w-git-status
-bindkey '¨'    w-git-log
-bindkey '…'    w-dot
-bindkey '^R'   w-ranger
-bindkey '^P'   w-contents
-bindkey '‘'    w-ncdu
-bindkey '^Z'   w-ctrl-z # ^F
-bindkey '^Q'   push-line-or-edit
-bindkey -M menuselect '^[[Z' reverse-menu-complete # Press enter once on autocomplete
-bindkey -M menuselect '^I' expand-or-complete # Press enter once on autocomplete
+bindkey 'ª'    undo
+bindkey '√'    redo
+bindkey '^G'   run-help
+bindkey '^E'   end-of-line       # <C-e>
+bindkey 'Ö'    beginning-of-line # <C-E>
+bindkey -M menuselect '^[[Z' reverse-menu-complete
+bindkey -M menuselect '^I'   menu-expand-or-complete

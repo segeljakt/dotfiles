@@ -1,7 +1,0 @@
-open_with vim
-open_with Preview.app
-q
-open_with 
-Roms
-open_with nvim
-rename Applicationsj

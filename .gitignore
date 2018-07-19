@@ -6,22 +6,37 @@
 !.gvimrc
 !.zshrc
 !.zsh_profile
-!.bashrc
-!.bash_profile
+!.zshenv
 !.tmux.conf
 !.gdbrc
 !.gitignore
-!.less
+!.mutt/
 !.cheat-sheet
-!.gitconfig
+!.githooks/
 
-# Whitelist config
-
-!.config
-
-# Whitelist vim
-
+# Vim
 !.vim/
 .vim/*
 !.vim/plugins.vim
 !.vim/plugin-settings.vim
+
+# Zsh
+!.zsh/
+.zsh/*
+!.zsh/scripts/
+.zsh/scripts/*
+!.zsh/scripts/edit-selected-lines.zsh
+!.zsh/scripts/preview-file.zsh
+!.zsh/widgets.zsh
+
+# Config
+!.config/
+.config/*
+!.config/htop/
+!.config/nvim/
+!.config/zathura/
+
+# Weechat
+!.weechat/
+.weechat/*
+!.weechat/*.conf
