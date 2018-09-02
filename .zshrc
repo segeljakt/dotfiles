@@ -19,6 +19,7 @@ export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 #: HOOKS
 function chpwd() {
+  tput sc
   emulate -L zsh
   tmux refresh-client
   #ls
@@ -28,6 +29,7 @@ function chpwd() {
 # Files
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
+alias   com="nvim ~/.commands"
 # Fixes
 alias   gdb="sudo gdb"
 alias  cgdb="sudo cgdb"
@@ -37,6 +39,7 @@ alias  make="clear && make"
 alias  zath="zathura --fork" # Run zathura in background
 # Git
 alias    gp="git push"
+alias   gpl="git pull"
 alias    gc="git commit"
 alias   gcl="git clone"
 alias    gg="git pull"
@@ -49,7 +52,8 @@ alias  time="tally"
 alias   top="htop"
 alias   cat="bat --theme TwoDark --style=plain"
 alias    vi="nvim"
-alias   vim="nvim"
+#alias   vim="nvim"
+alias   gcc="gcc-8"
 # Shortcuts
 alias   ...=../..
 alias  ....=../../..
@@ -69,6 +73,7 @@ alias    zz="nvim ~/.tmux.conf"
 alias   zzz="nvim ~/.config/nvim/init.vim"
 alias  zzzz="nvim ~/.cheat-sheet"
 alias    zx="nvim ~/.zsh/widgets.zsh"
+alias   zzx="nvim ~/.zsh/spotify.zsh"
 alias    rv="source ~/.zshrc"
 alias avril="ssh klasseg@avril.sys.ict.kth.se" # avril
 alias    pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
@@ -76,6 +81,7 @@ alias     g="fetch_downloads"
 alias   hir="pbpaste | highlight --syntax=rs    -O rtf | pbcopy" # Highlight code (Rust)
 alias   his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight code (Scala)
 alias     o="n-options"
+alias  hack="nvim ~/.hack-days"
 #: SYSTEM VARIABLES
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
@@ -84,16 +90,18 @@ export          PS1="%F{red}%D{%H:%M:%S}%f "
 export       EDITOR=nvim
 export       LC_ALL=en_US.UTF-8
 export         LANG=en_US.UTF-8
-export HISTFILESIZE=1000
+export HISTFILESIZE=5000 # Disk (BASH??)
+export     HISTSIZE=5000 # Memory
+export     SAVEHIST=5000 # Disk
+export     HISTFILE=~/.zsh/hist
 export     HISTSIZE=$HISTFILESIZE
 export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
-setopt CDABLE_VARS;          # Prepend ~
 setopt NO_AUTOREMOVESLASH;
 setopt MENU_COMPLETE;        # Press tab twice to autocomplete
-setopt INC_APPEND_HISTORY;
+setopt INC_APPEND_HISTORY;   # Append to history immediately, not just on exit
 setopt LIST_PACKED;
 setopt HIST_IGNORE_SPACE;    # Don't save commands starting with space to history
 setopt HIST_IGNORE_ALL_DUPS; # Ignore all duplicate commands
@@ -112,16 +120,31 @@ setopt TRANSIENT_RPROMPT;    # Clear RPS1 when accepting command
 FZF_HEIGHT=20
 
 #: COMPLETION
-fpath=(~/.zsh/completion $fpath)
+fpath=(
+  ~/.zsh/completion
+  ~/.zsh/zsh-completion-generator/completions
+  /usr/local/share/zsh-completions
+  $fpath
+)
 autoload -Uz compinit
+autoload -Uz edit-command-line
+zle -N edit-command-line
 zmodload zsh/complist
 compinit
 zstyle ":completion:*:" format "%B%d%b"
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' special-dirs true      # Tabcomplete parent dir
 zstyle ':completion:*' menu select            # Show menu selection
-#zstyle ':completion:*' verbose true           # Verbose completion results
+zstyle ':completion:*' verbose true           # Verbose completion results
 zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
+# 0 -- vanilla completion (abc => abc)
+# 1 -- smart case completion (abc => Abc)
+# 2 -- word flex completion (abc => A-big-Car)
+# 3 -- full flex completion (abc => ABraCadabra)
+#zstyle ':completion:*' matcher-list '' \
+#  'm:{a-z\-}={A-Z\_}' \
+#  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+#  'r:|?=** m:{a-z\-}={A-Z\_}'
 #: SOURCES
 source ~/.zsh/widgets.zsh
 source ~/.zsh/scripts/alien.zsh
@@ -138,7 +161,7 @@ bindkey '^L'   w-clear-ls
 bindkey '^Z'   w-fg
 bindkey '^[[Z' w-cd-parent
 bindkey "'"    w-git-status
-bindkey '¨'    w-git-log
+bindkey '*'    w-git-log
 bindkey '…'    w-dot
 bindkey '^P'   w-contents
 bindkey '^R'   w-ranger
@@ -155,6 +178,7 @@ bindkey '°'    w-toggle-exact
 bindkey 'ı'    w-clear # <C-I>
 bindkey '’'    w-clear # <C-M> TODO: Mail
 bindkey '^N'   w-clear # TODO: IRC
+bindkey 'Œ'    w-scrollback
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -167,5 +191,6 @@ bindkey '√'    redo
 bindkey '^G'   run-help
 bindkey '^E'   end-of-line       # <C-e>
 bindkey 'Ö'    beginning-of-line # <C-E>
+bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete

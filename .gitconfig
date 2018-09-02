@@ -11,9 +11,23 @@
 	d = difftool
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 [core]
-	pager = less -R
+	pager = diff-so-fancy | less --tabs=4 -RFX
 	hooksPath = ~/.githooks
 [log]
 	date = format:%b %d %H:%M
 [format]
 	pretty = format:%C(auto,yellow)%h %<(3,trunc)%aN %C(auto,blue)%>(12,trunc)%ad - %C(auto,green)%C(auto,reset)%s%C(auto,red)% gD
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse

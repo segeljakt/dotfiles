@@ -2,12 +2,37 @@
 "|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
 "+----------------------------------------------------------------------------+
 set nocp                        " Always do this first
+let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'w0rp/ale'
+let g:ale_linters = {'rust': ['rls'], 'c': ['gcc']}
+let g:ale_c_gcc_executable = '/usr/local/bin/gcc-8'
+let g:ale_set_highlights = 0
+let g:ale_rust_rls_toolchain = "stable"
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/goyo.vim'
+Plug 'cespare/vim-toml'
+Plug 'rust-lang/rust.vim'
+Plug 'majutsushi/tagbar'
+Plug 'valloric/youcompleteme'
+Plug 'tpope/vim-endwise'
+Plug 'raimondi/delimitmate'
+Plug 'tenfyzhong/completeparameter.vim'
+Plug 'airblade/vim-gitgutter'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'klassegeljakt/vim-stealth'
+Plug 'scrooloose/nerdtree'
+Plug 'zirrostig/vim-schlepp'
+Plug 'tpope/vim-fugitive'
+Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'pest-parser/pest.vim'
+Plug 'junegunn/vim-emoji'
+Plug 'timonv/vim-cargo'
 call plug#end()
 colorscheme gruvbox
 nnoremap <silent> <C-w>h :TmuxNavigateLeft<CR>
@@ -15,9 +40,153 @@ nnoremap <silent> <C-w>j :TmuxNavigateDown<CR>
 nnoremap <silent> <C-w>k :TmuxNavigateUp<CR>
 nnoremap <silent> <C-w>l :TmuxNavigateRight<CR>
 nnoremap <silent> <C-w>p :TmuxNavigatePrevious<CR>
+let g:rust_recommended_style = 0
+let g:rust_fold = 1
+let g:rust_bang_comment_leader = 1
+nmap <F8> :TagbarToggle<CR>
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_rust_src_path = "~/.rustup  "'~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src'
+let g:ycm_rust_src_path = "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
+
+let g:ycm_key_list_select_completion = ['<C-j>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+let g:ycm_key_list_stop_completion = ['<CR>']
+let g:ycm_key_invoke_completion = '<Tab>'
+"let g:ycm_cache_omnifunc = 0
+"let g:ycm_use_ultisnips_completer = 0
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+nmap <C-q> <plug>NERDCommenterAppend
+nmap q <plug>NERDCommenterToggle
+vmap q <plug>NERDCommenterToggle
+let g:NERDAltDelims_c = 0
+let delimitMate_expand_cr = 1
+" Lightline
+set ruler                              " Show line and column number
+set noshowmode
+if !has('gui_running')
+  set t_Co=256
+endif
+let g:lightline = {
+      \   'colorscheme': 'wombat',
+      \   'active': {
+      \     'left': [ [ 'mode'],
+      \               [ 'readonly', 'modified' ],
+      \               [ 'absolutepath' ] ],
+      \     'right': [ [ 'lineinfo' ],
+      \                [ 'filetype' ],
+      \                [ 'percent' ] ],
+      \   },
+      \   'inactive': {
+      \     'left': [ [ 'absolutepath' ] ],
+      \     'right': [ [ 'lineinfo' ],
+      \                [ 'percent' ] ]
+      \   },
+      \   'separator': { 'left': '', 'right': '' },
+      \   'subseparator': { 'left': '', 'right': '' },
+      \   'tabline_separator': { 'left': '', 'right': '' },
+      \   'tabline_subseparator': { 'left': '', 'right': '' },
+      \   'tab': {
+      \     'active': [ 'filename', 'modified' ],
+      \     'inactive': [ 'filename', 'modified' ]
+      \   },
+      \   'tabline': {
+      \     'left': [ [ 'tabs' ] ],
+      \     'right': [ [ ] ],
+      \   },
+      \   'component': {
+      \     'mode': '%{lightline#mode()}',
+      \     'absolutepath': '%F',
+      \     'relativepath': '%f',
+      \     'filename': '%t',
+      \     'modified': '%M',
+      \     'bufnum': '%n',
+      \     'paste': '%{&paste?"PASTE":""}',
+      \     'readonly': '%R',
+      \     'charvalue': '%b',
+      \     'charvaluehex': '%B',
+      \     'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+      \     'fileformat': '%{&ff}',
+      \     'filetype': '%{&ft!=#""?&ft:"no ft"}',
+      \     'percent': '%3p%%',
+      \     'percentwin': '%P',
+      \     'spell': '%{&spell?&spelllang:""}',
+      \     'lineinfo': '%3l:%-2v',
+      \     'line': '%l',
+      \     'column': '%c',
+      \     'close': '%999X X ',
+      \     'winnr': '%{winnr()}',
+      \     'pwd': '%pwd',
+      \   },
+      \   'component_function': {
+      \     'readonly': 'LightlineReadonly',
+      \     'fugitive': 'LightlineFugitive',
+      \     'filetype': 'MyFiletype',
+      \     'fileformat': 'MyFileformat',
+      \   },
+      \   'component_visible_condition': {
+      \     'modified': '&modified||!&modifiable',
+      \     'readonly': '&readonly',
+      \     'paste': '&paste',
+      \     'spell': '&spell'
+      \   },
+      \   'component_function_visible_condition': { },
+      \   'component_expand': {
+      \     'tabs': 'lightline#tabs'
+      \   },
+      \   'component_type': {
+      \     'tabs': 'tabsel',
+      \     'close': 'raw'
+      \   },
+      \   'component_raw': { },
+      \   'tab_component':  { },
+      \   'tab_component_function': {
+      \     'filename': 'lightline#tab#filename',
+      \     'modified': 'lightline#tab#modified',
+      \     'readonly': 'lightline#tab#readonly',
+      \     'tabnum': 'lightline#tab#tabnum'
+      \   },
+      \   'mode_map': {
+      \     'n' : 'NORMAL',
+      \     'i' : 'INSERT',
+      \     'R' : 'REPLACE',
+      \     'v' : 'VISUAL',
+      \     'V' : 'V-LINE',
+      \     "\<C-v>": 'V-BLOCK',
+      \     'c' : 'COMMAND',
+      \     's' : 'SELECT',
+      \     'S' : 'S-LINE',
+      \     "\<C-s>": 'S-BLOCK',
+      \     't': 'TERMINAL',
+      \   },
+      \   'enable': {
+      \     'statusline': 1,
+      \     'tabline': 1
+      \   },
+      \ }
+fun! LightlineReadonly()
+  return &readonly ? '' : ''
+endfun
+fun! LightlineFugitive()
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? ''.branch : ''
+  endif
+  return ''
+endfun
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype.' '.WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+"inoremap <unique> § <C-X><C-O><C-P>
 "": General settings
 let mapleader = "§"             " Leader key
-"let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 let g:author = "Klas Segeljakt" " My name
 let g:email = "klass@spotify.com"  " My email
 syn enable                      " Enable syntax
@@ -66,18 +235,18 @@ set wildignorecase              " Ignore case when completing filenames
 set wildmenu                    " Tabcompletion for commandline
 set formatoptions=rownlj        " r: Comment on Enter
 set hidden
+set diffopt+=context:0
+set undofile
+set undodir=~/.config/nvim/undodir
 " o: Comment on o
 " w: Trailing whitespace = Same
 " n: Recognize numbered lists
 " l: Do not break long lines
 " j: Remove comment when joining lines
 " Get character at offset relative to cursor
-fun! PeekChar(offset)
-    return getline(".")[col(".") - 1 + a:offset]
-endfun
-
+" Config
+nnoremap æ :tabnew ~/.config/nvim/init.vim<CR>
 " Conditionally remap Enter in insert mode
-inoremap <expr> <CR> PeekChar(0) == ')' && PeekChar(-1) != ',' ? "\<Right>" : "\<Enter>"
 " Search
 nnoremap <S-Space> /
 " Up down
@@ -103,53 +272,40 @@ nnoremap <Leader>fu :set fu!<CR>
 nnoremap <Leader>dd :set diff!<CR>
 " Bind cursor movement and scrolling between windows
 nnoremap <Leader>g :set cursorbind! scrollbind!<CR>
-" Tabs work as expected in replace mode
-nnoremap R gR
-" Go to start of line
-nnoremap B ^
-" Scroll up
-nnoremap E <C-y>
+nnoremap R gR| " Tabs work as expected in replace mode
+nnoremap B ^| " Go to start of line
+nnoremap E <C-y>| " Scroll up
 " Swap # with *
 nnoremap # *N
 nnoremap * #N
 vnoremap # *N
 vnoremap * *N
-" Quick command
 nnoremap <Space> :
 vnoremap <Space> :
 " Highlight last inserted text
 nnoremap gV `[v`]<Space>
-" Clear matches and errors/warnings
-"noremap <silent> <C-f> :let @/ = ""<CR>:SyntasticReset<CR>
-noremap <silent> <C-f> :let @/ = ""<CR>
-" Toggle case with <Alt-y>
-"noremap µ ~
-" Yank char
-nnoremap y vy
-" Write multiple lines with <C-v>I or <C-v>A
-inoremap <C-c> <Esc>
-" Move to start of line above
-nnoremap ¨ k^
+noremap <silent> F :let @/ = ""<CR>| " Clear matches and errors/warnings
+"noremap µ ~| " Toggle case with <Alt-y>
+nnoremap y vy|           " Yank char
+inoremap <C-c> <Esc>|    " Write multiple lines with <C-v>I or <C-v>A
+nnoremap ¨ k^|           " Move to start of line above
 " Move in insert mode
 inoremap ˛ <Left>
 inoremap √ <Down>
 inoremap ª <Up>
 inoremap ﬁ <Right>
-" <Alt+Space> key should be treated as <Space>
-inoremap   <Space>
-" View yanks with <C-o>
-nnoremap <C-o> :reg<CR>
-" Exit window
-nnoremap <C-d> :x<CR>
-" Save
-nnoremap <C-s> :w<CR>
+inoremap   <Space>|      " <Alt+Space> key should be treated as <Space>
+nnoremap <C-o> :reg<CR>| " View yanks with <C-o>
+nnoremap <C-d> :x<CR>|   " Exit window
+nnoremap <C-s> :w<CR>|   " Save
+nnoremap ı :%s///g<Left><Left>
 ": Whitespace/Tabs
 set expandtab                   " Expand tabs to spaces
 set tabstop=2                   " Number of spaces per tab
 set shiftwidth=2                " Number of spaces for each autoindent
 set softtabstop=2               " ?
 set shiftround                  " Indent to round number of spaces
-inoremap <Tab> <Tab>
+"inoremap <Tab> <Tab>
 nnoremap <Tab> >>
 nnoremap <S-Tab> <<
 vnoremap <Tab> >gv

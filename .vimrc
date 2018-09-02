@@ -9,23 +9,22 @@ call plug#end()
 source ~/.vim/private.vim
 source ~/.vim/plugin-settings.vim
 ": General settings
-"source ~/.vim/settings.vim
-let mapleader = "§"             " Leader key
-let g:author = "Klas Segeljakt" " My name
-let g:email = "klasseg@kth.se"  " My email
-syntax enable                   " Enable syntax
+let mapleader = "§"
+let g:author = "Klas Segeljakt"
+let g:email = "klasseg@kth.se"
+syntax enable
 filetype plugin indent on       " Detect filetypes
+set dict+=~/.vim/dict/basic
 set autoread                    " Automatically read changes
 set autowriteall                " Automatically write when changing file
-set background=dark             " Dark background
+set background=dark
 set bufhidden=hide              " Delete buffer when closing window
 set cindent                     " Autmatic c indentation
 set cinkeys-=0#,:               " Comments don't fiddle with indenting
 set cinoptions=l1,c0,C0,\0      " Do not indent switch-cases
 set concealcursor=nv            " Conceal only in normal and visual mode
 set conceallevel=2              " Replace concealed text with char, if any
-set cpo-=aA                     " Read and write shouldn't set #
-set dict=~/.vim/dict/basic      " Dictionary
+set cpoptions-=aA               " Read and write shouldn't set #
 set fileformats=unix,mac,dos    " Handle all, but prefer unix
 set fileignorecase              " Always do the above
 set fillchars=vert:\│           " Borders
