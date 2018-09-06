@@ -82,6 +82,7 @@ alias   hir="pbpaste | highlight --syntax=rs    -O rtf | pbcopy" # Highlight cod
 alias   his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight code (Scala)
 alias     o="n-options"
 alias  hack="nvim ~/.hack-days"
+alias    gl="git log --pretty"
 #: SYSTEM VARIABLES
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
@@ -178,7 +179,6 @@ bindkey '°'    w-toggle-exact
 bindkey 'ı'    w-clear # <C-I>
 bindkey '’'    w-clear # <C-M> TODO: Mail
 bindkey '^N'   w-clear # TODO: IRC
-bindkey 'Œ'    w-scrollback
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit

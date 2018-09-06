@@ -1,9 +1,10 @@
 FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
 FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
 function w-upgrade-all {
-  xpanes -s -d -e "brew upgrade --cleanup" \
-                 "rustup update"           \
-                 "cargo install-update -a"
+  xpanes -s -d -e             \
+    "brew upgrade --cleanup"  \
+    "rustup update"           \
+    "cargo install-update -a"
 }
 function w-clear-ls   { zle -I; clear; ls                                     }
 function w-clear      { zle -I; clear;                                        }
@@ -13,7 +14,15 @@ function w-help       { zle -I; cat ~/.help                                   }
 function w-todo       { zle -I; nvim ~/.todo                                  }
 function w-copy       { echo "$BUFFER" | pbcopy                               }
 function w-ranger     { ranger < /dev/tty > /dev/tty; zle redisplay           }
-function w-bin        { exa /bin/ /usr/bin /usr/local/bin | fzf; zle redisplay }
+function w-bin {
+  exa                  \
+    /bin/              \
+    /usr/bin/          \
+    /usr/local/bin/ |  \
+    sed "s/ -> .*$//g" | \
+  fzf
+  zle redisplay
+}
 function w-cal-agenda { clear; gcalcli agenda; zle redisplay                  }
 function w-cal-week   { clear; gcalcli calw;   zle redisplay                  }
 function w-toggle-exact {
@@ -182,6 +191,5 @@ zle -N w-working-dir
 zle -N w-slash
 zle -N w-upgrade-all
 zle -N w-toggle-exact
-#zle -N w-scrollback
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }
