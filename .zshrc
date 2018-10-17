@@ -11,7 +11,6 @@ export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin"
 export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.4/bin"
 export PATH="$PATH:/usr/local/Cellar/ctags/5.8_1/bin"
 export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local/bin"
 export GOPATH="$HOME/Git/go/"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/X11/lib/pkgconfig"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/cairo/1.12.16/lib/pkgconfig/"
@@ -46,7 +45,7 @@ alias    gg="git pull"
 # Overrides
 alias    ls="exa --group-directories-first"
 alias  grep="rg"
-alias  find="fd --no-ignore"
+#alias  find="fd --no-ignore"
 alias  tree="tree-rs"
 alias  time="tally"
 alias   top="htop"
@@ -66,14 +65,13 @@ alias     u="w-upgrade-all"
 alias     a="brew search"
 alias     i="brew info"
 alias    ii="brew install"
-alias     r="brew cleanup --force"
+alias     r="brew cleanup"
 alias     c="clear"
 alias     z="nvim ~/.zshrc"
 alias    zz="nvim ~/.tmux.conf"
 alias   zzz="nvim ~/.config/nvim/init.vim"
 alias  zzzz="nvim ~/.cheat-sheet"
 alias    zx="nvim ~/.zsh/widgets.zsh"
-alias   zzx="nvim ~/.zsh/spotify.zsh"
 alias    rv="source ~/.zshrc"
 alias avril="ssh klasseg@avril.sys.ict.kth.se" # avril
 alias    pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
@@ -83,7 +81,8 @@ alias   his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight cod
 alias     o="n-options"
 alias  hack="nvim ~/.hack-days"
 alias    gl="git log --pretty"
-#: SYSTEM VARIABLES
+alias    ed="ed -p'* '"
+#: ENVIRONMENT VARIABLES
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
@@ -98,6 +97,8 @@ export     HISTFILE=~/.zsh/hist
 export     HISTSIZE=$HISTFILESIZE
 export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
+source ~/.zsh/tizen-c.zsh
+source ~/.zsh/tizen-cpp.zsh
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
 setopt NO_AUTOREMOVESLASH;
@@ -118,11 +119,11 @@ setopt INTERACTIVE_COMMENTS; # Allow interactive comments in shell
 setopt PROMPT_SUBST;         # Allow stuff in prompts
 setopt TRANSIENT_RPROMPT;    # Clear RPS1 when accepting command
 #: CUSTOM OPTIONS
-FZF_HEIGHT=20
-
+export FZF_HEIGHT=20
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 #: COMPLETION
 fpath=(
-  ~/.zsh/completion
+  ~/.zsh/completions
   ~/.zsh/zsh-completion-generator/completions
   /usr/local/share/zsh-completions
   $fpath
@@ -148,12 +149,10 @@ zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
 #  'r:|?=** m:{a-z\-}={A-Z\_}'
 #: SOURCES
 source ~/.zsh/widgets.zsh
-source ~/.zsh/scripts/alien.zsh
-source ~/.zsh/scripts/start-spotify.zsh
-source ~/Git/github/zsh-autopair/autopair.zsh
-source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
+source ~/.zsh/zsh-autopair/autopair.zsh
 source ~/.zsh/zsh-completion-generator/zsh-completion-generator.plugin.zsh
 source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
 #: KEYBINDS
 # Custom widgets
 bindkey '^O'   w-bin
@@ -175,7 +174,8 @@ bindkey '.'    w-single-dot
 bindkey '~'    w-working-dir
 bindkey 'ü'    w-upgrade-all
 bindkey '/'    w-slash
-bindkey '°'    w-toggle-exact
+bindkey '°'    w-fzf-toggle-exact # <S-§>
+bindkey '•'    w-fzf-set-filter   # <S-M-§>
 bindkey 'ı'    w-clear # <C-I>
 bindkey '’'    w-clear # <C-M> TODO: Mail
 bindkey '^N'   w-clear # TODO: IRC
@@ -194,3 +194,12 @@ bindkey 'Ö'    beginning-of-line # <C-E>
 bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete
+# FUNCTIONS
+function pdftojpg {
+  convert \
+    -density 300 \
+    -trim \
+    -quality 100 \
+    $1 \
+    +append $(echo $1 | sed "s/\.pdf/\.png")
+}

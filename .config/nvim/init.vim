@@ -4,11 +4,11 @@
 set nocp                        " Always do this first
 let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'w0rp/ale'
-let g:ale_linters = {'rust': ['rls'], 'c': ['gcc']}
-let g:ale_c_gcc_executable = '/usr/local/bin/gcc-8'
-let g:ale_set_highlights = 0
-let g:ale_rust_rls_toolchain = "stable"
+"Plug 'w0rp/ale'
+"let g:ale_linters = {'rust': ['rls'], 'c': ['gcc']}
+"let g:ale_c_gcc_executable = '/usr/local/bin/gcc-8'
+"let g:ale_set_highlights = 0
+"let g:ale_rust_rls_toolchain = "stable"
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
@@ -16,10 +16,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'majutsushi/tagbar'
-Plug 'valloric/youcompleteme'
+"Plug 'valloric/youcompleteme'
 Plug 'tpope/vim-endwise'
 Plug 'raimondi/delimitmate'
-Plug 'tenfyzhong/completeparameter.vim'
+"Plug 'tenfyzhong/completeparameter.vim'
 Plug 'airblade/vim-gitgutter'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -33,6 +33,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'pest-parser/pest.vim'
 Plug 'junegunn/vim-emoji'
 Plug 'timonv/vim-cargo'
+"Plug 'typeintandem/vim'
 call plug#end()
 colorscheme gruvbox
 nnoremap <silent> <C-w>h :TmuxNavigateLeft<CR>
@@ -55,11 +56,11 @@ let g:ycm_key_list_stop_completion = ['<CR>']
 let g:ycm_key_invoke_completion = '<Tab>'
 "let g:ycm_cache_omnifunc = 0
 "let g:ycm_use_ultisnips_completer = 0
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+"smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+"imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+"smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+"imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 nmap <C-q> <plug>NERDCommenterAppend
 nmap q <plug>NERDCommenterToggle
 vmap q <plug>NERDCommenterToggle

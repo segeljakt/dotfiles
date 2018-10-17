@@ -10,7 +10,6 @@
 !.tmux.conf
 !.gdbrc
 !.gitignore
-!.mutt/
 !.cheat-sheet
 !.githooks/
 
@@ -36,7 +35,12 @@
 !.config/nvim/
 !.config/zathura/
 
+.config/nvim/undodir/*
+.config/nvim/pack/*
+
 # Weechat
 !.weechat/
 .weechat/*
 !.weechat/*.conf
+
+# Mutt

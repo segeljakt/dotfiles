@@ -1,5 +1,10 @@
-FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
-FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
+# CONFIG
+export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
+export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
+export FZF_FILTERS='*.{c,h,cpp,rs,java,scala}'
+export SCROLLBACK=10
+
+# WIDGETS
 function w-upgrade-all {
   xpanes -s -d -e             \
     "brew upgrade --cleanup"  \
@@ -25,12 +30,16 @@ function w-bin {
 }
 function w-cal-agenda { clear; gcalcli agenda; zle redisplay                  }
 function w-cal-week   { clear; gcalcli calw;   zle redisplay                  }
-function w-toggle-exact {
+function w-fzf-toggle-exact {
   if [[ "$FZF_EXACT" == "" ]]; then
     export FZF_EXACT="--exact"
   else
     export FZF_EXACT=""
   fi
+}
+function w-fzf-set-filter {
+  BUFFER="export FZF_FILTERS='$FZF_FILTERS'"
+  CURSOR=$#BUFFER
 }
 function w-fg {
   if [ $(jobs | head -c1 | wc -c) -ne 0 ]; then
@@ -99,6 +108,7 @@ function w-file() {
        --no-ignore                                                      \
        --files                                                          \
        --hidden                                                         \
+       --glob ${FZF_FILTERS}                                            \
        . |                                                              \
     fzf --multi                                                         \
         -i                                                              \
@@ -127,6 +137,7 @@ function w-contents() {
        --with-filename                                                     \
        --no-heading                                                        \
        --line-number                                                       \
+       --glob ${FZF_FILTERS}                                               \
        . |                                                                 \
     fzf --multi                                                            \
         -i                                                                 \
@@ -151,7 +162,6 @@ function w-contents() {
   fi
   zle redisplay
 }
-SCROLLBACK=10
 function w-enter() {
   if [[ "$BUFFER" == "" ]]; then
     # LINES
@@ -190,6 +200,7 @@ zle -N w-single-dot
 zle -N w-working-dir
 zle -N w-slash
 zle -N w-upgrade-all
-zle -N w-toggle-exact
+zle -N w-fzf-toggle-exact
+zle -N w-fzf-set-filter
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

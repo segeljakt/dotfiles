@@ -3,6 +3,9 @@ let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
 nnoremap ı :PlugInstall<CR>
 nnoremap ü :PlugUpdate<CR>
+": YouCompleteMe
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_show_diagnostics_ui = 0
 ": Vim-devicons
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 ": Rust
@@ -72,7 +75,7 @@ let g:racer_experimental_completer = 1
 "let g:yankring_replace_n_pkey = ""
 "let g:yankring_replace_n_nkey = ""
 ": clang_complete
-let g:clang_library_path='/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
+"let g:clang_library_path='/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
 ": Vdebug
 fun! Pydbgp(command)
   exe "python -S /Users/Klas/Git/other-projects/pydbgp/pydbgp -d localhost:9000" a:command
@@ -99,47 +102,66 @@ aug LineJumpTagbar
   au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> gm <ESC>:silent! call LineJumpMoveMiddle()<CR>
   au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> gl <ESC>:silent! call LineJumpMoveBottom()<CR>
 aug END
-": CtrlP
-let g:ctrlp_match_window='bottom,order:btt,min:1,max:10,results:10'
+": FZF
+nnoremap <C-p> :Files<CR>
 ": Ale
 "nunmap <C-k>
 "nunmap <C-j>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "let g:ale_c_build_dir_names += 'obj'
-"o
-"
 let g:ale_sign_error = '🔥'
-let g:ale_sign_warning = '💀'
-
-
+let g:ale_sign_warning = '👉'
+let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
+let g:ale_keep_list_window_open = 1 " Always show quickfix list
 let g:ale_linters = {
-                    \ 'python': ['mypy', 'pylint'],
-                    \ 'zsh':    ['shell'],
-                    \ 'c':      ['gcc'],
-                    \ 'cpp':    ['g++'],
-                    \ 'rust':   ['rls'],
-                    \}
+  \ 'c':        ['clang'],
+  \ 'cpp':      ['clang'],
+  \ 'zsh':      ['shell'],
+  \ 'sh':       ['shell'],
+  \ 'rust':     ['rls'],
+  \ 'python':   ['mypy', 'pylint'],
+  \ 'markdown': [''],
+  \ 'pandoc':   ['']
+  \}
+let g:ale_fixers = {
+  \ 'c':      ['remove_trailing_lines', 'trim_whitespace', 'clang-format', 'uncrustify'],
+  \ 'rust':   ['remove_trailing_lines', 'trim_whitespace', 'rustfmt'],
+  \ 'zsh':    ['remove_trailing_lines', 'trim_whitespace'],
+  \ 'sh':     ['remove_trailing_lines', 'trim_whitespace', 'shfmt'],
+  \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
+  \}
 "let g:ale_echo_msg_format = '<%linter%:%severity%> %code: '
 nnoremap t :ALEGoToDefinition<CR>
 ":: Rust
+"let g:rust_fold = 2
 "let g:ale_rust_rustc_options = ""
 let g:ale_rust_rls_toolchain = 'stable' 
 ":: C
 let g:ale_c_clang_executable = 'clang'
-let g:ale_c_clang_options = '-std=c11 -Wall               -I /Users/Klas/Git/my-projects/adpc/src/'
+"let g:ale_c_clang_options = '-std=c11 -Wall               -I /Users/Klas/Git/my-projects/adpc/src/'
 "let g:ale_c_clang_options = '-std=c11 -Wall            -I /Users/Klas/Git/my-projects/mario-ascii/src/'
 let g:ale_c_gcc_executable = 'gcc-8'
-let g:ale_c_gcc_options = '-std=c11 -Wall -fms-extensions -I /Users/Klas/Git/my-projects/mario-ascii/src/ -I /Users/Klas/Git/my-projects/mario-ascii/lib/'
-":: CPP
-let g:ale_cpp_clang_executable = 'clang'
-let g:ale_cpp_clang_options = '-std=c++14 -Wall -I/usr/local/opt/openssl/include'
-let g:ale_cpp_gcc_executable = 'gcc-7'
-let g:ale_cpp_gcc_options ='-std=c++14 -Wall -I/usr/local/opt/openssl/include' 
+let g:ale_c_gcc_options = '-std=c11 '
+                      \ .'-Wall '
+                      \ .'-fms-extensions '
+                      \ .'-I /Users/Klas/Git/my-projects/mario-ascii/src/ '
+                      \ .'-I /Users/Klas/Git/my-projects/mario-ascii/lib/ '
+let g:ale_c_clang_options = $TIZEN_C
+"let g:ale_c_clang_options = '-std=c11 -Wall -fms-extensions -I /Users/Klas/Git/my-projects/mario-ascii/src/ -I /Users/Klas/Git/my-projects/mario-ascii/lib/'
+"let g:ale_cpp_gcc_options = '-std=c11 -Wall -fms-extensions -I /Users/Klas/Git/my-projects/mario-ascii/src/ -I /Users/Klas/Git/my-projects/mario-ascii/lib/'
+":: C++
+"let g:ale_cpp_clang_executable = 'clang-8'
+let g:ale_cpp_clang_options = $TIZEN_CPP
+":: Rust
+"let g:ale_cpp_clang_executable = 'clang'
+"let g:ale_cpp_clang_options = '-std=c++14 -Wall -I/usr/local/opt/openssl/include'
+"let g:ale_cpp_gcc_executable = 'gcc-7'
+"let g:ale_cpp_gcc_options ='-std=c++14 -Wall -I/usr/local/opt/openssl/include' 
 "let g:ale_c_gcc_options = '-std=c11 -Wall -fms-extensions -I ~/Git/my-projects/adpc/src/'
- "'-std=c11 -Wall -fms-extensions ~/Git/my-projects/mario-ascii/src/'
-let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
-let g:ale_keep_list_window_open = 1 " Always show quickfix list
+"'-std=c11 -Wall -fms-extensions ~/Git/my-projects/mario-ascii/src/'
+":: Markdown/Pandoc
+let g:ale_linter_aliases = {'pandoc': ['markdown']}
 ": Buffergator
 "let g:buffergator_suppress_keymaps = 1 " Disable default keymaps
 "let g:buffergator_viewport_split_policy = "n" " Use existing window
@@ -226,8 +248,8 @@ endfun
 let g:startify_lists = [
     \   { 'header': ['   MRU'],             'type': 'files' },
     \   { 'header': ['   Commits to '.getcwd()],    'type': function('s:list_commits', [getcwd()]) },
-    \   { 'header': ['   Commits to arc'],           'type': function('s:list_commits', ['~/Git/cda/arc/']) },
-    \   { 'header': ['   Commits to jobmanagement'], 'type': function('s:list_commits', ['~/Git/cda/jobmanagement/']) },
+    \   { 'header': ['   Commits to arc'],           'type': function('s:list_commits', ['~/PhD/cda/arc/']) },
+    \   { 'header': ['   Commits to jobmanagement'], 'type': function('s:list_commits', ['~/PhD/cda/jobmanagement/']) },
     \   { 'header': ['   TODO'],            'type': function('s:list_todos') },
     \ ]
 ": thesaurus_query.vim
@@ -373,6 +395,7 @@ endfunction
 ": NERDTree
 let g:NERDTreeWinSize = 15
 let g:NERDTreeChDirMode = 1
+let NERDTreeCreatePrefix=""
 " Open nerdtree when vim starts
 "autocmd vimenter * if winwidth(0) > 111 | NERDTree | endif
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && winwidth(0) > 110 | NERDTree | endif
@@ -607,8 +630,6 @@ let g:github_dashboard = { 'username': g:github_username, 'password': g:github_p
 nnoremap gh :GHActivity<CR>
 ": ctrlp-funky
 nnoremap <Leader>p :CtrlPFunky<CR>
-": ctrlp
-nnoremap <C-p> :CtrlP<CR>
 ": ag
 nnoremap <leader>aa :Ag
 ": a.vim

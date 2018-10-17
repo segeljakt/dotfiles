@@ -3,11 +3,14 @@
 "+----------------------------------------------------------------------------+
 ": My plugins
 Plug 'klassegeljakt/vim-sentencer'
+Plug 'klassegeljakt/vim-stealth'
 ": General-purpose
+"Plug 'airblade/vim-rooter'                 " CD to root (.git)
+Plug '/usr/local/opt/fzf'                  " FZF installation
+Plug 'junegunn/fzf.vim'                    " FZF
 Plug 'edkolev/tmuxline.vim'                " Tmux+lightline
-Plug 'junegunn/fzf'                        " Fuzzy file finder
 Plug 'airblade/vim-matchquote'             " % match quotes
-Plug 'rhysd/clever-f.vim'                  " f{char} f
+"Plug 'rhysd/clever-f.vim'                  " f{char} f
 Plug 'tommcdo/vim-exchange'                " Swap two visual selections
 Plug 'osyo-manga/vim-over'                 " Substitute preview
 Plug 'sodapopcan/vim-twiggy'               " Git integration
@@ -43,8 +46,8 @@ Plug 'wellle/targets.vim'                  " Additional text objects
 Plug 'danro/rename.vim'                    " Rename current buffer
 Plug 'nelstrom/vim-visual-star-search'     " Search by visual block
 Plug 'moll/vim-bbye'                       " Delete buffers and close files
-Plug 'kien/ctrlp.vim'                      " Fuzzy file finder
-Plug 'jazzcore/ctrlp-cmatcher'             " CtrlP performance boost
+"Plug 'kien/ctrlp.vim'                      " Fuzzy file finder
+"Plug 'jazzcore/ctrlp-cmatcher'             " CtrlP performance boost
 Plug 'vim-scripts/visualrepeat'            " Repeat . for visual mode
 Plug 'vim-scripts/mru.vim'                 " Manage most recently used files
 Plug 'wellle/visual-split.vim'             " Split windows by visual selection
@@ -122,12 +125,16 @@ Plug 'davidbeckingsale/writegood.vim'      " Highlight common writing problems
 "Plug 'jamestomasino/vim-writingsyntax'    " Adjectives, weasel words, passive language
 "Plug 'rlofc/vorg'                         " Plaintext organizer
 ": Programming
-Plug 'ryanoasis/vim-devicons'             " Development icons for NERDTree
+Plug 'tenfyzhong/completeparameter.vim'    " Complete YCM function parameters
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'honza/vim-snippets'                  " Default snippets
+Plug 'valloric/youcompleteme'              " YCM
+Plug 'ryanoasis/vim-devicons'              " Development icons for NERDTree
 Plug 'sbdchd/neoformat'                    " Format code
 Plug 'w0rp/ale'                            " Async linting
 Plug 'majutsushi/tagbar'                   " Display tags of window
 Plug 'bkad/camelcasemotion'                " camelCaseMotion and snake_case_motion
-Plug 'ajh17/vimcompletesme'                " Tabcompletion
+"Plug 'ajh17/vimcompletesme'                " Tabcompletion
 Plug 'andrewradev/sideways.vim'            " Move arguments sideways
 Plug 'foosoft/vim-argwrap'                 " Wrap/unwrap arguments
 Plug 'scrooloose/nerdcommenter'            " Commenting plugin
@@ -147,7 +154,7 @@ Plug 'vim-scripts/a.vim'                   " Toggle between header and source
 "--> C++
 Plug 'tenfyzhong/vim-gencode-cpp'          " Generate Declaration/Definition
 "--> Java
-Plug 'artur-shaik/vim-javacomplete2'       " Java code completion
+"Plug 'artur-shaik/vim-javacomplete2'       " Java code completion
 Plug 'apalmer1377/factorus'                " Java and python automated refactoring
 "--> Python
 "Plug 'klen/python-mode'                    " Python-mode
@@ -156,8 +163,8 @@ Plug 'zivyangll/git-blame.vim'             " Show git-blame
 Plug 'cohama/agit.vim'                     " View git log
 Plug 'tpope/vim-fugitive'                  " Git wrapper
 Plug 'junegunn/vim-github-dashboard'       " Github dashboard
-Plug 'mhinz/vim-signify'                   " Replacement for gitgutter
-"Plug 'airblade/vim-gitgutter'              " Show changes in git
+"Plug 'mhinz/vim-signify'                   " Replacement for gitgutter
+Plug 'airblade/vim-gitgutter'              " Show changes in git (Better)
 "::---------- DISABLED ----------
 "Plug 'yggdroot/hipairs'                    " Show enclosing pairs
 "Plug 'joonty/vdebug'                       " Debugging for Python, Ruby, Perl, etc
@@ -209,7 +216,9 @@ Plug 'mhinz/vim-signify'                   " Replacement for gitgutter
 "Plug 'deonponcini/includefixer'           " Complete #include
 "Plug 'git-time-metric/gtm'                " Git time tracking
 ": Filetype
+Plug 'octol/vim-cpp-enhanced-highlight'    " .cpp
 Plug 'cespare/vim-toml'                    " .toml
+Plug 'pest-parser/pest.vim'                " .pest
 "::---------- DISABLED ----------
 "Plug 'valloric/matchtagalways'            " .xml/.html
 "Plug 'elzr/vim-json'                      " .json

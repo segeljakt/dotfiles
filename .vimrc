@@ -31,8 +31,10 @@ set fillchars=vert:\│           " Borders
 set foldclose="all"             " Autoclose folds
 set guicursor+=a:blinkon0       " Disable blinking
 "set guifont=Menlo\ for\ Powerline:h11
-set guifont=Menlo\ Regular\ Nerd\ Font\ Complete:h11
-set directory^=$HOME/.vim/swapfiles// " Centralize swapfiles
+"set guifont=Menlo\ Regular\ Nerd\ Font\ Complete:h11
+set guifont=Roboto\ Mono\ Nerd\ Font\ Complete:h11
+"set directory^=$HOME/.vim/swapfiles// " Centralize swapfiles
+set noswapfile                  " I've had enough of this
 set hlsearch                    " Highlight matches of search
 set ignorecase                  " Ignore case when searching
 set incsearch                   " Highlight pattern while searching
@@ -85,6 +87,10 @@ set maxmemtot=2000000           " Max mem for all buffers combined
 "set showmatch                  " Jump to [{( after entering ]})
 "set clipboard=unnamed          " Yank and paste without prefix
 ": Remaps
+" Date
+nnoremap ∆ :put =strftime('[%d-%m-%Y]')<CR>j
+" Tags
+nnoremap t <c-]>
 " Up down
 nnoremap <D-j> j<C-e>
 nnoremap <D-k> k<C-y>
@@ -113,7 +119,7 @@ nnoremap B ^
 " Scroll up
 nnoremap E <C-y>
 " Swap # with *
-nnoremap # *N
+nnoremap # gd
 nnoremap * #N
 vnoremap # *N
 vnoremap * *N
@@ -133,6 +139,7 @@ nnoremap y vy
 inoremap <C-c> <Esc>
 " Move to start of line above
 nnoremap ¨ k^
+inoremap ¨ ~
 " Move in insert mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
@@ -144,8 +151,9 @@ inoremap   <Space>
 nnoremap <C-o> :reg<CR>
 " Vim file shortcut
 nnoremap † :tabedit ~/.vim/trash.vim<CR>
-nnoremap π :tabedit ~/.vim/plugins.vim<CR>:split ~/.vimrc<CR>
-nnoremap æ :tabedit ~/.vim/plugin-settings.vim<CR>:split ~/.vimrc<CR>
+nnoremap π :tabedit ~/.vim/plugins.vim<CR>
+nnoremap æ :tabedit ~/.vimrc<CR>
+nnoremap œ :tabedit ~/.vim/plugin-settings.vim<CR>
 " Update vimrc
 nnoremap rv :source ~/.vimrc<CR>:source ~/.gvimrc<CR>
 "::----------- DISABLED ------------
@@ -321,8 +329,10 @@ fun! UpdateTemplate_gcc() " C template
   undojoin | exe "5s/\\[.*\\]/".strftime("[%Y-%m-%d %H:%M]")."/"
 endfun
 fun! HasTemplate_gcc() " C template
-  return getline(1) == "/".repeat('*', 78)
+  return !(line('$') == 1 && getline(1) == '')
+  "return getline(1) == "/".repeat('*', 78)
 endfun
+
 ":: Vim
 fun! NewTemplate_vim(...) " Vim template
   exe "0read ~/.vim/templates/template_vim"
@@ -387,13 +397,13 @@ nnoremap ! :!
 " Find who wrote line
 "vmap g :!git blame =expand("%:p") &#124; sed -n =line("'&lt;") ,=line("'&gt;") p
 ": Tags
-fun! GenerateTags()
-  if &tags != "" && &tags != "tags"
-    let l:tagdir_path=substitute(&tags, '/tags', '', 0)
-    exe "AsyncRun ctags --tag-relative -f" &tags "-R" l:tagdir_path
-  endif
-endfun
-nnoremap <silent> t <C-]>
+"fun! GenerateTags()
+  "if &tags != "" && &tags != "tags"
+    "let l:tagdir_path=substitute(&tags, '/tags', '', 0)
+    "exe "AsyncRun ctags --tag-relative -f" &tags "-R" l:tagdir_path
+  "endif
+"endfun
+"nnoremap <silent> t <C-]>
 nnoremap <silent> <D-r> :call GenerateTags()<CR>
 ": Visual mode
 " Move to edges in visual mode, append in block mode
@@ -406,6 +416,7 @@ xnoremap p "_dP
 ": GUI settings
 if has("gui_running")
   set guioptions=
+  set ghr=60
   colorscheme gruvbox
 endif
 ": Langmap
@@ -564,7 +575,7 @@ aug BufReadPostGroup | au!
   au BufReadPost * if &modifiable | retab | endif
   au BufReadPost *.c,*.h,*.rs if HasTemplate_gcc() == 0 | call NewTemplate_c() | endif
   " Filter (Fix indentation on lines except comments and dots (struct assignment))
-  au BufReadPost *.c,*.h,*.cpp exe 'normal mz' | exe 'g!/^\(\*\|\/\| *\.\| *&\| *\/\\| *{\| *\"\| *\/\)/normal ==' | exe 'normal `z'
+  "au BufReadPost *.c,*.h,*.cpp exe 'normal mz' | exe 'g!/^\(\*\|\/\| *\.\| *&\| *\/\\| *{\| *\"\| *\/\)/normal ==' | exe 'normal `z'
   au BufReadPost .vimrc exe 'set nowrap'
   " Find important files
   au BufReadPost * let b:makefile_path = findfile('makefile'  , ';')
@@ -596,9 +607,9 @@ aug END
 aug GUIEnterGroup | au!
   au GUIEnter * set visualbell t_vb=
 aug END
-aug SwapExistsGroup | au!
-  au SwapExists * let v:swapchoice = "o" " Open swap-files as read-only
-aug END
+"aug SwapExistsGroup | au!
+  "au SwapExists * let v:swapchoice = "o" " Open swap-files as read-only
+"aug END
 ": Fix?
 inoremap <S-Tab> <C-d>
 ": Experimental
