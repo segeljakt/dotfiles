@@ -17,7 +17,7 @@
 !.vim/
 .vim/*
 !.vim/plugins.vim
-!.vim/plugin-settings.vim
+!.vim/plugin-conf.vim
 
 # Zsh
 !.zsh/

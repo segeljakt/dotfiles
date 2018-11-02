@@ -7,9 +7,9 @@ export SCROLLBACK=10
 # WIDGETS
 function w-upgrade-all {
   xpanes -s -d -e             \
-    "brew upgrade --cleanup"  \
+    "cargo install-update -a" \
     "rustup update"           \
-    "cargo install-update -a"
+    "brew upgrade --cleanup"
 }
 function w-clear-ls   { zle -I; clear; ls                                     }
 function w-clear      { zle -I; clear;                                        }

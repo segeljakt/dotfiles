@@ -32,7 +32,6 @@ Plug 'shougo/unite.vim'                    " GUI
 Plug 'shougo/denite.nvim'                  " GUI - Better?
 Plug 'embear/vim-foldsearch'               " Fold non-matching lines of search
 Plug 'taiansu/nerdtree-ag'                 " Search for
-Plug 'rking/ag.vim'                        " Silver searcher
 Plug 'mhinz/vim-startify'                  " Start-screen
 Plug 'conradirwin/vim-bracketed-paste'     " Indent text when it is pasted
 Plug 'seagoj/last-position.vim'            " Goto last position when opening
@@ -92,6 +91,7 @@ Plug 'drzel/vim-line-no-indicator'         " Line number indicator
 "Plug 'bronson/vim-trailing-whitespace'
 "Plug 'thinca/vim-visualstar'              " Search in selection
 "Plug 'vim-scripts/YankRing.vim'            " Keep history of yanks
+"Plug 'rking/ag.vim'                        " Silver searcher
 ": Writing
 Plug 'ron89/thesaurus_query.vim'           " Synonyms
 Plug 'brennier/quicktex'                   " Math-equations
@@ -139,12 +139,11 @@ Plug 'andrewradev/sideways.vim'            " Move arguments sideways
 Plug 'foosoft/vim-argwrap'                 " Wrap/unwrap arguments
 Plug 'scrooloose/nerdcommenter'            " Commenting plugin
 Plug 'ararslan/license-to-vim'             " Add lincense information
-Plug 'tacahiroy/ctrlp-funky'               " Function navigator
 Plug 'gabesoft/vim-ags'                    " Silver searcher, find code
 Plug 'jiangmiao/auto-pairs'                " Insert pairs of separators
 "--> Rust
-Plug 'racer-rust/vim-racer'                " Rust completions
-Plug 'timonv/vim-cargo'                    " Cargo bindings
+"Plug 'racer-rust/vim-racer'                " Rust completions
+Plug 'rust-lang/rust.vim'
 "--> C
 Plug 'justinmk/vim-syntax-extra'           " Better syntax highlighting for C
 "Plug 'vim-scripts/CRefVim'                 " C documentation
@@ -215,6 +214,8 @@ Plug 'airblade/vim-gitgutter'              " Show changes in git (Better)
 "Plug 'wilhelmtell/reimin'                 " :Include files
 "Plug 'deonponcini/includefixer'           " Complete #include
 "Plug 'git-time-metric/gtm'                " Git time tracking
+"Plug 'timonv/vim-cargo'                    " Cargo bindings (OUTDATED)
+"Plug 'tacahiroy/ctrlp-funky'               " Function navigator
 ": Filetype
 Plug 'octol/vim-cpp-enhanced-highlight'    " .cpp
 Plug 'cespare/vim-toml'                    " .toml
@@ -230,7 +231,8 @@ Plug 'pest-parser/pest.vim'                " .pest
 "Plug 'wannesm/wmnusmv.vim'                " .nusmv
 ": Syntax
 Plug 'vim-scripts/SyntaxAttr.vim'          " Show :hi attributes
-Plug 'sheerun/vim-polyglot'
+Plug 'jrozner/vim-antlr'
+"Plug 'sheerun/vim-polyglot'
 Plug 'milad14000/vim_p4'
 ":: DISABLED
 "Plug 'TagHighlight'                       " Highlight C typedefs and enums
@@ -245,7 +247,6 @@ Plug 'textlint/textlint'                   " Text linting
 Plug 'nixon/vim-vmath'                     " Calculate average, median, etc
 Plug 'shougo/vimproc.vim'                  " Asynchronous execution library
 Plug 'vim-scripts/DrawIt'                  " Draw lines
-Plug 'vim-scripts/TaskList.vim'            " Task management
 Plug 'wakatime/vim-wakatime'               " Monitor programming statistics
 Plug 't9md/vim-macvim-transparency'        " Macvim window transparency
 Plug 'konfekt/fastfold'                    " Reduce performance loss from folding
@@ -273,6 +274,7 @@ Plug 'itchyny/calendar.vim'                " Calendar
 "Plug 'irrationalistic/vim-tasks'          " Task list
 "Plug 'teddywing/auditory.vim'             " Vim sounds
 "Plug 'severin-lemaignan/vim-minimap'      " Minimap for vim
+"Plug 'vim-scripts/TaskList.vim'            " Task management
 ": Colorschemes
 Plug 'morhetz/gruvbox'
 "::---------- DISABLED ----------

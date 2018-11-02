@@ -1,8 +1,6 @@
 ": Plugged
 let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
-nnoremap ı :PlugInstall<CR>
-nnoremap ü :PlugUpdate<CR>
 ": YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0
@@ -23,8 +21,6 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 map ´ <Plug>(wildfire-fuel)
 " This selects the previous closest text object.
 "vmap <C-SPACE> <Plug>(wildfire-water)
-": Calendar
-nnoremap ç :Calendar<CR>
 ": deoplete.vim and deoplete-rust
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#sources#rust#racer_binary='/Users/Klas/.cargo/bin/racer'
@@ -56,24 +52,6 @@ let g:license_email = 'klasseg@kth.se'
 set hidden
 let g:racer_cmd = "/Users/Klas/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
-": Language Server Client
-"let g:lsc_server_commands = {'rust': 'rustup run stable rls'}
-": Language Server Protocol
-" Required for operations modifying multiple buffers like rename.
-"set hidden
-
-"let g:LanguageClient_serverCommands = {
-      "\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-      "\ 'javascript': ['javascript-typescript-stdio'],
-      "\ 'javascript.jsx': ['javascript-typescript-stdio'],
-      "\ }
-"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-": Yankring
-"nnoremap <C-o> :YRShow<CR>  
-"let g:yankring_replace_n_pkey = ""
-"let g:yankring_replace_n_nkey = ""
 ": clang_complete
 "let g:clang_library_path='/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
 ": Vdebug
@@ -90,20 +68,22 @@ let g:LineJumpSelectIgnoreCase = 1
 let NERDTreeIgnore=['\.pyc$', '\.swp$', '\~$']
 "LineJump NERDTree key map
 aug LineJumpNerdTree
-  au BufEnter NERD_tree_\d\+ nnoremap <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
-  au BufEnter NERD_tree_\d\+ nnoremap <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
+  au BufEnter NERD_tree_\d\+ nno <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
+  au BufEnter NERD_tree_\d\+ nno <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
 aug END
 aug LineJumpTagbar
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> ;  <ESC>:silent! call LineJumpMoveForward()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> ,  <ESC>:silent! call LineJumpMoveBackward()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> gh <ESC>:silent! call LineJumpMoveTop()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> gm <ESC>:silent! call LineJumpMoveMiddle()<CR>
-  au BufEnter __Tagbar__ nnoremap <buffer> <nowait> <silent> gl <ESC>:silent! call LineJumpMoveBottom()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> ;  <ESC>:silent! call LineJumpMoveForward()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> ,  <ESC>:silent! call LineJumpMoveBackward()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gh <ESC>:silent! call LineJumpMoveTop()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gm <ESC>:silent! call LineJumpMoveMiddle()<CR>
+  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gl <ESC>:silent! call LineJumpMoveBottom()<CR>
 aug END
 ": FZF
-nnoremap <C-p> :Files<CR>
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 ": Ale
 "nunmap <C-k>
 "nunmap <C-j>
@@ -132,7 +112,6 @@ let g:ale_fixers = {
   \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
   \}
 "let g:ale_echo_msg_format = '<%linter%:%severity%> %code: '
-nnoremap t :ALEGoToDefinition<CR>
 ":: Rust
 "let g:rust_fold = 2
 "let g:ale_rust_rustc_options = ""
@@ -162,25 +141,21 @@ let g:ale_cpp_clang_options = $TIZEN_CPP
 "'-std=c11 -Wall -fms-extensions ~/Git/my-projects/mario-ascii/src/'
 ":: Markdown/Pandoc
 let g:ale_linter_aliases = {'pandoc': ['markdown']}
-": Buffergator
-"let g:buffergator_suppress_keymaps = 1 " Disable default keymaps
-"let g:buffergator_viewport_split_policy = "n" " Use existing window
-"nnoremap : :BuffergatorOpen<CR>
 ": AutoPairs
-let g:AutoPairs = {
-      \ '(':')',
-      \ '[':']',
-      \ '{':'}',
-      \ '"':'"',
-      \ '<':'>',
-      \ }
+let g:AutoPairs = { '(':')', '[':']', '{':'}', '"':'"', '<':'>' }
+let g:AutoPairsShortcutToggle = 0
+let g:AutoPairsShortcutFastWrap = 0
+let g:AutoPairsShortcutJump = 0
+let g:AutoPairsShortcutBackInsert = 0
+let g:AutoPairsMapBS = 0
 let g:AutoPairsMapCh = 0
-" Unmap autopairs
-"if exists("autopairs_disabled") == 0
-"let autopairs_disabled=1
-"iunmap <buffer> <C-h>
-"endif
-"inoremap <buffer> <silent> <CR> <C-R>=AutoPairsReturn()<CR>
+let g:AutoPairsMapCR = 0
+let g:AutoPairsCenterLine = 0
+let g:AutoPairsMapSpace = 0
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsMultilineClose = 0
+let g:AutoPairsMoveCharacter = 0
+"let g:AutoPairsSmartQuotes = 0
 ": Colorschemes
 let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 "let g:gruvbox_bold=1
@@ -202,10 +177,6 @@ let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 "let g:gruvbox_invert_tabline=0
 "let g:gruvbox_improved_strings=0
 "let g:gruvbox_improved_warnings=0
-": Colorscheme switcher
-" <Alt-l> to switch colorscheme
-nnoremap ﬁ :NextColorScheme<CR>
-nnoremap ˛ :PrevColorScheme<CR>
 ": man.vim
 nmap K <Plug>ManPreGetPage<CR>
 ": Startify
@@ -214,15 +185,9 @@ let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands'
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 0
-let g:num_items = 3
 let g:startify_fortune_use_unicode = 1
 let g:startify_enable_unsafe = 1
 autocmd VimEnter * let t:startify_new_tab = 1
-"autocmd BufEnter *
-  "\ if !exists('t:startify_new_tab') && empty(expand('%')) |
-  "\   let t:startify_new_tab = 1 |
-  "\   Startify |
-  "\ endif
 let g:startify_skiplist = [
     \   '\.vim',
     \   '/usr/*',
@@ -230,39 +195,22 @@ let g:startify_skiplist = [
     \ ]
 let g:startify_custom_header =
       \ startify#fortune#cowsay('', '═','║','╔','╗','╝','╚')
-fun! s:list_commits(repo)
-  let commits = systemlist('git -C '.a:repo.' log | head -n'.g:num_items)
-  return map(commits, '{'.
-    \   '"line": matchstr(v:val, "\\s\\zs.*"),'.
-    \   '"cmd": "Git -C '.a:repo.' show ". matchstr(v:val, "^\\x\\+")'.
-    \ '}')
-endfun
-"[1]: Todo
-fun! s:list_todos()
-  let todos = systemlist('cat ~/.todo | head -n'.g:num_items)
-  return map(todos, '{'.
-    \   '"line": matchstr(v:val, "\\s*\\[.*\\]:\\s*\\zs.*"),'.
-    \   '"cmd": "edit ~/.todo"'.
-    \ '}')
-endfun
-let g:startify_lists = [
-    \   { 'header': ['   MRU'],             'type': 'files' },
-    \   { 'header': ['   Commits to '.getcwd()],    'type': function('s:list_commits', [getcwd()]) },
-    \   { 'header': ['   Commits to arc'],           'type': function('s:list_commits', ['~/PhD/cda/arc/']) },
-    \   { 'header': ['   Commits to jobmanagement'], 'type': function('s:list_commits', ['~/PhD/cda/jobmanagement/']) },
-    \   { 'header': ['   TODO'],            'type': function('s:list_todos') },
-    \ ]
+"fun! s:projects()
+  "let dirs = systemlist('ls -d ~/Git/my-projects/*/ ~/Phd/Git/*/')
+  "return map(dirs, '{'.
+    "\   '"line": fnamemodify(v:val, ":h:t")."/",'.
+    "\   '"cmd": "NERDTree ".v:val'.
+    "\ '}')
+"endfun
+let g:startify_lists = [ { 'header': ['   MRU'], 'type': 'files' } ]
 ": thesaurus_query.vim
 "let g:tq_openoffice_en_file="~/.vim/thesaurus/th_en_US_v2"
 let tq_enabled_backends=["thesaurus_com", "openoffice_en", "datamuse_com"]
-nnoremap d<Tab> :ThesaurusQueryReplaceCurrentWord<CR>
 ": python-mode
 let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>B'
 let g:pymode_run = 1
 let g:pymode_run_bind = '<leader>R'
-": ConqueGDB
-"nnoremap cd :ConqueGdbTab
 ": camelCaseMotion
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -393,7 +341,7 @@ function! MyFileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 ": NERDTree
-let g:NERDTreeWinSize = 15
+let g:NERDTreeWinSize = 20
 let g:NERDTreeChDirMode = 1
 let NERDTreeCreatePrefix=""
 " Open nerdtree when vim starts
@@ -418,11 +366,7 @@ fun! ZoomNERDTreeFromOtherWindow()
     exe "vertical resize 999"
   endif
 endfun
-nnoremap <silent> <C-a> :call ZoomNERDTreeFromOtherWindow()<CR>
 ": Unite-bibtex
-nnoremap ø :tabedit ~/.vim/bibtex/library.bib<CR>
-nnoremap › :AsyncRun open https://www.kth.se/en/kthb<CR>
-nnoremap ‹ :AsyncRun open https://scholar.google.se<CR>
 let b:unite_bibtex_prefix = '[@'
 let b:unite_bibtex_postfix = ']'
 let b:unite_bibtex_separator = ', '
@@ -455,11 +399,9 @@ let g:NERDAltDelims_c = 0
 "let g:macvim_transparency_roller = [0, 100]
 " roll from
 "nmap <F10> <Plug>(macvim-transparency-roll)
-": TaskList
-nnoremap <leader>v <Plug>TaskList
 ": present.vim
-"nnoremap ∏ :call TogglePresentMode()<CR>
-"nnoremap π :call StartPresentMode()<CR>
+"nno ∏ :call TogglePresentMode()<CR>
+"nno π :call StartPresentMode()<CR>
 let g:present_mode=0
 let g:cursor_hidden=0
 fun! StartPresentMode()
@@ -473,7 +415,7 @@ fun! CreateColorTrace(end, fg)
   " Highlight characters between ends, and conceal ends 
   exe "syn region" l:region "matchgroup=colortrace"
         \ "start=/".a:end."/ end=/".a:end."/ concealends containedin=ALL"
-  exe "vnoremap" a:end "<C-v>I".a:end."<C-c>gvlA".a:end."<C-c>"
+  exe "vno" a:end "<C-v>I".a:end."<C-c>gvlA".a:end."<C-c>"
 endfun
 fun! DeleteColorTrace(end, fg)
   let l:region="REGION_".a:fg
@@ -506,7 +448,7 @@ fun! TogglePresentMode()
     set nospell
     set nowrap
     " Remove colors with <Alt-q>
-    vnoremap • <C-v>I<BS><C-c>gvA<BS><C-c>
+    vno • <C-v>I<BS><C-c>gvA<BS><C-c>
     iunmap <Up>
     iunmap <Down>
     iunmap <Left>
@@ -531,9 +473,7 @@ fun! TogglePresentMode()
 endfun
 ": goyo
 let g:goyo_height = 100
-nnoremap <silent> Ω :Goyo<CR>
 let g:word_mode=0
-nnoremap <silent> Ω :call ToggleWordMode()<CR>
 fun! ToggleWordMode()
   if(g:word_mode==0) " Activate word_mode
     let g:word_mode=1
@@ -542,50 +482,41 @@ fun! ToggleWordMode()
     Limelight
     set linebreak
     set textwidth=80
-    nnoremap j gj
-    nnoremap k gk
-    inoremap <C-j> <Esc>gji
-    inoremap <C-k> <Esc>gki
+    nno j gj
+    nno k gk
+    ino <C-j> <Esc>gji
+    ino <C-k> <Esc>gki
     set spell
     set nonumber
     set noshowmode
     set noshowcmd
     set formatoptions-=t
-    nnoremap <Up> <Nop>
-    nnoremap <Down> <Nop>
-    nnoremap <Left> <Nop>
-    nnoremap <Right> <Nop>
+    nno <Up> <Nop>
+    nno <Down> <Nop>
+    nno <Left> <Nop>
+    nno <Right> <Nop>
   else " Deactivate word_mode"
     let g:word_mode=0
     exe "Goyo!"
     Limelight!
     set nolinebreak
     set textwidth=0
-    nnoremap j j
-    nnoremap k k
-    inoremap <C-j> <Esc>ji
-    inoremap <C-k> <Esc>ki
+    nno j j
+    nno k k
+    ino <C-j> <Esc>ji
+    ino <C-k> <Esc>ki
     set nospell
     set number
     set showmode
     set showcmd
-    nnoremap <Up> <C-w>k
-    nnoremap <Down> <C-w>j
-    nnoremap <Left> <C-w>h
-    nnoremap <Right> <C-w>l
+    nno <Up> <C-w>k
+    nno <Down> <C-w>j
+    nno <Left> <C-w>h
+    nno <Right> <C-w>l
   endif
 endfun
 ": investigate
 "let g:investigate_use_dash=1
-": vim-bbye
-"nnoremap <Leader>å :Bdelete<CR>
-": vim-argwrap
-nnoremap <silent> Ö :ArgWrap<CR>
-": sideways
-nnoremap <C-H> :SidewaysLeft<CR>
-nnoremap <C-L> :SidewaysRight<CR>
-": nrrwrgn
-"vnoremap <C-i> :NR<CR>
 ": ultisnips
 let g:UltiSnipsExpandTrigger="<Leader><Leader>"
 let g:UltiSnipsJumpForwardTrigger="<Leader><Leader>"
@@ -604,7 +535,6 @@ vmap D       <Plug>SchleppDup
 let g:Schlepp#reindent  = 1
 let g:Schlepp#dupTrimWS = 1
 ": DrawIt
-noremap <silent> ö <Esc>:silent call ToggleDrawIt()<CR>
 let g:draw_it_is_active = 0
 fun! ToggleDrawIt()
   if g:draw_it_is_active
@@ -615,31 +545,11 @@ fun! ToggleDrawIt()
     let g:draw_it_is_active = 1
   endif
 endfun
-": vim-vmath
-vmap <expr> ++ VMATH_YankAndAnalyse()
-nmap        ++ vip++
-": vim-table-mode
-inoremap <C-Q> <Esc>:TableModeToggle<CR><Esc>:TableModeRealign<CR>li
-"inoremap <Leader>r :TableModeRealign<CR>
-": bbye
-nnoremap Å :Bdelete!<CR>
-nnoremap å :x<CR>
-nnoremap ˙ :Bdelete!<CR>:x<CR>
 ": github-dashboard
 let g:github_dashboard = { 'username': g:github_username, 'password': g:github_password }
-nnoremap gh :GHActivity<CR>
-": ctrlp-funky
-nnoremap <Leader>p :CtrlPFunky<CR>
-": ag
-nnoremap <leader>aa :Ag
-": a.vim
-nnoremap ga :A<CR>
 ": easytags
 "set tags=/Users/Klas/.vimtags
 ": vim_current_word
 "let g:vim_current_word#highlight_current_word = 0
-" Cref
-map <silent> <Leader>cq <Plug>CRV_CRefVimAsk
 ": MRU
-nnoremap <C-u> :MRU<CR>
 let MRU_Window_Height = 30
