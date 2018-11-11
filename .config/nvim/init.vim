@@ -67,6 +67,7 @@ vmap q <plug>NERDCommenterToggle
 let g:NERDAltDelims_c = 0
 let delimitMate_expand_cr = 1
 " Lightline
+set updatetime=250
 set ruler                              " Show line and column number
 set noshowmode
 if !has('gui_running')

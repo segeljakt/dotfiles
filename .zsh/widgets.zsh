@@ -5,10 +5,13 @@ export FZF_FILTERS='*.{c,h,cpp,rs,java,scala}'
 export SCROLLBACK=10
 
 # WIDGETS
+function backward-kill-dir () {
+    local WORDCHARS=${WORDCHARS/\/}
+    zle backward-kill-word
+}
 function w-upgrade-all {
   xpanes -s -d -e             \
     "cargo install-update -a" \
-    "rustup update"           \
     "brew upgrade --cleanup"
 }
 function w-clear-ls   { zle -I; clear; ls                                     }
@@ -202,5 +205,6 @@ zle -N w-slash
 zle -N w-upgrade-all
 zle -N w-fzf-toggle-exact
 zle -N w-fzf-set-filter
+zle -N backward-kill-dir
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

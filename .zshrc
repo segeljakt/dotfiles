@@ -84,7 +84,7 @@ alias     o="n-options"
 alias  hack="nvim ~/.hack-days"
 alias    gl="git log --pretty"
 alias    ed="ed -p'* '"
-#: ENVIRONMENT VARIABLES
+#: ENV
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
@@ -99,6 +99,7 @@ export     HISTFILE=~/.zsh/hist
 export     HISTSIZE=$HISTFILESIZE
 export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
+export    WORDCHARS=""
 source ~/.zsh/tizen-c.zsh
 source ~/.zsh/tizen-cpp.zsh
 #: OPTIONS
@@ -157,9 +158,9 @@ source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
 #: KEYBINDS
 # Custom widgets
-bindkey '^O'   w-bin
+bindkey 'Œ'    w-bin
 bindkey '^I'   w-cd-or-expand
-bindkey '^L'   w-clear-ls
+bindkey '^O'   w-clear-ls
 bindkey '^Z'   w-fg
 bindkey '^[[Z' w-cd-parent
 bindkey "'"    w-git-status
@@ -186,6 +187,8 @@ bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
 bindkey '^B'   vi-backward-blank-word
 bindkey '^W'   vi-forward-blank-word
+bindkey '^H'   backward-char
+bindkey '^L'   forward-char
 bindkey '^J'   history-beginning-search-forward
 bindkey '^K'   history-beginning-search-backward
 bindkey 'ª'    undo
@@ -196,6 +199,8 @@ bindkey 'Ö'    beginning-of-line # <C-E>
 bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete
+bindkey '^[[~' backward-kill-dir # <C-BS>
+bindkey "^[[3~" delete-char # <FN-BS>
 # FUNCTIONS
 function pdftojpg {
   convert \
