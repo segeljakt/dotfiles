@@ -1,13 +1,36 @@
 ": Plugged
 let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
+": winresizer
+let g:winresizer_gui_enable    = 0
+let g:winresizer_start_key     = 0
+let g:winresizer_gui_start_key = 0
+let g:winresizer_vert_resize   = 1
+let g:winresizer_horiz_resize  = 1
+": vim-search-pulse
+" let g:vim_search_pulse_mode = 'pattern'
+": vim-illuminate
+let g:Illuminate_ftblacklist = ['nerdtree']
+let g:Illuminate_highlightUnderCursor = 0
+hi illuminatedWord guibg=bg gui=underline
+": TComment
+let g:tcomment#options = {'col': 1}
+": CoC
+inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
+set completeopt=preview,noinsert,menuone,noselect
+set shortmess+=c
 ": YouCompleteMe
+"set completeopt=menu,menuone
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0
-set completeopt=menu,menuone
 let g:ycm_key_list_select_completion = ['<C-j>']
 let g:ycm_key_list_previous_completion = ['<C-k>']
 let g:ycm_key_list_stop_completion = ['<C-y>', '<UP>', '<DOWN>']
+let g:ycm_add_menu_to_compelteopt = 1
+let g:ycm_key_invoke_completion = '<C-d>'
+let g:ycm_min_num_of_chars_for_completion = 99
 ": EchoDoc
 let g:echodoc#enable_at_startup = 1
 ": Completeparameter
@@ -20,8 +43,9 @@ imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 " Compatibility with AutoPairs
 let g:complete_parameter_use_ultisnips_mapping = 0
-let g:AutoPairs = {'[':']', '{':'}', '"':'"', '`':'`', '<':'>' }
-ino <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
+let g:AutoPairs   = { '(':')', '[':']', '{':'}', '"':'"', '`':'`' }
+let g:AutoPairsBS = { '(':')', '[':']', '{':'}', '"':'"', '`':'`' }
+ino <silent> ) <C-R>=AutoPairsInsert(')')<CR>
 let g:rust_keep_autopairs_default=1 " Stop rust.vim from overriding
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
@@ -29,9 +53,7 @@ let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 ": Vim-devicons
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 ": Rust
-let g:rust_recommended_style = 0
-": Java
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"let g:rust_recommended_style = 0
 ": IndentGuides
 "let g:indent_guides_auto_colors = 0
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg= ctermbg=3
@@ -101,7 +123,7 @@ autocmd! FileType fzf
 ": ALE
 "let g:ale_c_build_dir_names += 'obj'
 let g:ale_sign_error = '🔥'
-let g:ale_sign_warning = '👉'
+let g:ale_sign_warning = '👉' " ❌
 let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
 let g:ale_keep_list_window_open = 1 " Always show quickfix list
 let g:ale_linters = {
@@ -127,6 +149,7 @@ let g:ale_fixers = {
 "let g:rust_fold = 2
 "let g:ale_rust_rustc_options = ""
 let g:ale_rust_rls_toolchain = 'nightly' 
+let g:ale_rust_cargo_use_clippy = 1
 ":: C
 let g:ale_c_clang_executable = 'clang'
 "let g:ale_c_clang_options = '-std=c11 -Wall               -I /Users/Klas/Git/my-projects/adpc/src/'
@@ -156,19 +179,32 @@ let g:ale_scala_sbtserver_root = "/Users/Klas/PhD/Git/arc/"
 ":: Markdown/Pandoc
 let g:ale_linter_aliases = {'pandoc': ['markdown']}
 ": AutoPairs
-let g:AutoPairsShortcutToggle = 0
-let g:AutoPairsShortcutFastWrap = 0
-let g:AutoPairsShortcutJump = 0
-let g:AutoPairsShortcutBackInsert = 0
-let g:AutoPairsMapBS = 0
+"let g:AutoPairsShortcutToggle = 0
+"let g:AutoPairsShortcutFastWrap = 0
+"let g:AutoPairsShortcutJump = 0
+"let g:AutoPairsShortcutBackInsert = 0
+"let g:AutoPairsMapBS = 0
+"let g:AutoPairsMapCh = 0
+"let g:AutoPairsMapCR = 0
+"let g:AutoPairsCenterLine = 0
+"let g:AutoPairsMapSpace = 0
+"let g:AutoPairsFlyMode = 0
+"let g:AutoPairsMultilineClose = 0
+"let g:AutoPairsMoveCharacter = 0
+"let g:AutoPairsSmartQuotes = 0
+let g:AutoPairsShortcutToggle     = "" " <M-p>
+let g:AutoPairsShortcutFastWrap   = "é" " <M-e>
+let g:AutoPairsShortcutJump       = "‘" " <M-e>
+let g:AutoPairsShortcutBackInsert = "›" " <M-b>
+let g:AutoPairsMapBS = 1
 let g:AutoPairsMapCh = 0
-let g:AutoPairsMapCR = 0
-let g:AutoPairsCenterLine = 0
-let g:AutoPairsMapSpace = 0
+let g:AutoPairsMapCR = 1
+let g:AutoPairsCenterLine = 1
+let g:AutoPairsMapSpace = 1
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0
-let g:AutoPairsMoveCharacter = 0
-let g:AutoPairsSmartQuotes = 0
+"let g:AutoPairsMoveCharacter = 0
+"let g:AutoPairsSmartQuotes = 0
 ": Colorschemes
 let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 "let g:gruvbox_bold=1
@@ -291,6 +327,7 @@ let g:lightline = {
       \     'fugitive': 'LightlineFugitive',
       \     'filetype': 'MyFiletype',
       \     'fileformat': 'MyFileformat',
+      \     'cocstatus': 'coc#status',
       \   },
       \   'component_visible_condition': {
       \     'modified': '&modified||!&modifiable',

@@ -332,3 +332,97 @@ fun! MyFoldExpr()
 endfun
 set foldmethod=expr
 set foldexpr=MyFoldExpr()
+": Digraphs
+ino <C-l>0 ₀|ino <C-o>0 ⁰
+ino <C-l>1 ₁|ino <C-o>1 ¹
+ino <C-l>2 ₂|ino <C-o>2 ²
+ino <C-l>3 ₃|ino <C-o>3 ³
+ino <C-l>4 ₄|ino <C-o>4 ⁴
+ino <C-l>5 ₅|ino <C-o>5 ⁵
+ino <C-l>6 ₆|ino <C-o>6 ⁶
+ino <C-l>7 ₇|ino <C-o>7 ⁷
+ino <C-l>8 ₈|ino <C-o>8 ⁸
+ino <C-l>9 ₉|ino <C-o>9 ⁹
+ino <C-l>+ ₊|ino <C-o>+ ⁺
+ino <C-l>- ₋|ino <C-o>- ⁻
+ino <C-l>= ₌|ino <C-o>= ⁼
+ino <C-l>( ₍|ino <C-o>( ⁽
+ino <C-l>) ₎|ino <C-o>) ⁾
+
+ino <C-l>a ₐ|ino <C-o>a ᵃ|ino <C-o>A ᴬ
+ino <C-l>b ₆|ino <C-o>b ᵇ|ino <C-o>B ᴮ
+ino <C-l>c ꜀|ino <C-o>c ᶜ|
+ino <C-l>d ₔ|ino <C-o>d ᵈ|ino <C-o>D ᴰ
+ino <C-l>e ₑ|ino <C-o>e ᵉ|ino <C-o>E ᴱ
+ino <C-l>f բ|ino <C-o>f ᶠ|
+ino <C-l>g ₉|ino <C-o>g ᵍ|ino <C-o>G ᴳ
+ino <C-l>h ₕ|ino <C-o>h ʰ|ino <C-o>H ᴴ
+ino <C-l>i ᵢ|ino <C-o>i ᶦ|ino <C-o>I ᴵ
+ino <C-l>j ⱼ|ino <C-o>j ʲ|ino <C-o>J ᴶ
+ino <C-l>k ₖ|ino <C-o>k ᵏ|ino <C-o>K ᴷ
+ino <C-l>l ₗ|ino <C-o>l ˡ|ino <C-o>L ᴸ
+ino <C-l>m ₘ|ino <C-o>m ᵐ|ino <C-o>M ᴹ
+ino <C-l>n ₙ|ino <C-o>n ⁿ|ino <C-o>N ᴺ
+ino <C-l>o ₒ|ino <C-o>o ᵒ|ino <C-o>O ᴼ
+ino <C-l>p ₚ|ino <C-o>p ᵖ|ino <C-o>P ᴾ
+ino <C-l>r ᵣ|ino <C-o>r ʳ|ino <C-o>R ᴿ
+ino <C-l>s ₛ|ino <C-o>s ˢ|
+ino <C-l>t ₜ|ino <C-o>t ᵗ|ino <C-o>T ᵀ
+ino <C-l>u ᵤ|ino <C-o>u ᵘ|ino <C-o>U ᵁ
+ino <C-l>v ᵥ|ino <C-o>v ᵛ|
+ino <C-l>x ₓ|ino <C-o>x ˣ|
+ino <C-l>y ᵧ|ino <C-o>y ʸ|
+ino <C-l>z ₂|ino <C-o>z ᶻ|
+
+ino <C-o>sn   ∩
+ino <C-o>su   ∪
+ino <C-o>s=(  ⊆
+ino <C-o>s(   ⊂
+ino <C-o>s!(  ⊄
+ino <C-o>s=)  ⊇
+ino <C-o>s)   ⊃
+ino <C-o>s!)  ⊅
+ino <C-o>so   ⊖
+ino <C-o>s-(  ∈
+ino <C-o>s-!( ∉
+ino <C-o>sx   ×
+ino <C-o>s0   Ø
+
+ino <C-o>ga   α|ino <C-o>gA   Α
+ino <C-o>gb   β|ino <C-o>gB   Β
+ino <C-o>gg   γ|ino <C-o>gG   Γ
+ino <C-o>gd   δ|ino <C-o>gD   ∆
+ino <C-o>ge   ε|ino <C-o>gE   Ε
+ino <C-o>gz   ζ|ino <C-o>gZ   Ζ
+ino <C-o>gh   η|ino <C-o>gH   Η
+ino <C-o>gth  θ|ino <C-o>gTH  Θ
+ino <C-o>gi   ι|ino <C-o>gI   Ι
+ino <C-o>gk   κ|ino <C-o>gK   Κ
+ino <C-o>gl   λ|ino <C-o>gL   Λ
+ino <C-o>gm   μ|ino <C-o>gM   Μ
+ino <C-o>gn   ν|ino <C-o>gN   Ν
+ino <C-o>gx   ξ|ino <C-o>gX   Ξ
+ino <C-o>gomi ο|ino <C-o>gOMI Ο
+ino <C-o>gpi  π|ino <C-o>gPI  Π
+ino <C-o>gr   ρ|ino <C-o>gR   Ρ
+ino <C-o>gs   σ|ino <C-o>gS   Σ
+ino <C-o>gta  τ|ino <C-o>gTA  Τ
+ino <C-o>gu   υ|ino <C-o>gU   Υ   
+ino <C-o>gph  φ|ino <C-o>gPH  Φ   
+ino <C-o>gc   χ|ino <C-o>gC   Χ
+ino <C-o>gps  ψ|ino <C-o>gPS  Ψ
+ino <C-o>gome ω|ino <C-o>gOME Ω
+
+ino <C-o>mx ⊗|
+ino <C-o>mi ∫|
+ino <C-o>md ∂|
+ino <C-o>mf ∀|
+
+ino <C-o><= ≤|ino <C-o>>= ≥
+ino <C-o>=< ≼|ino <C-o>=> ≽
+ino <C-o>>> ≻|ino <C-o><< ≺
+
+
+ino <C-o>-> →
+ino <C-o>. ·
+ino <C-o>\|\| ∥

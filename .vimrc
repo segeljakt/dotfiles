@@ -32,7 +32,11 @@ set fillchars=vert:\│           " Borders
 set foldclose="all"             " Autoclose folds
 set guicursor+=a:blinkon0       " Disable blinking
 set guifont=Roboto\ Mono\ Nerd\ Font\ Complete:h11
+set cursorline
+set relativenumber
+" set guifont=FuraCode\ Nerd\ Font:h11
 set nomodeline                  " Do not detect modeline
+set encoding=utf-8
 "set directory^=$HOME/.vim/swapfiles// " Centralize swapfiles
 "set updatecount=10000          " Number of chars before flush
 set noswapfile                  " I've had enough of this
@@ -89,6 +93,11 @@ set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
 "set verbose                     " Lengthen messages
 set whichwrap=b,s,h,l           " Allow these to move past EOL
+" TURN OFF PLUGINS
+let loaded_matchparen = 1       " Avoid loading matchparen plugin
+let g:loaded_matchit = 1
+" let loaded_netrwPlugin = 1
+" normal! :NoMatchParen<CR>
 "::----------- DISABLED ------------
 "set guipty                     " Pseudo-pty for shell-commands
 "set macligatures               " Ligatures (Laggy)
@@ -114,9 +123,16 @@ set whichwrap=b,s,h,l           " Allow these to move past EOL
 ": Commands
 com! Ix :w ![ -z "$1" ] && curl -F 'f:1=<-' ix.io || ix < "$1"; " Pastebin
 ": Keybindings
+" Rust
+nno          <          i<><C-c>i| " Generics
 " Plugins
+xmap         s          <Plug>VSurround
+nno          q          :TComment<CR>
+vno <expr>   q          mode()==#'V' ? ':TComment<CR>' : ':TCommentInline<CR>' | " Comment
+nno <silent> +          :Neoformat<CR>
+nno <silent> gb         :Gbrowse<CR>
+nno <silent> <C-w>d     :WindowSwap#EasyWindowSwap<CR>
 nno          M          <Plug>ToggleMarkbar
-nno          <C-s>      :TagbarToggle<CR>
 nno          <C-p>      :Rg<CR>
 nno          <C-u>      :MRU<CR>
 nno          :          :Buffers<CR>
@@ -133,7 +149,7 @@ nno          <D-u>      :UndotreeToggle<CR>
 nno          ﬁ          :NextColorScheme<CR>|             " <M-l>
 nno          ˛          :PrevColorScheme<CR>|             " <M-h>
 nno          •          :TableModeToggle<CR>|             " <M-q>
-nno          t          :ALEGoToDefinition<CR>
+nno          t          :ALEGoToDefinition<CR>zz
 nno          ö          :call ToggleDrawIt()<CR>
 nno          Ω          :call ToggleWordMode()<CR>        " <M-w>
 nno          d<Tab>     :ThesaurusQueryReplaceCurrentWord<CR>
@@ -145,13 +161,19 @@ vm           J          <Plug>SchleppDown
 vm           K          <Plug>SchleppUp
 vm           L          <Plug>SchleppRight
 vm           D          <Plug>SchleppDup
-nm <silent>  <C-q>      <Plug>NERDCommenterAppend
-nm <silent>  q          <Plug>NERDCommenterToggle
-nm <silent>  <C-k>      <Plug>(ale_previous_wrap)
-nm <silent>  <C-j>      <Plug>(ale_next_wrap)
+"map <silent>  <C-q>     <Plug>NERDCommenterAppend
+"map <silent>  q         <Plug>NERDCommenterToggle
+nm <silent>  <C-k>      <Plug>(ale_previous_wrap)zz
+nm <silent>  <C-j>      <Plug>(ale_next_wrap)zz
 nm           K          <Plug>ManPreGetPage<CR>
+no           <C-w>m     :WinResizerStartMove<CR>
+no           <C-w>,     :WinResizerStartResize<CR>
+" imap         <C-l>      <Plug>(coc-snippets-expand)
 " Fixes
+nno          n          nzz
+nno          N          Nzz
 ino          <C-c>      <Esc>|                            " Fix <C-c>
+" ino          <C-c>      <Esc>:w<CR>|                      " Fix <C-c>
 no           #          gd|                               " Swap # with *
 no           *          #N
 nno          R          gR|                               " Fix <Tab>
@@ -164,7 +186,7 @@ vno          P          "_dp|                             " No yank on paste
 vno          p          "_dP
 vno          <BS>       <BS>|                             " Fix defaults
 " Overrides
-nno          <BS>       <C-^>|                            " Change buffer
+" nno          <BS>       <C-^>|                            " Change buffer
 nno          B          ^|                                " Go to start of line
 nno          E          <C-y>|                            " Scroll up
 no           <S-Space>  /|                                " Spacebar
@@ -188,6 +210,8 @@ nno          <C-n>      gt<CR>|                           " Tab page management
 nno          <C-b>      gT<CR>|
 nno          gt         :tabnew<CR>
 nno          <C-CR>     kk<CR>|                           " Reverse <CR>
+nno          k          gk
+nno          j          gj
 " Command line
 cno          <C-h>      <Left>|                           " Movement in i-mode
 cno          <C-l>      <Right>
@@ -204,10 +228,11 @@ nno          <Leader>dd :set diff!<CR>|                   " Diff mode
 nno          <Leader>g  :set crb! scb!<CR>                " Bind cursor/scroll
 nno          ≤          :vertical resize -1<CR>|          " <M-<> - Resize
 nno          ≥          :vertical resize +1<CR>|          " <M->>
-nno          ¿          :resize -1<CR>|                   " <M-?>
-nno          ±          :resize +1<CR>|                   " <M-+>
+" nno          ¿          :resize -1<CR>|                   " <M-?>
+" nno          ±          :resize +1<CR>|                   " <M-+>
 nno          Œ          :set wrap!<CR>|                   " <M-O>
 " Shortcuts
+" nno          <C-s>      :w<CR>
 nno          <D-j>      j<C-e>|                           " Move without scroll
 nno          <D-k>      k<C-y>
 vno          <C-y>      ygvr<Space>|                      " Yank & clear
@@ -218,11 +243,12 @@ nno          <Leader>e  :Ix<CR>                           " Upload to pastebin
 no           å          :x<CR>
 nno          ä          :%s/\s\+$//e<CR>|                 " Remove whitespaces
 nno          cd         :cd %:p:h<CR>:NERDTreeCWD<CR>|    " Change directory
-nno          <C-o>      :reg<CR>|                         " View yanks
+"nno          <C-o>      :reg<CR>|                         " View yanks
+nno          <C-o>      :ALEDetail<CR><C-w>j              " Ale Detail"
 nno          ˆ          :%s///g<Left><Left>|              " Replace <M-S-i>
 nno          ∆          :put =strftime('[%d-%m-%Y]')<CR>| " Insert date <M-S-d>
-nno          <C-f>      :let @/ = ""<CR>|                 " Clear matches
-xno          <C-f>      :<BS><BS><BS><BS><BS>let @/ = ""<CR>| " Clear matches
+" nno          <C-f>      :let @/ = ""<CR>|                 " Clear matches
+" xno          <C-f>      :<BS><BS><BS><BS><BS>let @/ = ""<CR>| " Clear matches
 nno          <D-i>      :terminal ++close<CR>|            " Terminal
 nno          <D-b>      :!cargo build<CR>                 " Cargo
 nno          <D-r>      :!cargo run<CR>
@@ -233,11 +259,11 @@ nno          <D-e>      :!cargo search
 nno          <D-x>      :!cargo check<CR>
 nno          <D-z>      :!cargo bench<CR>
 " File shortcuts
-nno          π          :tabe ~/.vim/plugins.vim<CR>|                  " <M-p>
-nno          æ          :tabe ~/.vimrc<CR>|                            " <M-ä>
-nno          Æ          :tabe ~/.gvimrc<CR>|                           " <M-Ä>
-nno          œ          :tabe ~/.vim/plugin-conf.vim<CR>|              " <M-o>
-nno          ø          :tabe ~/.vim/bibtex/library.bib<CR>|           " <M-ö>
+nno          π          :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
+nno          æ          :tab drop ~/.vimrc<CR>|                        " <M-ä>
+nno          Æ          :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
+nno          œ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
+nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
 nno          ›          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
 nno          ‹          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
 ": Syntax
@@ -265,15 +291,6 @@ let g:html_pre_wrap = 0
 "let g:html_dynamic_folds = 1
 "let g:html_no_foldcolumn = 1
 "let g:html_hover_unfold = 1
-":: Pest
-"hi PestToken guifg=lightred
-"hi PestRule guifg=lightblue
-"fun HighlightPest()
-  "syn match PestToken /t_[A-Za-z0-9_]\+/
-  "syn match PestToken /t_[A-Za-z0-9_]\+/ containedin=pestBlock
-  "syn match PestRule /r_[A-Za-z0-9_]\+/
-  "syn match PestRule /r_[A-Za-z0-9_]\+/ containedin=pestBlock
-"endfun
 ":: Keywords
 " TODO DANGER ERROR WARNING Klas Segeljakt <klasseg@kth.se> [2017-10-21 01:26]
 fun HighlightKeywords()
@@ -360,18 +377,20 @@ endfun
 ": Autocmd
 aug Autocommands | au!
   "au BufReadPost * if &modifiable | retab | endif
+"   au WinEnter * if &previewwindow | set ft=markdown | endif
   au BufReadPost .vimrc set nowrap
-  au CursorHold * nested update
+  au FocusLost * if &modifiable | wall | endif
+"   au CursorHold *.* nested silent! update
   au GUIEnter * set vb t_vb= " Disable bell
   au Syntax * call HighlightKeywords()
   au Syntax * match none
-  au Syntax c,cpp,rust match _ColorColumn /\%81v.*/
-  "au Syntax pest call HighlightPest()
+  au Syntax c,cpp,rust match _ColorColumn /\%101v.*/
+  "au FileType java setlocal omnifunc=javacomplete#Complete
   " Templates
-  au BufNewFile *.c,*.h,*.rs silent! call NewTemplate_c()
-  au BufNewFile *.vim        silent! call NewTemplate_vim()
-  au BufNewFile *.md         silent! call NewTemplate_pandoc()
-  au QuitPre *.c,*.h,*.rs    silent! call UpdateTemplate_gcc()
+"   au BufNewFile *.c,*.h,*.rs silent! call NewTemplate_c()
+"   au BufNewFile *.vim        silent! call NewTemplate_vim()
+"   au BufNewFile *.md         silent! call NewTemplate_pandoc()
+"   au QuitPre *.c,*.h,*.rs    silent! call UpdateTemplate_gcc()
   " NERDTree
   au VimEnter * cd %:p:h | NERDTree | 2 wincmd w
   au StdinReadPre * silent let s:std_in=1
@@ -388,3 +407,4 @@ iab      liek  like
 iab  liekwise  likewise
 iab      moer  more
 iab  previosu  previous
+iab      pset  pest

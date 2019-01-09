@@ -2,6 +2,10 @@
 if [ "$TMUX" = "" ]; then /usr/local/bin/tmux; exit; fi
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
+export CUDA_LIBRARY_PATH="/Developer/NVIDIA/CUDA-10.0/lib"
+export PATH=/Developer/NVIDIA/CUDA-10.0/bin${PATH:+:${PATH}}
+#export PATH="$PATH:/usr/local/cuda/bin"
+export PATH="$PATH:/usr/local/opt/bison/bin"
 export PATH="$PATH:/usr/local/opt/bison/bin"
 export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
 export PATH="$PATH:/Users/klassegeljakt/.cargo/bin"
@@ -15,7 +19,12 @@ export GOPATH="$HOME/Git/go/"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/X11/lib/pkgconfig"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/cairo/1.12.16/lib/pkgconfig/"
 export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
-export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/nvmm/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/nvmm/libdevice:$LD_LIBRARY_PATH"
+export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-10.0/lib\
+                         ${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
 #: HOOKS
 function chpwd() {
   tput sc
@@ -55,13 +64,14 @@ alias    vi="nvim"
 #alias   vim="nvim"
 alias   gcc="gcc-8"
 # Shortcuts
+alias     m="mvim --remote-tab"
 alias   ...=../..
 alias  ....=../../..
 alias .....=../../../..
 alias  comp="~/.zsh/zsh-completion-generator/help2comp.py"
 alias    xp="xpanes"
 alias     v="nvim"
-alias     t="trans" # translate
+alias     t="trans -view" # translate
 alias     u="w-upgrade-all"
 alias     a="brew search"
 alias     i="brew info"
@@ -84,6 +94,10 @@ alias     o="n-options"
 alias  hack="nvim ~/.hack-days"
 alias    gl="git log --pretty"
 alias    ed="ed -p'* '"
+alias    sc="nvim ~/PhD/Plan.md"
+alias    cb="cargo build --color always 2>&1 | less"
+alias    ct="cargo test --color always 2>&1 | less"
+alias   hdp="ssh klas@109.225.89.18 -p 8209"
 #: ENV
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
@@ -142,6 +156,7 @@ zstyle ':completion:*' special-dirs true      # Tabcomplete parent dir
 zstyle ':completion:*' menu select            # Show menu selection
 zstyle ':completion:*' verbose true           # Verbose completion results
 zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
+fignore=(class lock) # Never complete these
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
 # 2 -- word flex completion (abc => A-big-Car)
@@ -182,6 +197,9 @@ bindkey '•'    w-fzf-set-filter   # <S-M-§>
 bindkey 'ı'    w-clear # <C-I>
 bindkey '’'    w-clear # <C-M> TODO: Mail
 bindkey '^N'   w-clear # TODO: IRC
+bindkey '^[[.' w-cargo-run # <D-R>
+bindkey '^[[,' w-cargo-run-stacktrace # <D-S-R>
+bindkey '^[[~' w-backward-kill-dir # <C-BS>
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -199,8 +217,7 @@ bindkey 'Ö'    beginning-of-line # <C-E>
 bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete
-bindkey '^[[~' backward-kill-dir # <C-BS>
-bindkey "^[[3~" delete-char # <FN-BS>
+bindkey '^[[3~' delete-char # <FN-BS>
 # FUNCTIONS
 function pdftojpg {
   convert \

@@ -5,7 +5,7 @@ export FZF_FILTERS='*.{c,h,cpp,rs,java,scala}'
 export SCROLLBACK=10
 
 # WIDGETS
-function backward-kill-dir () {
+function w-backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}
     zle backward-kill-word
 }
@@ -14,14 +14,16 @@ function w-upgrade-all {
     "cargo install-update -a" \
     "brew upgrade --cleanup"
 }
-function w-clear-ls   { zle -I; clear; ls                                     }
-function w-clear      { zle -I; clear;                                        }
-function w-fg         { zle -I; fg                                            }
-function w-cd-parent  { zle -I; cd ..; clear; pwd; ls                         }
-function w-help       { zle -I; cat ~/.help                                   }
-function w-todo       { zle -I; nvim ~/.todo                                  }
-function w-copy       { echo "$BUFFER" | pbcopy                               }
-function w-ranger     { ranger < /dev/tty > /dev/tty; zle redisplay           }
+function w-cargo-run  { zle -I; export RUST_BACKTRACE=0; cargo run             }
+function w-cargo-run-stacktrace  { zle -I; export RUST_BACKTRACE=1; cargo run  }
+function w-clear-ls   { zle -I; clear; ls                                      }
+function w-clear      { zle -I; clear;                                         }
+function w-fg         { zle -I; fg                                             }
+function w-cd-parent  { zle -I; cd ..; clear; pwd; ls                          }
+function w-help       { zle -I; cat ~/.help                                    }
+function w-todo       { zle -I; nvim ~/.todo                                   }
+function w-copy       { echo "$BUFFER" | pbcopy                                }
+function w-ranger     { ranger < /dev/tty > /dev/tty; zle redisplay            }
 function w-bin {
   exa                  \
     /bin/              \
@@ -205,6 +207,8 @@ zle -N w-slash
 zle -N w-upgrade-all
 zle -N w-fzf-toggle-exact
 zle -N w-fzf-set-filter
-zle -N backward-kill-dir
+zle -N w-backward-kill-dir
+zle -N w-cargo-run
+zle -N w-cargo-run-stacktrace
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }
