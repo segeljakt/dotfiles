@@ -3,7 +3,7 @@ let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
 ": winresizer
 let g:winresizer_gui_enable    = 0
-let g:winresizer_start_key     = 0
+let g:winresizer_start_key     = "<C-w>,"
 let g:winresizer_gui_start_key = 0
 let g:winresizer_vert_resize   = 1
 let g:winresizer_horiz_resize  = 1

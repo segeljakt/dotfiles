@@ -167,8 +167,10 @@ nm <silent>  <C-k>      <Plug>(ale_previous_wrap)zz
 nm <silent>  <C-j>      <Plug>(ale_next_wrap)zz
 nm           K          <Plug>ManPreGetPage<CR>
 no           <C-w>m     :WinResizerStartMove<CR>
-no           <C-w>,     :WinResizerStartResize<CR>
+" no           <C-w>,     :WinResizerStartResize<CR>
 " imap         <C-l>      <Plug>(coc-snippets-expand)
+map          K          <Plug>(expand_region_expand)
+map          L          <Plug>(expand_region_shrink)
 " Fixes
 nno          n          nzz
 nno          N          Nzz

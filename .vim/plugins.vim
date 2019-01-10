@@ -174,7 +174,8 @@ Plug 'justinmk/vim-syntax-extra'           " (*) C - Better syntax highlighting
 Plug 'sbdchd/neoformat'                    " (*) Format code
 Plug 'cohama/agit.vim'                     " (*) Git - View git log
 Plug 'tpope/vim-fugitive'                  " (*) Git - Git wrapper
-Plug 'gcmt/wildfire.vim'                   " Select closest text object (Bad mappings)
+" Plug 'gcmt/wildfire.vim'                   " Select closest text object (Bad mappings)
+Plug 'terryma/vim-expand-region'
 "::---------- DISABLED ----------
 "Plug 'junegunn/vim-github-dashboard'       " Git - Github dashboard
 "Plug 'zivyangll/git-blame.vim'             " Git - Show git-blame

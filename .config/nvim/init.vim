@@ -348,6 +348,7 @@ ino <C-l>- ₋|ino <C-o>- ⁻
 ino <C-l>= ₌|ino <C-o>= ⁼
 ino <C-l>( ₍|ino <C-o>( ⁽
 ino <C-l>) ₎|ino <C-o>) ⁾
+             ino <C-o>~  ̃
 
 ino <C-l>a ₐ|ino <C-o>a ᵃ|ino <C-o>A ᴬ
 ino <C-l>b ₆|ino <C-o>b ᵇ|ino <C-o>B ᴮ
@@ -388,35 +389,36 @@ ino <C-o>s-!( ∉
 ino <C-o>sx   ×
 ino <C-o>s0   Ø
 
-ino <C-o>ga   α|ino <C-o>gA   Α
-ino <C-o>gb   β|ino <C-o>gB   Β
-ino <C-o>gg   γ|ino <C-o>gG   Γ
-ino <C-o>gd   δ|ino <C-o>gD   ∆
-ino <C-o>ge   ε|ino <C-o>gE   Ε
-ino <C-o>gz   ζ|ino <C-o>gZ   Ζ
-ino <C-o>gh   η|ino <C-o>gH   Η
-ino <C-o>gth  θ|ino <C-o>gTH  Θ
-ino <C-o>gi   ι|ino <C-o>gI   Ι
-ino <C-o>gk   κ|ino <C-o>gK   Κ
-ino <C-o>gl   λ|ino <C-o>gL   Λ
-ino <C-o>gm   μ|ino <C-o>gM   Μ
-ino <C-o>gn   ν|ino <C-o>gN   Ν
-ino <C-o>gx   ξ|ino <C-o>gX   Ξ
-ino <C-o>gomi ο|ino <C-o>gOMI Ο
-ino <C-o>gpi  π|ino <C-o>gPI  Π
-ino <C-o>gr   ρ|ino <C-o>gR   Ρ
-ino <C-o>gs   σ|ino <C-o>gS   Σ
-ino <C-o>gta  τ|ino <C-o>gTA  Τ
-ino <C-o>gu   υ|ino <C-o>gU   Υ   
-ino <C-o>gph  φ|ino <C-o>gPH  Φ   
-ino <C-o>gc   χ|ino <C-o>gC   Χ
-ino <C-o>gps  ψ|ino <C-o>gPS  Ψ
-ino <C-o>gome ω|ino <C-o>gOME Ω
+ino <C-o>ga   α|ino <C-o>gA   Α|
+ino <C-o>gb   β|ino <C-o>gB   Β|ino <C-o>g-b  ᵦ|ino <C-o>g+b   ᵝ
+ino <C-o>gg   γ|ino <C-o>gG   Γ|ino <C-o>g-g  ᵧ|ino <C-o>g+g   ᵞ
+ino <C-o>gd   δ|ino <C-o>gD   ∆|                ino <C-o>g+d   ᵟ
+ino <C-o>ge   ε|ino <C-o>gE   Ε|
+ino <C-o>gz   ζ|ino <C-o>gZ   Ζ|
+ino <C-o>gh   η|ino <C-o>gH   Η|
+ino <C-o>gth  θ|ino <C-o>gTH  Θ|                ino <C-o>g+th  ᶿ
+ino <C-o>gi   ι|ino <C-o>gI   Ι|                ino <C-o>g+i   ᶥ
+ino <C-o>gk   κ|ino <C-o>gK   Κ|
+ino <C-o>gl   λ|ino <C-o>gL   Λ|
+ino <C-o>gm   μ|ino <C-o>gM   Μ|
+ino <C-o>gn   ν|ino <C-o>gN   Ν|
+ino <C-o>gx   ξ|ino <C-o>gX   Ξ|
+ino <C-o>gomi ο|ino <C-o>gOMI Ο|
+ino <C-o>gpi  π|ino <C-o>gPI  Π|
+ino <C-o>gr   ρ|ino <C-o>gR   Ρ|ino <C-o>g-r  ᵨ
+ino <C-o>gs   σ|ino <C-o>gS   Σ|
+ino <C-o>gta  τ|ino <C-o>gTA  Τ|
+ino <C-o>gu   υ|ino <C-o>gU   Υ|
+ino <C-o>gph  φ|ino <C-o>gPH  Φ|ino <C-o>g-ph ᵩ|ino <C-o>g+ph  ᵠ
+ino <C-o>gc   χ|ino <C-o>gC   Χ|ino <C-o>g-c  ᵪ|ino <C-o>g+c   ᵡ
+ino <C-o>gps  ψ|ino <C-o>gPS  Ψ|
+ino <C-o>gome ω|ino <C-o>gOME Ω|
 
-ino <C-o>mx ⊗|
-ino <C-o>mi ∫|
-ino <C-o>md ∂|
-ino <C-o>mf ∀|
+ino <C-o>mx   ⊗|
+ino <C-o>mint ∫|
+ino <C-o>md   ∂|
+ino <C-o>mf   ∀|
+ino <C-o>minf ∞|
 
 ino <C-o><= ≤|ino <C-o>>= ≥
 ino <C-o>=< ≼|ino <C-o>=> ≽
