@@ -93,11 +93,6 @@ set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
 "set verbose                     " Lengthen messages
 set whichwrap=b,s,h,l           " Allow these to move past EOL
-" TURN OFF PLUGINS
-let loaded_matchparen = 1       " Avoid loading matchparen plugin
-let g:loaded_matchit = 1
-" let loaded_netrwPlugin = 1
-" normal! :NoMatchParen<CR>
 "::----------- DISABLED ------------
 "set guipty                     " Pseudo-pty for shell-commands
 "set macligatures               " Ligatures (Laggy)
@@ -120,6 +115,24 @@ let g:loaded_matchit = 1
 " n: Recognize numbered lists
 " l: Do not break long lines
 " j: Remove comment when joining lines
+": Disabled plugins
+let g:loaded_matchparen       = 1
+let g:loaded_matchit          = 1
+let g:loaded_tarPlugin        = 1
+let g:loaded_tar              = 1
+let g:loaded_zipPlugin        = 1
+let g:loaded_zip              = 1
+let g:loaded_gzip             = 1
+let g:loaded_netrw            = 1
+let g:loaded_netrwPlugin      = 1
+let g:loaded_vimballPlugin    = 1
+let g:loaded_vimball          = 1
+let g:loaded_logiPat          = 1
+let g:loaded_getscriptPlugin  = 1
+let g:loaded_2html_plugin     = 1
+let g:loaded_rrhelper         = 1
+let g:loaded_spellfile_plugin = 1
+let g:no_pdf_maps             = 1
 ": Commands
 com! Ix :w ![ -z "$1" ] && curl -F 'f:1=<-' ix.io || ix < "$1"; " Pastebin
 ": Keybindings
@@ -262,7 +275,7 @@ nno          <D-x>      :!cargo check<CR>
 nno          <D-z>      :!cargo bench<CR>
 " File shortcuts
 nno          π          :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
-nno          æ          :tab drop ~/.vimrc<CR>|                        " <M-ä>
+nno          æ          :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
 nno          Æ          :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
 nno          œ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
 nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
@@ -394,10 +407,10 @@ aug Autocommands | au!
 "   au BufNewFile *.md         silent! call NewTemplate_pandoc()
 "   au QuitPre *.c,*.h,*.rs    silent! call UpdateTemplate_gcc()
   " NERDTree
-  au VimEnter * cd %:p:h | NERDTree | 2 wincmd w
+"   au VimEnter * cd %:p:h | NERDTree | 2 wincmd w
   au StdinReadPre * silent let s:std_in=1
-  au TabNew * let t:NERDTreeZoomCurrentWindow = winnr()
-  au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"   au TabNew * let t:NERDTreeZoomCurrentWindow = winnr()
+"   au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   " Formatoptions
   au BufEnter * setlocal formatoptions=rownlj
 aug END

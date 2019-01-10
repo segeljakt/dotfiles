@@ -18,7 +18,8 @@ Plug 'kshenoy/vim-signature'               " Show and navigate signatures
 Plug 'zirrostig/vim-schlepp'               " (*) Drag visual block and visual line
 Plug 'mhinz/vim-startify'                  " (*) Start-screen
 Plug 'mbbill/undotree'                     " (*) undo history
-Plug 'scrooloose/nerdtree'                 " (*) File system navigator
+Plug 'mcchrish/nnn.vim'                    " NerdTree replacement
+" Plug 'scrooloose/nerdtree'                 " (*) File system navigator
 Plug 'dhruvasagar/vim-table-mode'          " (*) Draw tables
 Plug 'danro/rename.vim'                    " (*) Rename current buffer
 Plug 'moll/vim-bbye'                       " (*) Delete buffers and close files
