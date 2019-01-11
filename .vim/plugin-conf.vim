@@ -2,11 +2,7 @@
 let g:plug_window = "tab new"
 " <Alt-u> to update, <Alt-i> to install
 ": winresizer
-let g:winresizer_gui_enable    = 0
 let g:winresizer_start_key     = "<C-w>,"
-let g:winresizer_gui_start_key = 0
-let g:winresizer_vert_resize   = 1
-let g:winresizer_horiz_resize  = 1
 ": vim-search-pulse
 " let g:vim_search_pulse_mode = 'pattern'
 ": vim-illuminate
@@ -327,7 +323,6 @@ let g:lightline = {
       \     'fugitive': 'LightlineFugitive',
       \     'filetype': 'MyFiletype',
       \     'fileformat': 'MyFileformat',
-      \     'cocstatus': 'coc#status',
       \   },
       \   'component_visible_condition': {
       \     'modified': '&modified||!&modifiable',
@@ -380,10 +375,10 @@ fun! LightlineFugitive()
   return ''
 endfun
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype.' '.WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 function! MyFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 ": NERDTree
 let g:NERDTreeWinSize    = 16
