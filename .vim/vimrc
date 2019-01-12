@@ -16,6 +16,7 @@ syntax enable
 filetype plugin indent on       " Detect filetypes
 colorscheme gruvbox
 set dict+=~/.vim/dict/basic
+set viminfo='100,n~/.vim/viminfo
 set autoread                    " Automatically read changes
 set autowriteall                " Automatically write when changing file
 set background=dark
@@ -60,9 +61,10 @@ set tagcase=match               " Case-sensitive tag search
 set notitle                     " Do not display title
 set titleold=                   " Do not display title
 set virtualedit=block           " Select whitespaces
-set wildignore=*.class,*.o,*~,*.pyc,.git
+set wildignore=*.class,*.o,*~,*.pyc,.git,*.lock,target,*.out
 set wildignorecase              " Ignore case when completing filenames
 set wildmenu                    " Tabcompletion for commandline
+set wildcharm=<Tab>             " Allow macros to tabcomplete
 set mps=(:),{:},[:],<:>,":"     " Separators
 set shell=/usr/local/bin/zsh    " Shell program
 set emoji                       " Emoji characters are full-width
@@ -91,6 +93,7 @@ set foldexpr=MyFoldExpr()       " Custom folding expression
 set updatetime=250              " Write to disk after 250 ms
 set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
+set belloff=all                 " STOP IT
 "set verbose                     " Lengthen messages
 set whichwrap=b,s,h,l           " Allow these to move past EOL
 "::----------- DISABLED ------------
@@ -140,8 +143,8 @@ com! Ix :w ![ -z "$1" ] && curl -F 'f:1=<-' ix.io || ix < "$1"; " Pastebin
 nno          <          i<><C-c>i| " Generics
 " Plugins
 xmap         s          <Plug>VSurround
-nno          q          :TComment<CR>
-vno <expr>   q          mode()==#'V' ? ':TComment<CR>' : ':TCommentInline<CR>' | " Comment
+nno <expr>   q          &ma ? ':TComment<CR>' : ''
+vno <expr>   q          &ma ? mode()==#'V' ? ':TComment<CR>' : ':TCommentInline<CR>' : ''
 nno <silent> +          :Neoformat<CR>
 nno <silent> gb         :Gbrowse<CR>
 nno <silent> <C-w>d     :WindowSwap#EasyWindowSwap<CR>
@@ -185,6 +188,7 @@ no           <C-w>m     :WinResizerStartMove<CR>
 map          K          <Plug>(expand_region_expand)
 map          L          <Plug>(expand_region_shrink)
 " Fixes
+nno          <C-q>      q|                                " Record with <C-q>
 nno          n          nzz
 nno          N          Nzz
 ino          <C-c>      <Esc>|                            " Fix <C-c>
@@ -228,7 +232,7 @@ nno          <C-CR>     kk<CR>|                           " Reverse <CR>
 nno          k          gk
 nno          j          gj
 " Command line
-cno          <C-h>      <Left>|                           " Movement in i-mode
+cno          <C-h>      <Left>
 cno          <C-l>      <Right>
 cno          <C-k>      <Up>
 cno          <C-j>      <Down>
@@ -236,15 +240,33 @@ cno          <Up>       <Nop>|                            " Disable arrow keys
 cno          <Down>     <Nop>
 cno          <Left>     <Nop>
 cno          <Right>    <Nop>
+cno          <C-b>      <S-Left>
+cno          <C-e>      <S-Right>
+cno          <C-v>      <C-r><C-l>
+cno          <C-f>      <C-\>e
+fun Accept()
+  let pos = getcmdpos()-2
+  let line = getcmdline()
+  if line[pos] == '/'
+    let a = line[0:pos]
+    let b = substitute(a, "\\\ ", ";", "g")
+    let c = split(b)[-1]
+    let d = substitute(c, ";", " ", "g")
+    if empty(getcompletion(d, "file"))
+      return b
+    else
+      return " \<BS>\<Tab>"
+    endif
+  else
+    return "\<CR>"
+  endif
+endfun
+cno <expr>   <CR>       Accept()
 " Toggles / Sliders
 nno          <Leader>b  :set ri!<CR>|                     " Write backwards
 nno          <Leader>fu :set fu!<CR>|                     " Fullscreen toggle
 nno          <Leader>dd :set diff!<CR>|                   " Diff mode
 nno          <Leader>g  :set crb! scb!<CR>                " Bind cursor/scroll
-nno          ≤          :vertical resize -1<CR>|          " <M-<> - Resize
-nno          ≥          :vertical resize +1<CR>|          " <M->>
-" nno          ¿          :resize -1<CR>|                   " <M-?>
-" nno          ±          :resize +1<CR>|                   " <M-+>
 nno          Œ          :set wrap!<CR>|                   " <M-O>
 " Shortcuts
 " nno          <C-s>      :w<CR>
@@ -396,10 +418,11 @@ aug Autocommands | au!
   au BufReadPost .vimrc set nowrap
   au FocusLost * if &modifiable | wall | endif
 "   au CursorHold *.* nested silent! update
-  au GUIEnter * set vb t_vb= " Disable bell
+"   au GUIEnter * set vb t_vb= " Disable bell
   au Syntax * call HighlightKeywords()
   au Syntax * match none
   au Syntax c,cpp,rust match _ColorColumn /\%101v.*/
+  au BufReadPost * norm! g`"
   "au FileType java setlocal omnifunc=javacomplete#Complete
   " Templates
 "   au BufNewFile *.c,*.h,*.rs silent! call NewTemplate_c()

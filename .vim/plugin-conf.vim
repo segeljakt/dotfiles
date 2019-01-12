@@ -1,6 +1,5 @@
 ": Plugged
 let g:plug_window = "tab new"
-" <Alt-u> to update, <Alt-i> to install
 ": winresizer
 let g:winresizer_start_key     = "<C-w>,"
 ": vim-search-pulse
@@ -10,6 +9,7 @@ let g:Illuminate_ftblacklist = ['nerdtree']
 let g:Illuminate_highlightUnderCursor = 0
 hi illuminatedWord guibg=bg gui=underline
 ": TComment
+let g:tcomment_maps = 0
 let g:tcomment#options = {'col': 1}
 ": CoC
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
@@ -18,7 +18,6 @@ let g:coc_snippet_prev = '<S-TAB>'
 set completeopt=preview,noinsert,menuone,noselect
 set shortmess+=c
 ": YouCompleteMe
-"set completeopt=menu,menuone
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_key_list_select_completion = ['<C-j>']
@@ -269,17 +268,12 @@ sunmap ge
 let g:lightline = {
       \   'colorscheme': 'wombat',
       \   'active': {
-      \     'left': [ [ 'mode'],
-      \               [ 'readonly', 'modified' ],
-      \               [ 'absolutepath' ] ],
-      \     'right': [ [ 'lineinfo' ],
-      \                [ 'filetype' ],
-      \                [ 'linepos', 'percent' ] ],
+      \     'left': [ [ 'mode'], [ 'readonly', 'modified' ], [ 'absolutepath' ] ],
+      \     'right': [ [ 'lineinfo' ], [ 'filetype' ], [ 'linepos', 'percent' ] ],
       \   },
       \   'inactive': {
       \     'left': [ [ 'absolutepath' ] ],
-      \     'right': [ [ 'lineinfo' ],
-      \                [ 'percent' ] ]
+      \     'right': [ [ 'lineinfo' ], [ 'percent' ] ]
       \   },
       \   'separator': { 'left': '', 'right': '' },
       \   'subseparator': { 'left': '', 'right': '' },
@@ -468,13 +462,8 @@ let g:Schlepp#dupTrimWS = 1
 ": DrawIt
 let g:draw_it_is_active = 0
 fun! ToggleDrawIt()
-  if g:draw_it_is_active
-    DIstop
-    let g:draw_it_is_active = 0
-  else
-    DIsngl
-    let g:draw_it_is_active = 1
-  endif
+  if g:draw_it_is_active | DIstop | else | DIsngl | endif
+  let g:draw_it_is_active = !g:draw_it_is_active
 endfun
 ": github-dashboard
 let g:github_dashboard = { 'username': g:github_username, 'password': g:github_password }
