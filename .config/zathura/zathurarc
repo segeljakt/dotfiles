@@ -4,3 +4,4 @@ map k navigate previous
 map J scroll down
 map K scroll up
 map 0 zoom out
+set synctex true

@@ -1,13 +1,73 @@
 ": Plugged
-let g:plug_window = "tab new"
+let g:plug_window = "enew"
+let g:pluggin=0
+com! PlugUpgrade let g:pluggin=1 | PlugUpdate | let g:pluggin=0
+": vim-lsc
+let g:lsc_enable_autocomplete = v:false
+let g:lsc_server_commands = {
+  \  'scala': {
+  \    'command': 'metals-vim',
+  \    'log_level': 'Log'
+  \  }
+  \}
+let g:lsc_auto_map = {
+  \  'GoToDefinition': 'gd',
+  \}
+": vim-markdown
+let g:vim_markdown_folding_disabled = 1
+": NNN
+" let g:nnn#layout = { 'left': '~20%' }
+let g:nnn#command = 'nnn -l'
+let g:nnn#replace_netrw = 1
+": NERDTree
+" let NERDTreeIgnore=['\.pyc$', '\.swp$', '\~$']
+" let NERDTreeRespectWildIgnore = 1
+" let NERDTreeWinSize = 13
+" let NERDTreeMinimalUI = 1
+" let NERDTreeStatusline = ""
+": vim-matchup
+let g:matchup_matchparen_stopline = 200
+" let g:matchup_matchparen_deferred = 1
+let g:matchup_matchparen_status_offscreen = 0
+": Vimtex
+let g:vimtex_indent_bib_enabled = 0
+let g:tex_conceal = "abdmgs"
+let g:vimtex_view_method = "skim"
+let g:tex_flavor = 'latex'
+" let g:vimtex_log_verbose = 0
+" let g:vimtex_quickfix_enabled = 0
+" let g:vimtex_quickfix_latexlog = {'default' : 0}
+let g:vimtex_quickfix_latexlog = {
+      \ 'default' : 1,
+      \ 'general' : 1,
+      \ 'references' : 1,
+      \ 'overfull' : 1,
+      \ 'underfull' : 1,
+      \ 'font' : 1,
+      \ 'packages' : {
+      \   'default' : 1,
+      \   'natbib' : 1,
+      \   'biblatex' : 1,
+      \   'babel' : 1,
+      \   'hyperref' : 1,
+      \   'scrreprt' : 1,
+      \   'fixltx2e' : 1,
+      \   'titlesec' : 1,
+      \ },
+      \}
+
+
 ": winresizer
 let g:winresizer_start_key     = "<C-w>,"
 ": vim-search-pulse
 " let g:vim_search_pulse_mode = 'pattern'
 ": vim-illuminate
-let g:Illuminate_ftblacklist = ['nerdtree']
+let g:Illuminate_ftblacklist = ['nerdtree', 'startify']
 let g:Illuminate_highlightUnderCursor = 0
 hi illuminatedWord guibg=bg gui=underline
+let g:startify_session_before_save = [
+  \   'silent! NERDTreeTabsClose'
+  \ ]
 ": TComment
 let g:tcomment_maps = 0
 let g:tcomment#options = {'col': 1}
@@ -96,27 +156,13 @@ let g:pymode_run_bind='…'
 "default g:NERDTreeMapToggleFilters key map is 'f', change it to some key else.
 let g:NERDTreeMapToggleFilters="0"
 let g:LineJumpSelectIgnoreCase = 1
-let NERDTreeIgnore=['\.pyc$', '\.swp$', '\~$']
-"LineJump NERDTree key map
-aug LineJumpNerdTree
-  au BufEnter NERD_tree_\d\+ nno <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
-  au BufEnter NERD_tree_\d\+ nno <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
-aug END
-aug LineJumpTagbar
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> f  <ESC>:silent! call LineJumpSelectForward()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> ;  <ESC>:silent! call LineJumpMoveForward()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> b  <ESC>:silent! call LineJumpSelectBackward()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> ,  <ESC>:silent! call LineJumpMoveBackward()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gh <ESC>:silent! call LineJumpMoveTop()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gm <ESC>:silent! call LineJumpMoveMiddle()<CR>
-  au BufEnter __Tagbar__ nno <buffer> <nowait> <silent> gl <ESC>:silent! call LineJumpMoveBottom()<CR>
-aug END
 ": FZF
-autocmd! FileType fzf
+" autocmd! FileType fzf
 "autocmd  FileType fzf set laststatus=0 noshowmode noruler
   "\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 ": ALE
 "let g:ale_c_build_dir_names += 'obj'
+let g:ale_completion_enabled = 1
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '👉' " ❌
 let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
@@ -127,12 +173,15 @@ let g:ale_linters = {
   \ 'zsh':      ['shell'],
   \ 'sh':       ['shell'],
   \ 'rust':     ['rls'],
-  \ 'python':   ['mypy', 'pylint'],
+  \ 'python':   ['pylint'],
   \ 'scala':    ['sbtserver'],
   \ 'markdown': [''],
-  \ 'pandoc':   ['']
+  \ 'pandoc':   [''],
+  \ 'tex':      [''],
+  \ 'bib':      ['']
   \}
 let g:ale_fixers = {
+  \ 'tex':  [''],
   \ 'c':      ['remove_trailing_lines', 'trim_whitespace', 'clang-format', 'uncrustify'],
   \ 'rust':   ['remove_trailing_lines', 'trim_whitespace', 'rustfmt'],
   \ 'zsh':    ['remove_trailing_lines', 'trim_whitespace'],
@@ -200,6 +249,19 @@ let g:AutoPairsFlyMode = 0
 let g:AutoPairsMultilineClose = 0
 "let g:AutoPairsMoveCharacter = 0
 "let g:AutoPairsSmartQuotes = 0
+": pear-tree
+let g:pear_tree_pairs = {
+  \ '(': {'closer': ')'},
+  \ '[': {'closer': ']'},
+  \ '{': {'closer': '}'},
+  \ "'": {'closer': "'"},
+  \ '"': {'closer': '"'},
+  \ '/\*': {'closer': '\*/'}
+  \ }
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
+imap <C-c> <Plug>(PearTreeFinishExpansion)
+imap <C-e> <Plug>(PearTreeJump)
 ": Colorschemes
 let g:gruvbox_contrast_dark="hard" " Needs to be put before loading
 "let g:gruvbox_bold=1
@@ -226,27 +288,26 @@ let g:startify_session_dir = '~/.vim/session'
 let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
-let g:startify_change_to_vcs_root = 0
+let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_enable_unsafe = 1
-autocmd VimEnter * let t:startify_new_tab = 1
 let g:startify_skiplist = [
-    \   '\.vim',
-    \   '.gvimrc',
-    \   '.vimrc',
-    \   '/usr/*',
-    \   '\.todo',
-    \ ]
-let g:startify_custom_header =
-      \ startify#fortune#cowsay('', '═','║','╔','╗','╝','╚')
-"fun! s:projects()
-  "let dirs = systemlist('ls -d ~/Git/my-projects/*/ ~/Phd/Git/*/')
-  "return map(dirs, '{'.
-    "\   '"line": fnamemodify(v:val, ":h:t")."/",'.
-    "\   '"cmd": "NERDTree ".v:val'.
-    "\ '}')
-"endfun
-let g:startify_lists = [ { 'header': ['   MRU'], 'type': 'files' } ]
+  \   '\.vim/',
+  \   '/usr/*',
+  \   '\.todo',
+  \ ]
+" TODO: FIX COWSAY
+" let g:cowkind = "stegosaurus"
+" let g:cow = split(system('echo | cowsay -f'.g:cowkind.' | tail -n +4'), '\n')
+" let g:cowkind = "small"
+" let g:cowkind = "turtle"
+" let g:cowkind = "tux"
+" let g:startify_custom_header = map(split, '"   ". v:val')
+" let g:startify_custom_header = startify#fortune#cowsay('','═','║','╔','╗','╝','╚')
+let g:startify_lists = [
+  \   { 'header': ['   MRU'], 'type': 'files' },
+  \   { 'header': ['   Sessions'], 'type': 'sessions' },
+  \ ]
 ": thesaurus_query.vim
 "let g:tq_openoffice_en_file="~/.vim/thesaurus/th_en_US_v2"
 let tq_enabled_backends=["thesaurus_com", "openoffice_en", "datamuse_com"]
@@ -266,132 +327,119 @@ sunmap e
 sunmap ge
 ": Lightline
 let g:lightline = {
-      \   'colorscheme': 'wombat',
-      \   'active': {
-      \     'left': [ [ 'mode'], [ 'readonly', 'modified' ], [ 'absolutepath' ] ],
-      \     'right': [ [ 'lineinfo' ], [ 'filetype' ], [ 'linepos', 'percent' ] ],
-      \   },
-      \   'inactive': {
-      \     'left': [ [ 'absolutepath' ] ],
-      \     'right': [ [ 'lineinfo' ], [ 'percent' ] ]
-      \   },
-      \   'separator': { 'left': '', 'right': '' },
-      \   'subseparator': { 'left': '', 'right': '' },
-      \   'tabline_separator': { 'left': '', 'right': '' },
-      \   'tabline_subseparator': { 'left': '', 'right': '' },
-      \   'tab': {
-      \     'active': [ 'filename', 'modified' ],
-      \     'inactive': [ 'filename', 'modified' ]
-      \   },
-      \   'tabline': {
-      \     'left': [ [ 'tabs' ] ],
-      \     'right': [ [ ] ],
-      \   },
-      \   'component': {
-      \     'mode': '%{lightline#mode()}',
-      \     'linepos': '%{LineNoIndicator()}',
-      \     'absolutepath': '%F',
-      \     'relativepath': '%f',
-      \     'filename': '%t',
-      \     'modified': '%M',
-      \     'bufnum': '%n',
-      \     'paste': '%{&paste?"PASTE":""}',
-      \     'readonly': '%R',
-      \     'charvalue': '%b',
-      \     'charvaluehex': '%B',
-      \     'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
-      \     'fileformat': '%{&ff}',
-      \     'filetype': '%{&ft!=#""?&ft:"no ft"}',
-      \     'percent': '%3p%%',
-      \     'percentwin': '%P',
-      \     'spell': '%{&spell?&spelllang:""}',
-      \     'lineinfo': '%3l:%-2v',
-      \     'line': '%l',
-      \     'column': '%c',
-      \     'close': '%999X X ',
-      \     'winnr': '%{winnr()}',
-      \     'pwd': '%pwd',
-      \   },
-      \   'component_function': {
-      \     'readonly': 'LightlineReadonly',
-      \     'fugitive': 'LightlineFugitive',
-      \     'filetype': 'MyFiletype',
-      \     'fileformat': 'MyFileformat',
-      \   },
-      \   'component_visible_condition': {
-      \     'modified': '&modified||!&modifiable',
-      \     'readonly': '&readonly',
-      \     'paste': '&paste',
-      \     'spell': '&spell'
-      \   },
-      \   'component_function_visible_condition': { },
-      \   'component_expand': {
-      \     'tabs': 'lightline#tabs'
-      \   },
-      \   'component_type': {
-      \     'tabs': 'tabsel',
-      \     'close': 'raw'
-      \   },
-      \   'component_raw': { },
-      \   'tab_component':  { },
-      \   'tab_component_function': {
-      \     'filename': 'lightline#tab#filename',
-      \     'modified': 'lightline#tab#modified',
-      \     'readonly': 'lightline#tab#readonly',
-      \     'tabnum': 'lightline#tab#tabnum'
-      \   },
-      \   'mode_map': {
-      \     'n' : 'NORMAL',
-      \     'i' : 'INSERT',
-      \     'R' : 'REPLACE',
-      \     'v' : 'VISUAL',
-      \     'V' : 'V-LINE',
-      \     "\<C-v>": 'V-BLOCK',
-      \     'c' : 'COMMAND',
-      \     's' : 'SELECT',
-      \     'S' : 'S-LINE',
-      \     "\<C-s>": 'S-BLOCK',
-      \     't': 'TERMINAL',
-      \   },
-      \   'enable': {
-      \     'statusline': 1,
-      \     'tabline': 1
-      \   },
-      \ }
-fun! LightlineReadonly()
-  return &readonly ? '' : ''
+  \   'colorscheme': 'PaperColor',
+  \   'active': {
+  \     'left':  [ [ 'mode'], [ 'readonly', 'modified' ], [ 'path' ] ],
+  \     'right': [ [ 'lineinfo' ], [ 'filetype', 'percent' ],
+  \                [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
+  \   },
+  \   'inactive': {
+  \     'left':  [ [ 'path' ] ],
+  \     'right': [ [ ], [ ], [ ] ],
+  \   },
+  \   'tabline': {
+  \     'left':  [ [ 'tabs' ] ],
+  \     'right': [ [ ], [ 'branch', 'time' ] ],
+  \   },
+  \   'tab': {
+  \     'active':   [ 'filename', 'modified' ],
+  \     'inactive': [ 'filename', 'modified' ]
+  \   },
+  \   'separator':            { 'left': '', 'right': '' },
+  \   'subseparator':         { 'left': '', 'right': '' },
+  \   'tabline_separator':    { 'left': '', 'right': '' },
+  \   'tabline_subseparator': { 'left': '', 'right': '' },
+  \   'component': {
+  \     'path':         '%{&ft!="nerdtree"?expand("%"):""}',
+  \     'filename':     '%t',
+  \     'modified':     '%M',
+  \     'bufnum':       '%n',
+  \     'paste':        '%{&paste?"PASTE":""}',
+  \     'readonly':     '%{&readonly?"":""}',
+  \     'charvalue':    '%b',
+  \     'charvaluehex': '%B',
+  \     'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+  \     'fileformat':   '%{&ff}',
+  \     'filetype':     '%{&ft==""?"N/A":&ft=="nerdtree"?"":&ft}',
+  \     'percent':      '%3p%%',
+  \     'percentwin':   '%P',
+  \     'spell':        '%{&spell?&spelllang:""}',
+  \     'lineinfo':     '%{&ft!="nerdtree"?printf("%3d:%-2d",line("."),col(".")):""}',
+  \     'line':         '%l',
+  \     'column':       '%c',
+  \     'close':        '%999X X ',
+  \     'winnr':        '%{winnr()}',
+  \     'time':         '%{strftime("%a %b %e %H:%M")}',
+  \   },
+  \   'component_function': {
+  \     'branch': 'LightlineBranch',
+  \     'mode':   'LightlineMode',
+  \   },
+  \   'component_visible_condition': {
+  \     'modified':     '&modified||!&modifiable',
+  \     'readonly':     '&readonly',
+  \     'paste':        '&paste',
+  \     'spell':        '&spell',
+  \     'lineinfo':     '(&ft != "nerdtree")',
+  \   },
+  \   'component_function_visible_condition': { },
+  \   'component_expand': {
+  \     'tabs': 'lightline#tabs'
+  \   },
+  \   'component_type': {
+  \     'tabs':  'tabsel',
+  \     'close': 'raw'
+  \   },
+  \   'component_raw': { },
+  \   'tab_component':  { },
+  \   'tab_component_function': {
+  \     'filename': 'lightline#tab#filename',
+  \     'modified': 'lightline#tab#modified',
+  \     'readonly': 'lightline#tab#readonly',
+  \     'tabnum':   'lightline#tab#tabnum'
+  \   },
+  \   'mode_map': {
+  \     'n' :     'NORMAL',
+  \     'i' :     'INSERT',
+  \     'R' :     'REPLACE',
+  \     'v' :     'VISUAL',
+  \     'V' :     'V-LINE',
+  \     "\<C-v>": 'V-BLOCK',
+  \     'c' :     'COMMAND',
+  \     's' :     'SELECT',
+  \     'S' :     'S-LINE',
+  \     "\<C-s>": 'S-BLOCK',
+  \     't':      'TERMINAL',
+  \   },
+  \   'enable': {
+  \     'statusline': 1,
+  \     'tabline': 1
+  \   },
+  \ }
+" fun! LightlinePath()
+"   if &ft != "nerdtree"
+"     return "%F"
+"   el
+"     return ""
+"   en
+" endfun
+fun! LightlineBranch()
+  let branch = fugitive#head()
+  return branch !=# '' ? ''.branch : ''
 endfun
-fun! LightlineFugitive()
-  if exists('*fugitive#head')
-    let branch = fugitive#head()
-    return branch !=# '' ? ''.branch : ''
-  endif
-  return ''
+fun! LightlineMode()
+	let fname = expand('%:t')
+  let cmdtype = getcmdtype()
+	return fname =~ 'NERD_tree' ? 'NERDTree' :
+       \ cmdtype == ':' ? 'COMMAND' :
+       \ cmdtype == '/' ? 'SEARCH' :
+       \ cmdtype == '?' ? 'REV-SEARCH' :
+	     \                   lightline#mode()
 endfun
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-": NERDTree
-let g:NERDTreeWinSize    = 16
-let g:NERDTreeChDirMode  = 1
-let NERDTreeCreatePrefix = ''
-let NERDTreeMinimalUI    = 1
-let NERDTreeDirArrows    = 1
-hi Directory guifg=#FF0000 ctermfg=red
-let g:NERDTreeZoomCurrentWindow=2
-fun! ZoomNERDTreeFromOtherWindow()
-  if winnr() == 1
-    exe "vertical resize" g:NERDTreeWinSize
-    exe g:NERDTreeZoomCurrentWindow "wincmd w"
-  else
-    let g:NERDTreeZoomCurrentWindow = winnr()
-    exe 'NERDTreeFocus'
-    exe "vertical resize 999"
-  endif
-endfun
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors   = "\uf05e"
+let g:lightline#ale#indicator_ok       = "\uf00c"
 ": Unite-bibtex
 let b:unite_bibtex_prefix = '[@'
 let b:unite_bibtex_postfix = ']'
@@ -407,69 +455,27 @@ let g:pandoc#syntax#codeblocks#embeds#use=1
 let g:pandoc#syntax#style#underline_special=1
 let g:pandoc#syntax#style#use_definition_lists=1
 let g:pandoc#syntax#codeblocks#embeds#langs = ["c","python","rust","scala","bash=sh"]
-": NERDCommenter
-let g:NERDAltDelims_c = 0
 ": goyo
-let g:goyo_height=100
-let g:word_mode=0
+let g:goyo_height = 100
+let g:word_mode = v:false
 fun! ToggleWordMode()
-  if(!g:word_mode) " Activate word_mode
-    exe "Goyo"
-    exe "Goyo 80"
-    Limelight
-    set linebreak
-    set textwidth=80
-    nno j gj
-    nno k gk
-    ino <C-j> <Esc>gji
-    ino <C-k> <Esc>gki
-    set spell
-    set nonumber
-    set noshowmode
-    set noshowcmd
-    set formatoptions-=t
-    nno <Up> <Nop>
-    nno <Down> <Nop>
-    nno <Left> <Nop>
-    nno <Right> <Nop>
-  else " Deactivate word_mode"
-    exe "Goyo!"
-    Limelight!
-    set nolinebreak
-    set textwidth=0
-    nno j j
-    nno k k
-    ino <C-j> <Esc>ji
-    ino <C-k> <Esc>ki
-    set nospell
-    set number
-    set showmode
-    set showcmd
-    nno <Up> <C-w>k
-    nno <Down> <C-w>j
-    nno <Left> <C-w>h
-    nno <Right> <C-w>l
-  endif
+  if !g:word_mode  " Activate word_mode
+    Goyo | Goyo 80 | Limelight
+    set linebreak textwidth=80 spell nonumber noshowmode noshowcmd formatoptions-=t
+  el " Deactivate word_mode"
+    Goyo! | Limelight!
+    set nolinebreak textwidth=0 nospell number showmode showcmd
+  en
   let g:word_mode=!g:word_mode
 endfun
-": ultisnips
-"let g:UltiSnipsExpandTrigger="<Leader><Leader>"
-"let g:UltiSnipsJumpForwardTrigger="<Leader><Leader>"
-"let g:UltiSnipsJumpBackwardTrigger=""
 ": Schlepp
 let g:Schlepp#reindent  = 1
 let g:Schlepp#dupTrimWS = 1
 ": DrawIt
-let g:draw_it_is_active = 0
+let g:draw_it_is_active = v:false
 fun! ToggleDrawIt()
-  if g:draw_it_is_active | DIstop | else | DIsngl | endif
+  if g:draw_it_is_active | DIstop | el | DIsngl | en
   let g:draw_it_is_active = !g:draw_it_is_active
 endfun
-": github-dashboard
-let g:github_dashboard = { 'username': g:github_username, 'password': g:github_password }
 ": MRU
 let MRU_Window_Height = 30
-": Tagbar
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-let g:tagbar_silent = 1

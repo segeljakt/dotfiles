@@ -12,7 +12,7 @@ function w-backward-kill-dir () {
 function w-upgrade-all {
   xpanes -s -d -e             \
     "cargo install-update -a" \
-    "brew upgrade --cleanup"
+    "brew upgrade"
 }
 function w-cargo-run  { zle -I; export RUST_BACKTRACE=0; cargo run             }
 function w-cargo-run-stacktrace  { zle -I; export RUST_BACKTRACE=1; cargo run  }

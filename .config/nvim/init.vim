@@ -9,6 +9,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 "let g:ale_c_gcc_executable = '/usr/local/bin/gcc-8'
 "let g:ale_set_highlights = 0
 "let g:ale_rust_rls_toolchain = "stable"
+Plug '/Users/Klas/Git/vim-plugins/neovim-calculator'
+Plug '/Users/Klas/Git/vim-plugins/vim-commando'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
@@ -33,9 +35,14 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'pest-parser/pest.vim'
 Plug 'junegunn/vim-emoji'
 Plug 'timonv/vim-cargo'
+"Plug 'NLKNguyen/papercolor-theme'
+Plug 'flazz/vim-colorschemes'
+Plug 'guns/xterm-color-table.vim'
+
 "Plug 'typeintandem/vim'
 call plug#end()
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme PaperColor
 nnoremap <silent> <C-w>h :TmuxNavigateLeft<CR>
 nnoremap <silent> <C-w>j :TmuxNavigateDown<CR>
 nnoremap <silent> <C-w>k :TmuxNavigateUp<CR>
@@ -74,7 +81,7 @@ if !has('gui_running')
   set t_Co=256
 endif
 let g:lightline = {
-      \   'colorscheme': 'wombat',
+      \   'colorscheme': 'PaperColor',
       \   'active': {
       \     'left': [ [ 'mode'],
       \               [ 'readonly', 'modified' ],
@@ -196,7 +203,7 @@ filetype plugin indent on       " Detect filetypes
 "set noautoindent                  " Preserve indentation on new lines
 set autoread                    " Automatically read changes
 set autowriteall                " Automatically write when changing file
-set background=dark             " Dark background
+set background=light
 set bufhidden=hide              " Delete buffer when closing window
 "set nosmartindent                 " Adapt indentation to { scope }
 set cindent                     " Autmatic c indentation

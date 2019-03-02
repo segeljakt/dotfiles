@@ -1,30 +1,17 @@
+#zmodload zsh/zprof # top of your .zshrc file
 #: STARTUP
 if [ "$TMUX" = "" ]; then /usr/local/bin/tmux; exit; fi
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
-export CUDA_LIBRARY_PATH="/Developer/NVIDIA/CUDA-10.0/lib"
-export PATH=/Developer/NVIDIA/CUDA-10.0/bin${PATH:+:${PATH}}
-#export PATH="$PATH:/usr/local/cuda/bin"
-export PATH="$PATH:/usr/local/opt/bison/bin"
-export PATH="$PATH:/usr/local/opt/bison/bin"
-export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
-export PATH="$PATH:/Users/klassegeljakt/.cargo/bin"
-export PATH="$PATH:/Library/TeX/texbin"
-export PATH="$PATH:/usr/local/opt/ncurses/bin"
-export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin"
-export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.4/bin"
-export PATH="$PATH:/usr/local/Cellar/ctags/5.8_1/bin"
-export PATH="$PATH:/usr/local/sbin"
-export GOPATH="$HOME/Git/go/"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/X11/lib/pkgconfig"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/cairo/1.12.16/lib/pkgconfig/"
-export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
-export LD_LIBRARY_PATH="$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda/lib:$LD_LIBRARY_PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda/nvmm/lib:$LD_LIBRARY_PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda/nvmm/libdevice:$LD_LIBRARY_PATH"
-export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-10.0/lib\
-                         ${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
+path=(
+  /usr/local/sbin
+  /opt/local/bin
+  /opt/local/sbin
+  /usr/local/opt/ncurses/bin
+  /usr/local/lib/ruby/gems/2.6.0/bin/
+  $HOME/.cargo/bin
+  $path
+)
 #: HOOKS
 function chpwd() {
   tput sc
@@ -34,17 +21,20 @@ function chpwd() {
   #export PS1="%F{yellow}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)%f$ "
 }
 #: ALIASES
+alias     g="nvim ~/.gym.md"
 # Files
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
 alias   com="nvim ~/.commands"
 # Fixes
-alias   gdb="sudo gdb"
+#alias   gdb="sudo gdb"
 alias  cgdb="sudo cgdb"
 alias  htop="sudo htop"
 alias mkdir="mkdir -pv" # Make parent directories
 alias  make="clear && make"
 alias  zath="zathura --fork" # Run zathura in background
+# GUI
+alias  mvim="skhd -k 'cmd + shift - k'; mvim"
 # Git
 alias    gp="git push"
 alias   gpl="git pull"
@@ -83,15 +73,14 @@ alias    zz="nvim ~/.tmux.conf"
 alias   zzz="nvim ~/.config/nvim/init.vim"
 alias  zzzz="nvim ~/.cheat-sheet"
 alias    zx="nvim ~/.zsh/widgets.zsh"
-alias   zzx="nvim ~/.zsh/spotify.zsh"
+alias   zxx="nvim ~/.skhd"
 alias    rv="source ~/.zshrc"
 alias avril="ssh klasseg@avril.sys.ict.kth.se" # avril
 alias    pi="mosh pi@192.168.1.4 -- tmux a" # Raspberry pi ssh
-alias     g="fetch_downloads"
 alias   hir="pbpaste | highlight --syntax=rs    -O rtf | pbcopy" # Highlight code (Rust)
 alias   his="pbpaste | highlight --syntax=scala -O rtf | pbcopy" # Highlight code (Scala)
+alias   hiq="pbpaste | highlight --syntax=sql   -O rtf | pbcopy" # Highlight code (SQL)
 alias     o="n-options"
-alias  hack="nvim ~/.hack-days"
 alias    gl="git log --pretty"
 alias    ed="ed -p'* '"
 alias    sc="nvim ~/PhD/Plan.md"
@@ -114,8 +103,7 @@ export     HISTSIZE=$HISTFILESIZE
 export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
 export    WORDCHARS=""
-source ~/.zsh/tizen-c.zsh
-source ~/.zsh/tizen-cpp.zsh
+export    LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
 setopt NO_AUTOREMOVESLASH;
@@ -135,9 +123,26 @@ setopt SHARE_HISTORY;        # Share history between shells
 setopt INTERACTIVE_COMMENTS; # Allow interactive comments in shell
 setopt PROMPT_SUBST;         # Allow stuff in prompts
 setopt TRANSIENT_RPROMPT;    # Clear RPS1 when accepting command
+setopt EXTENDED_GLOB;
 #: CUSTOM OPTIONS
 export FZF_HEIGHT=20
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+#: SOURCES
+#function zr_update {
+  #zr load \
+    #zsh-users/zsh-autosuggestions \
+    #zdharma/fast-syntax-highlighting \
+    #hlissner/zsh-autopair \
+    #RobSis/zsh-completion-generator
+#}
+#source ~/.zr/init.zsh
+source ~/.zsh/widgets.zsh
+source ~/.zsh/zsh-autopair/autopair.zsh
+#source ~/.zsh/zsh-completion-generator/zsh-completion-generator.plugin.zsh
+source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 
+autoload -Uz edit-command-line; zle -N edit-command-line
 #: COMPLETION
 fpath=(
   ~/.zsh/completions
@@ -145,32 +150,16 @@ fpath=(
   /usr/local/share/zsh-completions
   $fpath
 )
-autoload -Uz compinit
-autoload -Uz edit-command-line
-zle -N edit-command-line
 zmodload zsh/complist
-compinit
+autoload -Uz compinit; compinit -C
 zstyle ":completion:*:" format "%B%d%b"
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' special-dirs true      # Tabcomplete parent dir
 zstyle ':completion:*' menu select            # Show menu selection
 zstyle ':completion:*' verbose true           # Verbose completion results
 zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
-fignore=(class lock) # Never complete these
-# 0 -- vanilla completion (abc => abc)
-# 1 -- smart case completion (abc => Abc)
-# 2 -- word flex completion (abc => A-big-Car)
-# 3 -- full flex completion (abc => ABraCadabra)
-#zstyle ':completion:*' matcher-list '' \
-#  'm:{a-z\-}={A-Z\_}' \
-#  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-#  'r:|?=** m:{a-z\-}={A-Z\_}'
-#: SOURCES
-source ~/.zsh/widgets.zsh
-source ~/.zsh/zsh-autopair/autopair.zsh
-source ~/.zsh/zsh-completion-generator/zsh-completion-generator.plugin.zsh
-source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} # Colors for files completion
+fignore=(class lock aux fls log out fdb_latexmk synctex.gz) # Never complete these
 #: KEYBINDS
 # Custom widgets
 bindkey 'Œ'    w-bin
@@ -227,3 +216,4 @@ function pdftojpg {
     $1 \
     +append $(echo $1 | sed "s/\.pdf/\.png")
 }
+#zprof # bottom of .zshrc
