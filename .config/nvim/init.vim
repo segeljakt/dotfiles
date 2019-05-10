@@ -9,6 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "let g:ale_c_gcc_executable = '/usr/local/bin/gcc-8'
 "let g:ale_set_highlights = 0
 "let g:ale_rust_rls_toolchain = "stable"
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug '/Users/Klas/Git/vim-plugins/neovim-calculator'
 Plug '/Users/Klas/Git/vim-plugins/vim-commando'
 Plug 'morhetz/gruvbox'

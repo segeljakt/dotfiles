@@ -10,9 +10,12 @@
 [alias]
 	d = difftool
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+  diffa = diff -w  --word-diff-regex=[^[:space:]]
+  diffw = diff -w -U0 --word-diff-regex=[^[:space:]]
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	hooksPath = ~/.githooks
+  whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
 [log]
 	date = format:%b %d %H:%M
 [format]

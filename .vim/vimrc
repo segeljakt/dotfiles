@@ -1,7 +1,7 @@
 "+----------------------------------------------------------------------------+
 "|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
 "+----------------------------------------------------------------------------+
-": Load plugins
+"* Load plugins
 set nocp                        " Always do this first
 set guioptions=
 call plug#begin('~/.vim/plugged')
@@ -9,13 +9,12 @@ source ~/.vim/plugins.vim
 call plug#end()
 source ~/.vim/private.vim
 source ~/.vim/plugin-conf.vim
-": General settings
+"* General settings
 let mapleader = "§"
 let g:author = "Klas Segeljakt"
 let g:email = "klasseg@kth.se"
 syntax enable
 filetype plugin indent on       " Detect filetypes
-" colorscheme gruvbox | set background=dark
 colorscheme PaperColor | set background=light
 set dict+=~/.vim/dict/basic
 set viminfo='100,n~/.vim/viminfo
@@ -31,18 +30,14 @@ set cpoptions-=aA               " Read and write shouldn't set #
 set fileformats=unix,mac,dos    " Handle all, but prefer unix
 set fileignorecase              " Always do the above
 set fillchars=vert:\│           " Borders
-set foldclose="all"             " Autoclose folds
 set guicursor+=a:blinkon0       " Disable blinking
+set scrolloff=0                " Show at least X lines above/below cursor
 set display=lastline            " Show as much as possible of paragraphs
-" set guifont=Roboto\ Mono\ Nerd\ Font\ Complete:h13
-" set cursorline
-" set relativenumber
-syntax sync minlines=256
+syn sync minlines=256           " Less syntax lagging
 set guifont=Fura\ Code\ Regular\ Nerd\ Font\ Complete:h13
+set macthinstrokes              " Tighter font
 set nomodeline                  " Do not detect modeline
 set encoding=utf-8
-"set directory^=$HOME/.vim/swapfiles// " Centralize swapfiles
-"set updatecount=10000          " Number of chars before flush
 set noswapfile                  " I've had enough of this
 set hlsearch                    " Highlight matches of search
 set ignorecase                  " Ignore case when searching
@@ -51,10 +46,9 @@ set infercase                   " Adjust completion to match case
 set laststatus=2                " Always show statusline
 set lazyredraw                  " Do not redraw while executing macros
 set linebreak                   " Break by word instead of char
-set macthinstrokes              " Tighter font
 set noshowmode                  " Do not bother showing current mode
 set number                      " Row numbers
-set pumheight=25                " Only show 5 completion items max
+set pumheight=25                " Only show 25 completion items max
 set showcmd                     " Show visual selection
 set showfulltag                 " Show full tag when matching from tagfile
 set showtabline=2               " Always show tabline
@@ -70,11 +64,10 @@ set wildmenu                    " Tabcompletion for commandline
 set wildcharm=<Tab>             " Allow macros to tabcomplete
 set matchpairs=(:),{:},[:],<:>,":" " Separators
 set shell=/usr/local/bin/zsh    " Shell program
-" let &shellcmdflag="-f -c"
+" set shellcmdflag=-f\ -c
 set emoji                       " Emoji characters are full-width
-set preserveindent              " Preserve indent structure
-"set autochdir                   " Change directory to file in buffer ERROR: bugs other stuff
-set maxmempattern=2000000       " More memory for pattern matching
+set autochdir                   " Change directory to file in buffer !WARNING!
+set maxmempattern=2000000       " Max memory for pattern matching
 set maxmem=2000000              " Max mem for buffers
 set maxmemtot=2000000           " Max mem for all buffers combined
 set ttyfast                     " Faster
@@ -86,12 +79,12 @@ set tabstop=2                   " Number of spaces per tab
 set shiftwidth=2                " Number of spaces for each autoindent
 set softtabstop=2               " ?
 set shiftround                  " Indent to round number of spaces
+set preserveindent              " Preserve indent structure
 set undofile                    " Use persistent undo
 set undodir=~/.vimundo          " Stored here
 set undolevels=2000             " Max number of changes that can be undone
-set ruler                       " Show line and column number
 set guiheadroom=60
-set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
+" set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
 set foldexpr=MyFoldExpr()       " Custom folding expression
 set updatetime=250              " Write to disk after 250 ms
 set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
@@ -101,30 +94,9 @@ set belloff=all                 " STOP IT
 set whichwrap=b,s,h,l           " Allow these to move past EOL
 set nojoinspaces                " Insert only one space when joining
 set shortmess=aoOstTWAIcF
+set completeopt=preview,noinsert,menuone,noselect
 set formatoptions=rownlj
-"::----------- DISABLED ------------
-"set guipty                     " Pseudo-pty for shell-commands
-"set macligatures               " Ligatures (Laggy)
-"set makeef=""                  " Quickfix file from make
-"set pdev="HP Deskjet"
-"set wildmode=list:longest,full " Match
-"set guifont=mplus\ Nerd\ Font:h10
-"set guifont=Menlo\ Regular\ for\ Powerline\ Nerd\ Font\ Complete:h10
-"set guifont=Inconsolata\ Nerd\ Font:h10
-"set guifont=Knack\ Nerd\ Font:h10
-"set guifont=\monofur\ for\ Powerline:h10
-"set scrolloff=2                " Show at least 2 lines above cursor
-"set scrolljump=5               " Number of lines to scroll when off-screen
-"set showmatch                  " Jump to [{( after entering ]})
-"set clipboard=unnamed          " Yank and paste without prefix
-"set langmap=li,ko,hn,je,nh,ej,ik,ol,LI,KO,JE,EJ,IK,OL
-"set macmeta                     " <Alt> => <M> (BUGGY)
-" o: Comment on o
-" w: Trailing whitespace = Same
-" n: Recognize numbered lists
-" l: Do not break long lines
-" j: Remove comment when joining lines
-": Disabled plugins
+"* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
 let g:loaded_tarPlugin        = 1
@@ -142,10 +114,7 @@ let g:loaded_2html_plugin     = 1
 let g:loaded_rrhelper         = 1
 let g:loaded_spellfile_plugin = 1
 let g:no_pdf_maps             = 1
-": Commands
-com! Ix :w ![ -z "$1" ] && curl -F 'f:1=<-' ix.io || ix < "$1"; " Pastebin
-com! -nargs=1 -complete=help H :h <args> | norm! "\<C-w>L"
-": Keybindings
+"* Keybindings
 " PhD
 nno <silent> <Leader>d  :AsyncRun open dict://<cword><CR><CR>
 nno          ∏          :e ~/PhD/Survey/Notes/
@@ -154,8 +123,8 @@ nno          <          i<><C-c>i| " Generics
 " Plugins
 nno          <C-s>      :CycleColorNext<CR>
 xmap         s          <Plug>VSurround
-nno <expr>   q          &ma ? ':TComment<CR>' : ''
-vno <expr>   q          &ma ? mode()==#'V' ? ':TComment<CR>' : ':TCommentInline<CR>' : ''
+nno <expr>   q          &ma?':TComment<CR>':''
+vno <expr>   q          &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
 nno <silent> +          :Neoformat<CR>
 nno <silent> gb         :Gbrowse<CR>
 nno          M          <Plug>ToggleMarkbar
@@ -168,7 +137,7 @@ nno          Ö          :ArgWrap<CR>
 nno          ç          :Calendar<CR>|                    " <M-c>
 nno          Å          :Bdelete!<CR>
 nno          gh         :GHActivity<CR>
-nno          ü          :PlugUpgrade<CR>|                 " <M-u>
+nno          ü          :PlugUpdate<CR>|                  " <M-u>
 nno          <C-H>      :SidewaysLeft<CR>
 nno          <C-L>      :SidewaysRight<CR>
 nno          <D-u>      :UndotreeToggle<CR>
@@ -188,16 +157,16 @@ vm           J          <Plug>SchleppDown
 vm           K          <Plug>SchleppUp
 vm           L          <Plug>SchleppRight
 vm           D          <Plug>SchleppDup
-"map <silent>  <C-q>     <Plug>NERDCommenterAppend
-"map <silent>  q         <Plug>NERDCommenterToggle
 nm <silent>  <C-k>      <Plug>(ale_previous_wrap)zz
 nm <silent>  <C-j>      <Plug>(ale_next_wrap)zz
 nm           K          <Plug>ManPreGetPage<CR>
 no           <C-w>m     :WinResizerStartMove<CR>
-" no           <C-w>,     :WinResizerStartResize<CR>
-" imap         <C-l>      <Plug>(coc-snippets-expand)
 nmap         K          <Plug>(expand_region_expand)
 nmap         L          <Plug>(expand_region_shrink)
+nno          <D-g>      :GitGutterLineHighlightsToggle<CR>
+nno          <D-S-g>    :GitGutterFold<CR>
+nno          <D-j>    :GitGutterNextHunk<CR>
+nno          <D-k>    :GitGutterPrevHunk<CR>
 " Fixes
 ino          \          <Nop>|                            " Terrible
 nno          <C-q>      q|                                " Record with <C-q>
@@ -259,24 +228,6 @@ cno          <C-b>      <S-Left>
 cno          <C-e>      <S-Right>
 cno          <C-v>      <C-r><C-l>
 cno          <C-f>      <C-\>e
-"fun Accept()
-"  let pos = getcmdpos()-2
-"  let line = getcmdline()
-"  if line[pos] == '/'
-"    let a = line[0:pos]
-"    let b = substitute(a, "\\\ ", ";", "g")
-"    let c = split(b)[-1]
-"    let d = substitute(c, ";", " ", "g")
-"    if empty(getcompletion(d, "file"))
-"      return b
-"    else
-"      return " \<BS>\<Tab>"
-"    endif
-"  else
-"    return "\<CR>"
-"  endif
-"endfun
-" cno <expr>   <CR>       Accept()
 " Toggles / Sliders
 nno          <Leader>b  :set ri!<CR>|                     " Write backwards
 nno          <Leader>fu :set fu!<CR>|                     " Fullscreen toggle
@@ -287,12 +238,13 @@ nno          Œ          :set wrap!<CR>|                   " <M-O>
 ino          <C-f>      \
 ino          <C-d>      <C-c>A
 " nno          <C-s>      :w<CR>
-nno          <D-j>      j<C-e>|                           " Move without scroll
-nno          <D-k>      k<C-y>
+" nno          <D-j>      j<C-e>|                           " Move without scroll
+" nno          <D-k>      k<C-y>
 vno          <C-y>      ygvr<Space>|                      " Yank & clear
 nno          cu         gg=G``|                           " Format file
 nno          gl         <C-w>TgT|                         " Move to new tab
 " Commands
+" nno          <S-D-d>    :ALEDetail<CR>
 nno          <Leader>e  :Ix<CR>                           " Upload to pastebin
 no           å          :x<CR>
 nno          ä          :%s/\s\+$//e<CR>|                 " Remove whitespaces
@@ -312,6 +264,17 @@ nno          <D-f>      :!cargo test<CR>
 nno          <D-e>      :!cargo search 
 nno          <D-x>      :!cargo check<CR>
 nno          <D-z>      :!cargo bench<CR>
+" Macros
+nno          <D-1>      @1
+nno          <D-2>      @2
+nno          <D-3>      @3
+nno          <D-4>      @4
+nno          <D-5>      @5
+nno          <D-6>      @6
+nno          <D-7>      @7
+nno          <D-8>      @8
+nno          <D-9>      @9
+nno          <D-E>      <C-q>
 " File shortcuts
 nno          π          :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
 nno          æ          :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
@@ -320,11 +283,11 @@ nno          œ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
 nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
 nno          ›          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
 nno          ‹          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
-": Syntax
+"* Syntax
 hi ColorColumn guibg=lightred
 " hi StatusLine guifg=#F5F5F5
 hi StatusLineNC guifg=#F5F5F5
-":: C
+"** C
 let c_gnu = 1              " GNU gcc specific items
 let c_space_errors = 1     " trailing white space and spaces before a <Tab>
 let c_curly_error = 1      " highlight a missing }; this forces syncing from the
@@ -341,14 +304,14 @@ let c_minlines = 200
   "syn match _PRE_PROCESSOR /[A-Z_][A-Z0-9_]\+/ containedin=.*Macro.*
   "syn match _PRE_PROCESSOR /[A-Z_][A-Z0-9_]\+/ containedin=.*cComment.*
 "endfun
-":: HTML
+"** HTML
 let g:html_whole_filler = 1
 let g:html_prevent_copy = "fn"
 let g:html_pre_wrap = 0
 "let g:html_dynamic_folds = 1
 "let g:html_no_foldcolumn = 1
 "let g:html_hover_unfold = 1
-":: Keywords
+"** Keywords
 " TODO DANGER ERROR WARNING Klas Segeljakt <klasseg@kth.se> [2017-10-21 01:26]
 fun HighlightKeywords()
   hi _TODO    guibg=#95bc0a guifg=black
@@ -367,85 +330,27 @@ fun HighlightKeywords()
   syn match _EMAIL /<*[a-zA-Z]\+@[a-zA-Z]\+\.[a-zA-Z]\+>*/ containedin=.*Comment.*
   syn match _DATE /\[[0-9?]\+-[0-9?]\+-[0-9?]\+ [0-9?]\+:[0-9?]\+\]/ containedin=.*Comment.*
 endfun
-"   au Syntax * call HighlightKeywords()
-": Templates
-":: C
-fun! NewTemplate_c(...) " C template
-  exe "0read ~/.vim/templates/template_c"
-  let l:filename = expand('%:t')
-  let l:extension = expand('%:e')
-  let l:author_email = g:author." <".g:email.">"
-  let l:date=strftime("[%Y-%m-%d %H:%M]")
-  " Filename+Author+Date
-  undojoin | exe "2s/_".repeat(" ", strlen(l:filename)-1)."/".l:filename."/"
-  undojoin | exe "3s/_".repeat(" ", strlen(l:author_email)-1)."/".l:author_email."/"
-  undojoin | exe "4s/\\[.*\\]/".l:date."/"
-  " File specifics
-  if a:0 != 1
-    if l:extension == "h" " Header
-      let l:FILENAME=substitute(toupper(l:filename), '\.', '_', 0)
-      undojoin | call append(7,  "#ifndef ".l:FILENAME)
-      undojoin | call append(8,  "#define ".l:FILENAME)
-      undojoin | call append(9,  '/'.repeat('*', 77).'/')
-      undojoin | call append(10,  '')
-      undojoin | call append(11, '/'.repeat('*', 77).'/')
-      undojoin | call append(12, "#endif /* ".l:FILENAME." */")
-      normal Gddgg10j
-    endif
-  endif
-endfun
-fun! UpdateTemplate_gcc() " C template
-  undojoin | exe "5s/\\[.*\\]/".strftime("[%Y-%m-%d %H:%M]")."/"
-endfun
-fun! HasTemplate_gcc() " C template
-  return !(line('$') == 1 && getline(1) == '')
-endfun
-":: Vim
-fun! NewTemplate_vim(...) " Vim template
-  exe "0read ~/.vim/templates/template_vim"
-  let l:filename = expand('%:t')
-  let l:author_email = g:author." <".g:email.">"
-  let l:date=strftime("[%Y-%m-%d %H:%M]")
-  undojoin | exe "2s/-".repeat(" ", strlen(l:filename)-1)."/".l:filename."/"
-  undojoin | exe "3s/-".repeat(" ", strlen(l:author_email)-1)."/".l:author_email."/"
-  undojoin | exe "4s/\\[.*\\]/".date."/"
-endfun
-fun! UpdateTemplate_vim() " Vim template
-  undojoin | exe "5s/\\[.*\\]/".strftime("[%Y-%m-%d %H:%M]")."/"
-endfun
-":: Pandoc
-fun! NewTemplate_pandoc(...) " Pandoc template
-  exe "0read ~/.vim/templates/template_pandoc"
-  let l:date=strftime("[%Y-%m-%d %H:%M]")
-  undojoin | exe "%s/<author>/".g:author."/"
-  undojoin | exe "%s/<email>/<".g:email.">/"
-  undojoin | exe '%s/<created>/"'.l:date.'"/'
-endfun
-": Folding
+"* Folding
 " Fold Expression
 fun! MyFoldExpr()
-  let thisline = getline(v:lnum)
-  if     match(thisline, '^.:::') >= 0 | return ">3"
-  elseif match(thisline, '^.::')  >= 0 | return ">2"
-  elseif match(thisline, '^.:')   >= 0 | return ">1"
-  else                                 | return "="
-  endif
+  let last = matchend(getline(v:lnum), '^.\*\+')
+  if last == -1
+    return "=="
+  el
+    return ">".(last-1)
+  en
 endfun
-": Autocmd
+"* Autocmd
 aug Autocommands | au!
   au FileType vim-plug syn match Normal '\v(Ok|Already up to date)\.' conceal
   au BufEnter tex set formatoptions+=w | set textwidth=83 | set nowrap
   au BufLeave tex set formatoptions-=w | set textwidth=0 | set wrap
   au BufReadPost .vimrc set nowrap
-  au FocusLost * silent wall
+  au FocusLost * silent! wall
   au Syntax * match none
-  au Syntax vim,c,cpp,rust match ColorColumn /\%101v.*/
+  au Syntax vim,c,cpp,rust match ColorColumn /\%121v.*/
   au BufReadPost * silent norm! g`"
   au StdinReadPre * silent let s:std_in=1
-"   au TabNew * let t:NERDTreeZoomCurrentWindow = winnr()
-"   au BufEnter * if winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree() | q | en
-  " Formatoptions
-"   au BufEnter * setlocal formatoptions=rownlj
   au VimEnter,BufWinEnter *
     \ if !exists('t:startify_new_tab')
     \ && !exists('t:goyo_master')
@@ -456,11 +361,9 @@ aug Autocommands | au!
     \ |   Startify
     \ | endif
   au BufRead,BufNewFile *.sbt set filetype=scala
-"   au VimEnter * NERDTreeCWD
-"   au VimEnter * wincmd w
-"   au BufWinEnter * if !exists("t:NERDTreeBufName") | NERDTreeMirror | en
+  au BufWinEnter * if &previewwindow | wincmd L | en
 aug END
-": Spell correction / Abbreviations
+"* Spell correction / Abbreviations
 iab    retrun  return
 iab     pritn  print
 iab       teh  the
@@ -469,99 +372,3 @@ iab  liekwise  likewise
 iab      moer  more
 iab  previosu  previous
 iab      pset  pest
-": Digraphs
-"ino <C-l>0 ₀|ino <C-o>0 ⁰
-"ino <C-l>1 ₁|ino <C-o>1 ¹
-"ino <C-l>2 ₂|ino <C-o>2 ²
-"ino <C-l>3 ₃|ino <C-o>3 ³
-"ino <C-l>4 ₄|ino <C-o>4 ⁴
-"ino <C-l>5 ₅|ino <C-o>5 ⁵
-"ino <C-l>6 ₆|ino <C-o>6 ⁶
-"ino <C-l>7 ₇|ino <C-o>7 ⁷
-"ino <C-l>8 ₈|ino <C-o>8 ⁸
-"ino <C-l>9 ₉|ino <C-o>9 ⁹
-"ino <C-l>+ ₊|ino <C-o>+ ⁺
-"ino <C-l>- ₋|ino <C-o>- ⁻
-"ino <C-l>= ₌|ino <C-o>= ⁼
-"ino <C-l>( ₍|ino <C-o>( ⁽
-"ino <C-l>) ₎|ino <C-o>) ⁾
-"             ino <C-o>~  ̃
-"
-"ino <C-l>a ₐ|ino <C-o>a ᵃ|ino <C-o>A ᴬ
-"ino <C-l>b ₆|ino <C-o>b ᵇ|ino <C-o>B ᴮ
-"ino <C-l>c ꜀|ino <C-o>c ᶜ|
-"ino <C-l>d ₔ|ino <C-o>d ᵈ|ino <C-o>D ᴰ
-"ino <C-l>e ₑ|ino <C-o>e ᵉ|ino <C-o>E ᴱ
-"ino <C-l>f բ|ino <C-o>f ᶠ|
-"ino <C-l>g ₉|ino <C-o>g ᵍ|ino <C-o>G ᴳ
-"ino <C-l>h ₕ|ino <C-o>h ʰ|ino <C-o>H ᴴ
-"ino <C-l>i ᵢ|ino <C-o>i ᶦ|ino <C-o>I ᴵ
-"ino <C-l>j ⱼ|ino <C-o>j ʲ|ino <C-o>J ᴶ
-"ino <C-l>k ₖ|ino <C-o>k ᵏ|ino <C-o>K ᴷ
-"ino <C-l>l ₗ|ino <C-o>l ˡ|ino <C-o>L ᴸ
-"ino <C-l>m ₘ|ino <C-o>m ᵐ|ino <C-o>M ᴹ
-"ino <C-l>n ₙ|ino <C-o>n ⁿ|ino <C-o>N ᴺ
-"ino <C-l>o ₒ|ino <C-o>o ᵒ|ino <C-o>O ᴼ
-"ino <C-l>p ₚ|ino <C-o>p ᵖ|ino <C-o>P ᴾ
-"ino <C-l>r ᵣ|ino <C-o>r ʳ|ino <C-o>R ᴿ
-"ino <C-l>s ₛ|ino <C-o>s ˢ|
-"ino <C-l>t ₜ|ino <C-o>t ᵗ|ino <C-o>T ᵀ
-"ino <C-l>u ᵤ|ino <C-o>u ᵘ|ino <C-o>U ᵁ
-"ino <C-l>v ᵥ|ino <C-o>v ᵛ|
-"ino <C-l>x ₓ|ino <C-o>x ˣ|
-"ino <C-l>y ᵧ|ino <C-o>y ʸ|
-"ino <C-l>z ₂|ino <C-o>z ᶻ|
-"
-"ino <C-o>sn   ∩
-"ino <C-o>su   ∪
-"ino <C-o>s=(  ⊆
-"ino <C-o>s(   ⊂
-"ino <C-o>s!(  ⊄
-"ino <C-o>s=)  ⊇
-"ino <C-o>s)   ⊃
-"ino <C-o>s!)  ⊅
-"ino <C-o>so   ⊖
-"ino <C-o>s-(  ∈
-"ino <C-o>s-!( ∉
-"ino <C-o>sx   ×
-"ino <C-o>s0   Ø
-"
-"ino <C-o>ga   α|ino <C-o>gA   Α|
-"ino <C-o>gb   β|ino <C-o>gB   Β|ino <C-o>g-b  ᵦ|ino <C-o>g+b   ᵝ
-"ino <C-o>gg   γ|ino <C-o>gG   Γ|ino <C-o>g-g  ᵧ|ino <C-o>g+g   ᵞ
-"ino <C-o>gd   δ|ino <C-o>gD   ∆|                ino <C-o>g+d   ᵟ
-"ino <C-o>ge   ε|ino <C-o>gE   Ε|
-"ino <C-o>gz   ζ|ino <C-o>gZ   Ζ|
-"ino <C-o>gh   η|ino <C-o>gH   Η|
-"ino <C-o>gth  θ|ino <C-o>gTH  Θ|                ino <C-o>g+th  ᶿ
-"ino <C-o>gi   ι|ino <C-o>gI   Ι|                ino <C-o>g+i   ᶥ
-"ino <C-o>gk   κ|ino <C-o>gK   Κ|
-"ino <C-o>gl   λ|ino <C-o>gL   Λ|
-"ino <C-o>gm   μ|ino <C-o>gM   Μ|
-"ino <C-o>gn   ν|ino <C-o>gN   Ν|
-"ino <C-o>gx   ξ|ino <C-o>gX   Ξ|
-"ino <C-o>gomi ο|ino <C-o>gOMI Ο|
-"ino <C-o>gpi  π|ino <C-o>gPI  Π|
-"ino <C-o>gr   ρ|ino <C-o>gR   Ρ|ino <C-o>g-r  ᵨ
-"ino <C-o>gs   σ|ino <C-o>gS   Σ|
-"ino <C-o>gta  τ|ino <C-o>gTA  Τ|
-"ino <C-o>gu   υ|ino <C-o>gU   Υ|
-"ino <C-o>gph  φ|ino <C-o>gPH  Φ|ino <C-o>g-ph ᵩ|ino <C-o>g+ph  ᵠ
-"ino <C-o>gc   χ|ino <C-o>gC   Χ|ino <C-o>g-c  ᵪ|ino <C-o>g+c   ᵡ
-"ino <C-o>gps  ψ|ino <C-o>gPS  Ψ|
-"ino <C-o>gome ω|ino <C-o>gOME Ω|
-"
-"ino <C-o>mx   ⊗|
-"ino <C-o>mint ∫|
-"ino <C-o>md   ∂|
-"ino <C-o>mf   ∀|
-"ino <C-o>minf ∞|
-"
-"ino <C-o><= ≤|ino <C-o>>= ≥
-"ino <C-o>=< ≼|ino <C-o>=> ≽
-"ino <C-o>>> ≻|ino <C-o><< ≺
-"
-"
-"ino <C-o>-> →
-"ino <C-o>. ·
-"ino <C-o>\|\| ∥

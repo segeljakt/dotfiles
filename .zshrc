@@ -26,6 +26,7 @@ alias     g="nvim ~/.gym.md"
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
 alias   com="nvim ~/.commands"
+alias names="nvim ~/PhD/names"
 # Fixes
 #alias   gdb="sudo gdb"
 alias  cgdb="sudo cgdb"
@@ -42,7 +43,9 @@ alias    gc="git commit"
 alias   gcl="git clone"
 alias    gg="git pull"
 # Overrides
-alias    ls="exa --group-directories-first"
+alias    ls="lsd --group-dirs=first"
+alias   lst="lsd --tree"
+alias   lsa="lsd --date relative --all"
 alias  grep="rg --no-ignore --hidden"
 alias    rg="rg --no-ignore --hidden"
 #alias  find="fd --no-ignore"
@@ -54,7 +57,7 @@ alias    vi="nvim"
 #alias   vim="nvim"
 alias   gcc="gcc-8"
 # Shortcuts
-alias     m="mvim --remote-tab"
+alias     m="mvim --remote-tab-silent"
 alias   ...=../..
 alias  ....=../../..
 alias .....=../../../..
@@ -66,7 +69,7 @@ alias     u="w-upgrade-all"
 alias     a="brew search"
 alias     i="brew info"
 alias    ii="brew install"
-alias     r="brew cleanup --force"
+alias     r="brew cleanup"
 alias     c="clear"
 alias     z="nvim ~/.zshrc"
 alias    zz="nvim ~/.tmux.conf"
@@ -104,6 +107,8 @@ export      FIGNORE=$FIGNORE:DS_Store
 export   HISTIGNORE="ls";    # Ignore certain commands from history
 export    WORDCHARS=""
 export    LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
+export CARGO_HOME=~/.cargo/
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
 setopt NO_AUTOREMOVESLASH;
@@ -209,11 +214,6 @@ bindkey -M menuselect '^I'   menu-expand-or-complete
 bindkey '^[[3~' delete-char # <FN-BS>
 # FUNCTIONS
 function pdftojpg {
-  convert \
-    -density 300 \
-    -trim \
-    -quality 100 \
-    $1 \
-    +append $(echo $1 | sed "s/\.pdf/\.png")
+  convert -density 300 -trim -quality 100 $1 +append $(echo $1 | sed "s/\.pdf/\.png")
 }
 #zprof # bottom of .zshrc
