@@ -1,5 +1,46 @@
 "* Plugged
-let g:plug_window = "enew"
+let g:plug_window = 'enew'
+"* agda
+let g:agdavim_enable_goto_definition = 0
+let g:agda_extraincpaths = ["/home/derek/haskell/agda-stdlib-0.8.1/src"]
+"* markdown-preview.nvim
+let g:mkdp_preview_options = {
+      \ 'disable_sync_scroll': 1,
+      \ 'hide_yaml_meta': 1
+      \ }
+let g:mkdp_page_title = '「${name}」'
+"* vim-surround
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes += [
+      \   {
+      \     'buns'        : ['{', '}'],
+      \     'motionwise'  : ['line'],
+      \     'kind'        : ['add'],
+      \     'linewise'    : 1,
+      \     'command'     : ["'[+1,']-1normal! >>"],
+      \   },
+      \   {
+      \     'buns'        : ['{', '}'],
+      \     'motionwise'  : ['line'],
+      \     'kind'        : ['delete'],
+      \     'linewise'    : 1,
+      \     'command'     : ["'[,']normal! <<"],
+      \   }
+      \ ]
+"* vim-multiple-cursors
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '’'         " replace C-n
+let g:VM_maps['Find Subword Under'] = '’'         " replace visual C-n
+let g:VM_maps["Select l"]           = '<S-Right>' " start selecting left
+let g:VM_maps["Select h"]           = '<S-Left>'  " start selecting right
+fun! VM_Start()
+  nmap <buffer> <C-C> <Esc>
+  imap <buffer> <C-C> <Esc>
+endfun
+fun! VM_Exit()
+  nunmap <buffer> <C-C>
+  iunmap <buffer> <C-C>
+endfun
 "* vim-gitgutter
 let g:gitgutter_diff_args =
   \   '--no-color'
@@ -8,20 +49,6 @@ let g:gitgutter_diff_args =
   \ .' --ignore-space-change'
   \ .' --ignore-all-space'
   \ .' --ignore-blank-lines'
-
-"* vim-lsc
-let g:lsc_enable_autocomplete = v:true
-let g:lsc_server_commands = {
-  \   'scala': {
-  \     'command': 'metals-vim',
-  \     'log_level': 'Log'
-  \   }
-  \ }
-let g:lsc_auto_map = {
-  \   'GoToDefinition': 'gd',
-  \ }
-"* vim-markdown-composer
-let g:markdown_composer_autostart = 0
 "* vim-markdown
 let g:vim_markdown_folding_disabled = 1
 ": NERDTree
@@ -29,19 +56,15 @@ let NERDTreeIgnore=['\.pyc$', '\.swp$', '\~$']
 let NERDTreeRespectWildIgnore = 1
 let NERDTreeWinSize = 13
 let NERDTreeMinimalUI = 1
-let NERDTreeStatusline = ""
-"* NNN
-" let g:nnn#layout = { 'left': '~20%' }
-let g:nnn#command = 'nnn -l'
-let g:nnn#replace_netrw = 1
+let NERDTreeStatusline = ''
 "* vim-matchup
 let g:matchup_matchparen_stopline = 200
-let g:matchup_matchparen_deferred = 1
+let g:matchup_matchparen_deferred = 0
 let g:matchup_matchparen_status_offscreen = 0
 "* Vimtex
 let g:vimtex_indent_bib_enabled = 0
-let g:tex_conceal = "abdmgs"
-let g:vimtex_view_method = "skim"
+let g:tex_conceal = 'abdmgs'
+let g:vimtex_view_method = 'skim'
 let g:tex_flavor = 'latex'
 " let g:vimtex_log_verbose = 0
 " let g:vimtex_quickfix_enabled = 0
@@ -73,24 +96,12 @@ hi illuminatedWord guibg=bg gui=underline
 "* TComment
 let g:tcomment_maps = 0
 let g:tcomment#options = {'col': 1}
-"* EchoDoc
-let g:echodoc#enable_at_startup = 1
-"* Completeparameter
-ino <expr> ( complete_parameter#pre_complete("()")
-nmap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-nmap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-let g:complete_parameter_use_ultisnips_mapping = 0
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsJumpForwardTrigger="<Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 "* ALE
-let g:ale_completion_enabled = 1
-let g:ale_sign_error = '🔥'
-let g:ale_sign_warning = '👉' " ❌
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = ''
+let g:ale_completion_enabled = 0
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '?'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
 let g:ale_keep_list_window_open = 1 " Always show quickfix list
@@ -105,7 +116,8 @@ let g:ale_linters = {
   \  'markdown': [''],
   \  'pandoc':   [''],
   \  'tex':      [''],
-  \  'bib':      ['']
+  \  'bib':      [''],
+  \  'haskell':  ['cabal_ghc']
   \ }
 let g:ale_fixers = {
   \  'tex':    [''],
@@ -139,6 +151,8 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
+let g:startify_custom_header =
+        \ map(split(system('fortune -a | cowsay'), '\n'), '"   ". v:val')
 let g:startify_enable_unsafe = 1
 let g:startify_skiplist = [
   \   '\.vim/',
@@ -149,11 +163,6 @@ let g:startify_lists = [
   \   { 'header': ['   MRU'], 'type': 'files' },
   \   { 'header': ['   Sessions'], 'type': 'sessions' },
   \ ]
-"* python-mode
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_bind = '<leader>B'
-let g:pymode_run = 1
-let g:pymode_run_bind = '<leader>R'
 "* camelCaseMotion
 map <silent> w  <Plug>CamelCaseMotion_w
 map <silent> b  <Plug>CamelCaseMotion_b
@@ -167,7 +176,7 @@ sunmap ge
 let g:lightline = {
   \   'colorscheme': 'PaperColor',
   \   'active': {
-  \     'left':  [ [ 'mode' ], [ 'readonly', 'modified' ], [ 'path' ] ],
+  \     'left':  [ [ 'mode' ], [ 'path' ], ['readonly', 'modified' ] ],
   \     'right': [ [ 'wordcount', 'lineinfo' ], [ 'filetype', 'percent' ],
   \                [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
   \   },
@@ -177,7 +186,7 @@ let g:lightline = {
   \   },
   \   'tabline': {
   \     'left':  [ [ 'tabs' ] ],
-  \     'right': [ [ ], [ 'branch', 'time' ] ],
+  \     'right': [ [ 'branch', 'time' ] ],
   \   },
   \   'tab': {
   \     'active':   [ 'filename', 'modified' ],
@@ -254,10 +263,6 @@ fun! LightlineMode()
        \ cmdtype == '?' ? 'REV-SEARCH' :
        \                   lightline#mode()
 endfun
-function! AreThereTrailingSpaces()
-    return 
-endfunction
-set statusline+=%{AreThereTrailingSpaces()}
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors   = "\uf05e"
@@ -281,7 +286,11 @@ let g:Schlepp#dupTrimWS = 1
 "* DrawIt
 let g:draw_it_is_active = v:false
 fun! ToggleDrawIt()
-  if g:draw_it_is_active | DIstop | el | DIsngl | en
+  if g:draw_it_is_active
+    DIstop
+  el
+    DIsngl
+  en
   let g:draw_it_is_active = !g:draw_it_is_active
 endfun
 "* MRU

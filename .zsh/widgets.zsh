@@ -1,9 +1,4 @@
-# CONFIG
-export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
-export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
-export FZF_FILTERS='*.{c,h,cpp,rs,java,scala}'
-export SCROLLBACK=10
-
+# TODO: Add mapping <C-e> for running last command
 # WIDGETS
 function w-backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}
@@ -16,6 +11,7 @@ function w-upgrade-all {
 }
 function w-cargo-run  { zle -I; export RUST_BACKTRACE=0; cargo run             }
 function w-cargo-run-stacktrace  { zle -I; export RUST_BACKTRACE=1; cargo run  }
+function w-open-vim   { zle -I; nvim                                           }
 function w-clear-ls   { zle -I; clear; ls                                      }
 function w-clear      { zle -I; clear;                                         }
 function w-fg         { zle -I; fg                                             }
@@ -23,7 +19,7 @@ function w-cd-parent  { zle -I; cd ..; clear; pwd; ls                          }
 function w-help       { zle -I; cat ~/.help                                    }
 function w-todo       { zle -I; nvim ~/.todo                                   }
 function w-copy       { echo "$BUFFER" | pbcopy                                }
-function w-ranger     { ranger < /dev/tty > /dev/tty; zle redisplay            }
+function w-hunter     { hunter < /dev/tty > /dev/tty; zle redisplay            }
 function w-bin {
   exa                  \
     /bin/              \
@@ -195,7 +191,7 @@ zle -N w-git-status
 zle -N w-git-log
 zle -N w-dot
 zle -N w-contents
-zle -N w-ranger
+zle -N w-hunter
 zle -N w-file
 zle -N w-cal-agenda
 zle -N w-cal-week
@@ -210,5 +206,6 @@ zle -N w-fzf-set-filter
 zle -N w-backward-kill-dir
 zle -N w-cargo-run
 zle -N w-cargo-run-stacktrace
+zle -N w-open-vim
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

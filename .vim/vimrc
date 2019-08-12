@@ -2,22 +2,28 @@
 "|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
 "+----------------------------------------------------------------------------+
 "* Load plugins
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 set nocp                        " Always do this first
 set guioptions=
+let maplocalleader = ","
+let mapleader = "§"
 call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim
 call plug#end()
 source ~/.vim/private.vim
 source ~/.vim/plugin-conf.vim
 "* General settings
-let mapleader = "§"
 let g:author = "Klas Segeljakt"
 let g:email = "klasseg@kth.se"
 syntax enable
 filetype plugin indent on       " Detect filetypes
 colorscheme PaperColor | set background=light
 set dict+=~/.vim/dict/basic
-set viminfo='100,n~/.vim/viminfo
+if has("gui_macvim")
+  set viminfo='100,n~/.vim/viminfo
+el
+  set viminfo='100,n~/.vim/nviminfo
+en
 set autoread                    " Automatically read changes
 set autowriteall                " Automatically write when changing file
 set bufhidden=hide              " Delete buffer when closing window
@@ -31,11 +37,10 @@ set fileformats=unix,mac,dos    " Handle all, but prefer unix
 set fileignorecase              " Always do the above
 set fillchars=vert:\│           " Borders
 set guicursor+=a:blinkon0       " Disable blinking
-set scrolloff=0                " Show at least X lines above/below cursor
+set scrolloff=0                 " Show at least X lines above/below cursor
 set display=lastline            " Show as much as possible of paragraphs
 syn sync minlines=256           " Less syntax lagging
 set guifont=Fura\ Code\ Regular\ Nerd\ Font\ Complete:h13
-set macthinstrokes              " Tighter font
 set nomodeline                  " Do not detect modeline
 set encoding=utf-8
 set noswapfile                  " I've had enough of this
@@ -64,12 +69,10 @@ set wildmenu                    " Tabcompletion for commandline
 set wildcharm=<Tab>             " Allow macros to tabcomplete
 set matchpairs=(:),{:},[:],<:>,":" " Separators
 set shell=/usr/local/bin/zsh    " Shell program
-" set shellcmdflag=-f\ -c
+" let &shell="/usr/local/bin/zsh -f"    " Shell program
+set shellcmdflag=-c
 set emoji                       " Emoji characters are full-width
 set autochdir                   " Change directory to file in buffer !WARNING!
-set maxmempattern=2000000       " Max memory for pattern matching
-set maxmem=2000000              " Max mem for buffers
-set maxmemtot=2000000           " Max mem for all buffers combined
 set ttyfast                     " Faster
 set winminheight=0              " Squeeze win height
 set winminwidth=0               " Squeeze win width
@@ -83,19 +86,28 @@ set preserveindent              " Preserve indent structure
 set undofile                    " Use persistent undo
 set undodir=~/.vimundo          " Stored here
 set undolevels=2000             " Max number of changes that can be undone
-set guiheadroom=60
-" set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
+set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
 set foldexpr=MyFoldExpr()       " Custom folding expression
+set foldnestmax=4
+set foldtext=FoldText()
 set updatetime=250              " Write to disk after 250 ms
 set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
 set belloff=all                 " STOP IT
-"set verbose                     " Lengthen messages
-set whichwrap=b,s,h,l           " Allow these to move past EOL
+"set verbose                    " Lengthen messages
+set whichwrap=b,s,h,l           " Allow these keys to move past EOL
 set nojoinspaces                " Insert only one space when joining
 set shortmess=aoOstTWAIcF
-set completeopt=preview,noinsert,menuone,noselect
+set completeopt=noinsert,menuone,noselect
 set formatoptions=rownlj
+set maxmempattern=2000000       " Max memory for pattern matching
+" Macvim specifics
+if has("gui_macvim")
+  set guiheadroom=60
+  set maxmemtot=2000000         " Max mem for all buffers combined
+  set maxmem=2000000            " Max mem for buffers
+  set macthinstrokes            " Tighter font
+endif
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -104,8 +116,8 @@ let g:loaded_tar              = 1
 let g:loaded_zipPlugin        = 1
 let g:loaded_zip              = 1
 let g:loaded_gzip             = 1
-let g:loaded_netrw            = 1
-let g:loaded_netrwPlugin      = 1
+" let g:loaded_netrw            = 1
+" let g:loaded_netrwPlugin      = 1
 let g:loaded_vimballPlugin    = 1
 let g:loaded_vimball          = 1
 let g:loaded_logiPat          = 1
@@ -122,7 +134,7 @@ nno          ∏          :e ~/PhD/Survey/Notes/
 nno          <          i<><C-c>i| " Generics
 " Plugins
 nno          <C-s>      :CycleColorNext<CR>
-xmap         s          <Plug>VSurround
+" xmap         S          <Plug>(operator-sandwich-add)
 nno <expr>   q          &ma?':TComment<CR>':''
 vno <expr>   q          &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
 nno <silent> +          :Neoformat<CR>
@@ -131,27 +143,28 @@ nno          M          <Plug>ToggleMarkbar
 nno          <C-p>      :Rg<CR>
 nno          <C-u>      :MRU<CR>
 xno          <C-r>      :s/ //g<Left><Left>
-nmap         :          \l
+nm           :          \l
+nm  <nowait><buffer> <C-c> <Plug>(VM-Reset)
 nno          <C-x>      :Stealth<CR>
 nno          Ö          :ArgWrap<CR>
-nno          ç          :Calendar<CR>|                    " <M-c>
+nno          χ          :Calendar<CR>|                    " <M-c>
 nno          Å          :Bdelete!<CR>
 nno          gh         :GHActivity<CR>
 nno          ü          :PlugUpdate<CR>|                  " <M-u>
 nno          <C-H>      :SidewaysLeft<CR>
 nno          <C-L>      :SidewaysRight<CR>
 nno          <D-u>      :UndotreeToggle<CR>
-nno          ﬁ          :NextColorScheme<CR>|             " <M-l>
-nno          ˛          :PrevColorScheme<CR>|             " <M-h>
+nno          λ          :NextColorScheme<CR>|             " <M-l>
+nno          η          :PrevColorScheme<CR>|             " <M-h>
 nno          •          :TableModeToggle<CR>|             " <M-q>
 nno          t          :ALEGoToDefinition<CR>zz
 nno          ö          :call ToggleDrawIt()<CR>
-nno          Ω          :call ToggleWordMode()<CR>        " <M-w>
+nno          ω          :call ToggleWordMode()<CR>        " <M-w>
 nno          d<Tab>     :ThesaurusQueryReplaceCurrentWord<CR>
-nno          <C-a>      :call ZoomNERDTreeFromOtherWindow()<CR>
+" nno          <C-a>      :call ZoomNERDTreeFromOtherWindow()<CR>
 nno          g.         :SortScalaImports<CR>
 xno          T          :Tabularize/
-vm           i          <Plug>SchleppToggleReindent
+" vm           i          <Plug>SchleppToggleReindent
 vm           H          <Plug>SchleppLeft
 vm           J          <Plug>SchleppDown
 vm           K          <Plug>SchleppUp
@@ -161,14 +174,16 @@ nm <silent>  <C-k>      <Plug>(ale_previous_wrap)zz
 nm <silent>  <C-j>      <Plug>(ale_next_wrap)zz
 nm           K          <Plug>ManPreGetPage<CR>
 no           <C-w>m     :WinResizerStartMove<CR>
-nmap         K          <Plug>(expand_region_expand)
-nmap         L          <Plug>(expand_region_shrink)
+map          ;          <Plug>(expand_region_expand)
+map          :          <Plug>(expand_region_shrink)
 nno          <D-g>      :GitGutterLineHighlightsToggle<CR>
 nno          <D-S-g>    :GitGutterFold<CR>
-nno          <D-j>    :GitGutterNextHunk<CR>
-nno          <D-k>    :GitGutterPrevHunk<CR>
+nno          <D-j>      :GitGutterNextHunk<CR>
+nno          <D-k>      :GitGutterPrevHunk<CR>
+vno          <D-S>      :SortGroup <details>.*<CR>
 " Fixes
-ino          \          <Nop>|                            " Terrible
+" ino          \          <Nop>|                            " Terrible
+" :set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 nno          <C-q>      q|                                " Record with <C-q>
 nno          n          nzz
 nno          N          Nzz
@@ -198,13 +213,17 @@ ino          <C-j>      <Down>
 ino          <C-k>      <Up>
 ino          <C-l>      <Right>
 no           !          :!
-no           <C-d>      <C-w>w|                           " Cycle windows
+if has("gui_macvim")
+	no         <C-d>      <C-w>w|                           " Cycle windows
+el
+	no         <C-d>      :x<CR>
+en
 nno          <Right>    <C-w>l|                           " Navigate splits
 nno          <Left>     <C-w>h
 nno          <Up>       <C-w>k
 nno          <Down>     <C-w>j
 nno          S          :%s//g<Left><Left>
-xno          S          :s//g<Left><Left>
+" xno          S          :s//g<Left><Left>
 nno <expr>   C          ':%s/' . @/ . '//g<Left><Left>'
 xno <expr>   C          ':s/' . @/ . '//g<Left><Left>'
 nno          <C-n>      gt|                           " Tab page management
@@ -233,7 +252,7 @@ nno          <Leader>b  :set ri!<CR>|                     " Write backwards
 nno          <Leader>fu :set fu!<CR>|                     " Fullscreen toggle
 nno          <Leader>dd :set diff!<CR>|                   " Diff mode
 nno          <Leader>g  :set crb! scb!<CR>                " Bind cursor/scroll
-nno          Œ          :set wrap!<CR>|                   " <M-O>
+nno          Θ          :set wrap!<CR>|                   " <M-O>
 " Shortcuts
 ino          <C-f>      \
 ino          <C-d>      <C-c>A
@@ -251,8 +270,8 @@ nno          ä          :%s/\s\+$//e<CR>|                 " Remove whitespaces
 nno          cd         :cd %:p:h<CR>:Nnn<CR>|            " Change directory
 "nno          <C-o>      :reg<CR>|                         " View yanks
 nno          <C-o>      :ALEDetail<CR><C-w>j              " Ale Detail"
-nno          ˆ          :%s///g<Left><Left>|              " Replace <M-S-i>
-nno          ∆          :put =strftime('[%d-%m-%Y]')<CR>| " Insert date <M-S-d>
+nno          ˆ          :%s///g<Left><Left>|              " Replace <M-I>
+nno          Δ          :put =strftime('[%d-%m-%Y]')<CR>| " Insert date <M-D>
 " nno          <C-f>      :let @/ = ""<CR>|                 " Clear matches
 " xno          <C-f>      :<BS><BS><BS><BS><BS>let @/ = ""<CR>| " Clear matches
 nno          <D-i>      :terminal ++close<CR>|            " Terminal
@@ -277,25 +296,25 @@ nno          <D-9>      @9
 nno          <D-E>      <C-q>
 " File shortcuts
 nno          π          :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
-nno          æ          :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
+nno          ⊢          :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
 nno          Æ          :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
-nno          œ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
+nno          θ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
 nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
-nno          ›          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
-nno          ‹          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
+nno          φ          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
+nno          β          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
 "* Syntax
 hi ColorColumn guibg=lightred
 " hi StatusLine guifg=#F5F5F5
 hi StatusLineNC guifg=#F5F5F5
 "** C
-let c_gnu = 1              " GNU gcc specific items
-let c_space_errors = 1     " trailing white space and spaces before a <Tab>
-let c_curly_error = 1      " highlight a missing }; this forces syncing from the
-let c_syntax_for_h = 1     " for *.h files use C syntax instead of C++ and use objc
-let c_comment_strings = 1  " strings and numbers inside a comment
-let c_no_bracket_error = 1 " don't highlight {}; inside [] as errors
-let c_no_curly_error = 1   " don't highlight {}; inside [] and () as errors;
-let c_minlines = 200
+let c_gnu              = 1   " GNU gcc specific items
+let c_space_errors     = 1   " trailing white space and spaces before a <Tab>
+let c_curly_error      = 1   " highlight a missing }; this forces syncing from the
+let c_syntax_for_h     = 1   " for *.h files use C syntax instead of C++ and use objc
+let c_comment_strings  = 1   " strings and numbers inside a comment
+let c_no_bracket_error = 1   " don't highlight {}; inside [] as errors
+let c_no_curly_error   = 1   " don't highlight {}; inside [] and () as errors;
+let c_minlines         = 200
 "fun! HighlightKeywords_gcc()
   "hi _PRE_PROCESSOR guifg=#f1d200
   "hi _CCOMMENT guifg=#928374 gui=NONE
@@ -333,23 +352,41 @@ endfun
 "* Folding
 " Fold Expression
 fun! MyFoldExpr()
-  let last = matchend(getline(v:lnum), '^.\*\+')
-  if last == -1
-    return "=="
+  let line = getline(v:lnum)
+  if line =~ '^<details>'
+    return ">1"
+  elseif line =~ '^</p></details>'
+    return "<1"
   el
-    return ">".(last-1)
+    return "="
   en
+"   let last = matchend(getline(v:lnum), '^.\*\+')
+"   if last == -1
+"     return "="
+"   el
+"     return ">".(last-1)
+"   en
+endfun
+fun! FoldText()
+  let line = getline(v:foldstart)
+  let list = matchlist(line, '^<details><summary>\(.*\)</summary><p>')
+  let inner = get(list, 1, "???")
+  let stripped = substitute(inner, '<.\{-}>', '', 'g')
+  return '# '.stripped
 endfun
 "* Autocmd
 aug Autocommands | au!
   au FileType vim-plug syn match Normal '\v(Ok|Already up to date)\.' conceal
-  au BufEnter tex set formatoptions+=w | set textwidth=83 | set nowrap
-  au BufLeave tex set formatoptions-=w | set textwidth=0 | set wrap
+  au BufEnter tex set formatoptions+=w textwidth=83 nowrap
+  au BufLeave tex set formatoptions-=w textwidth=0 wrap
+  au BufEnter markdown set nonumber
+  au BufLeave markdown set number
   au BufReadPost .vimrc set nowrap
   au FocusLost * silent! wall
   au Syntax * match none
   au Syntax vim,c,cpp,rust match ColorColumn /\%121v.*/
   au BufReadPost * silent norm! g`"
+  au TabLeave * silent! w
   au StdinReadPre * silent let s:std_in=1
   au VimEnter,BufWinEnter *
     \ if !exists('t:startify_new_tab')
@@ -362,13 +399,24 @@ aug Autocommands | au!
     \ | endif
   au BufRead,BufNewFile *.sbt set filetype=scala
   au BufWinEnter * if &previewwindow | wincmd L | en
+  au BufNewFile,BufRead *.agda setf agda
 aug END
 "* Spell correction / Abbreviations
-iab    retrun  return
-iab     pritn  print
-iab       teh  the
-iab      liek  like
-iab  liekwise  likewise
-iab      moer  more
-iab  previosu  previous
-iab      pset  pest
+iab    retrun return
+iab     pritn print
+iab       teh the
+iab      liek like
+iab  liekwise likewise
+iab      moer more
+iab  previosu previous
+iab      pset pest
+"* Cursor fix
+if exists('$ITERM_PROFILE')
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>[3 q"
+    let &t_EI = "\<Esc>[0 q"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+end

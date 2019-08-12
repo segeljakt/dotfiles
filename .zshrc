@@ -1,6 +1,7 @@
 #zmodload zsh/zprof # top of your .zshrc file
 #: STARTUP
-if [ "$TMUX" = "" ]; then /usr/local/bin/tmux; exit; fi
+export TERM=screen-256color
+# if [ "$TMUX" = "" ]; then /usr/local/bin/tmux -u -2; exit; fi
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
 path=(
@@ -8,20 +9,23 @@ path=(
   /opt/local/bin
   /opt/local/sbin
   /usr/local/opt/ncurses/bin
-  /usr/local/lib/ruby/gems/2.6.0/bin/
+  /usr/local/lib/ruby/gems/2.6.0/bin
+  $HOME/.local/bin
   $HOME/.cargo/bin
+  $HOME/.cabal/bin
   $path
 )
 #: HOOKS
-function chpwd() {
-  tput sc
-  emulate -L zsh
-  tmux refresh-client
+# function chpwd() {
+#   tput sc
+#   emulate -L zsh
+#   tmux refresh-client
   #ls
   #export PS1="%F{yellow}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)%f$ "
-}
+# }
 #: ALIASES
 alias     g="nvim ~/.gym.md"
+alias   tid="python3 ~/Workspace/other/tid/tid.py '$TID'"
 # Files
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
@@ -34,6 +38,7 @@ alias  htop="sudo htop"
 alias mkdir="mkdir -pv" # Make parent directories
 alias  make="clear && make"
 alias  zath="zathura --fork" # Run zathura in background
+alias emacs="open -a emacs"
 # GUI
 alias  mvim="skhd -k 'cmd + shift - k'; mvim"
 # Git
@@ -91,6 +96,8 @@ alias    cb="cargo build --color always 2>&1 | less"
 alias    ct="cargo test --color always 2>&1 | less"
 alias   hdp="ssh klas@109.225.89.18 -p 8209"
 #: ENV
+export DYLD_LIBRARY_PATH="/Users/Klas/Workspace/python/weld/python/pyweld/weld/:/usr/local/lib/python3.7/site-packages/grizzly/"
+export WELD_HOME="~/Workspace/weld/"
 #export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
 export         LESS="-R"
 export          PS1="%F{red}%D{%H:%M:%S}%f "
@@ -109,6 +116,12 @@ export    WORDCHARS=""
 export    LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
 export CARGO_HOME=~/.cargo/
+# export CARGO_TARGET_DIR="/Users/Klas/.cargo/target/"
+export CARGO_INCREMENTAL=1
+export RANGER_LOAD_DEFAULT_RC=FALSE
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/libffi/lib/pkgconfig"
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/gstreamer/lib/pkgconfig"
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/gst-plugins-base/lib/pkgconfig"
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
 setopt NO_AUTOREMOVESLASH;
@@ -132,6 +145,10 @@ setopt EXTENDED_GLOB;
 #: CUSTOM OPTIONS
 export FZF_HEIGHT=20
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
+export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
+export FZF_FILTERS='*.{c,h,cpp,rs,java,scala,py}'
+export SCROLLBACK=10
 #: SOURCES
 #function zr_update {
   #zr load \
@@ -176,7 +193,7 @@ bindkey "'"    w-git-status
 bindkey '*'    w-git-log
 bindkey '…'    w-dot
 bindkey '^P'   w-contents
-bindkey '^R'   w-ranger
+bindkey '^R'   w-hunter
 bindkey '^T'   w-file
 bindkey 'ä'    w-cal-agenda
 bindkey 'Ä'    w-cal-week
@@ -194,6 +211,7 @@ bindkey '^N'   w-clear # TODO: IRC
 bindkey '^[[.' w-cargo-run # <D-R>
 bindkey '^[[,' w-cargo-run-stacktrace # <D-S-R>
 bindkey '^[[~' w-backward-kill-dir # <C-BS>
+bindkey '^G'   w-open-vim
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -205,7 +223,6 @@ bindkey '^J'   history-beginning-search-forward
 bindkey '^K'   history-beginning-search-backward
 bindkey 'ª'    undo
 bindkey '√'    redo
-bindkey '^G'   run-help
 bindkey '^E'   end-of-line       # <C-e>
 bindkey 'Ö'    beginning-of-line # <C-E>
 bindkey '^X'   edit-command-line
