@@ -1,8 +1,19 @@
 "* Plugged
 let g:plug_window = 'enew'
-"* agda
-let g:agdavim_enable_goto_definition = 0
-let g:agda_extraincpaths = ["/home/derek/haskell/agda-stdlib-0.8.1/src"]
+"* vim-choosewin
+let g:choosewin_return_on_single_win = 1
+let g:choosewin_color_label = {
+	    \ 'gui': ['ForestGreen', 'white', 'bold'],
+	    \ 'cterm': [9, 16]
+	    \ }
+let g:choosewin_color_other = {
+	    \ 'gui': ['gray20', 'black'],
+	    \ 'cterm': [240, 0]
+	    \ }
+"* vim-stealth
+let g:stealth#trigger_after = 1000
+"* fzf.vim
+let g:fzf_layout = { 'up': '~40%' }
 "* markdown-preview.nvim
 let g:mkdp_preview_options = {
       \ 'disable_sync_scroll': 1,
@@ -43,7 +54,7 @@ fun! VM_Exit()
 endfun
 "* vim-gitgutter
 let g:gitgutter_diff_args =
-  \   '--no-color'
+  \  ' --no-color'
   \ .' --ignore-cr-at-eol'
   \ .' --ignore-space-at-eol'
   \ .' --ignore-space-change'
@@ -51,14 +62,14 @@ let g:gitgutter_diff_args =
   \ .' --ignore-blank-lines'
 "* vim-markdown
 let g:vim_markdown_folding_disabled = 1
-": NERDTree
-let NERDTreeIgnore=['\.pyc$', '\.swp$', '\~$']
+"* NERDTree
+let NERDTreeIgnore = ['\.pyc$', '\.swp$', '\~$']
 let NERDTreeRespectWildIgnore = 1
 let NERDTreeWinSize = 13
 let NERDTreeMinimalUI = 1
 let NERDTreeStatusline = ''
 "* vim-matchup
-let g:matchup_matchparen_stopline = 200
+let g:matchup_matchparen_stopline = 100
 let g:matchup_matchparen_deferred = 0
 let g:matchup_matchparen_status_offscreen = 0
 "* Vimtex
@@ -70,23 +81,23 @@ let g:tex_flavor = 'latex'
 " let g:vimtex_quickfix_enabled = 0
 " let g:vimtex_quickfix_latexlog = {'default' : 0}
 let g:vimtex_quickfix_latexlog = {
-  \  'default'    : 1,
-  \  'general'    : 1,
-  \  'references' : 1,
-  \  'overfull'   : 1,
-  \  'underfull'  : 1,
-  \  'font'       : 1,
-  \  'packages'   : {
-  \    'default'  : 1,
-  \    'natbib'   : 1,
-  \    'biblatex' : 1,
-  \    'babel'    : 1,
-  \    'hyperref' : 1,
-  \    'scrreprt' : 1,
-  \    'fixltx2e' : 1,
-  \    'titlesec' : 1,
-  \  },
-  \ }
+      \  'default'    : 1,
+      \  'general'    : 1,
+      \  'references' : 1,
+      \  'overfull'   : 1,
+      \  'underfull'  : 1,
+      \  'font'       : 1,
+      \  'packages'   : {
+      \    'default'  : 1,
+      \    'natbib'   : 1,
+      \    'biblatex' : 1,
+      \    'babel'    : 1,
+      \    'hyperref' : 1,
+      \    'scrreprt' : 1,
+      \    'fixltx2e' : 1,
+      \    'titlesec' : 1,
+      \  },
+      \ }
 "* winresizer
 let g:winresizer_start_key = "<C-w>,"
 "* vim-illuminate
@@ -94,6 +105,7 @@ let g:Illuminate_ftblacklist = ['startify']
 let g:Illuminate_highlightUnderCursor = 0
 hi illuminatedWord guibg=bg gui=underline
 "* TComment
+let g:tcomment#mode_extra = '#'
 let g:tcomment_maps = 0
 let g:tcomment#options = {'col': 1}
 "* ALE
@@ -103,8 +115,8 @@ let g:ale_completion_enabled = 0
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1 " Use quickfix list instead of loclist
-let g:ale_keep_list_window_open = 1 " Always show quickfix list
+let g:ale_set_quickfix = 1
+let g:ale_keep_list_window_open = 1
 let g:ale_linters = {
   \  'c':        ['clang'],
   \  'cpp':      ['clang'],
@@ -142,6 +154,7 @@ let g:pear_tree_pairs = {
   \ }
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
+let g:pear_tree_repeatable_expand = 0
 imap <C-c> <Plug>(PearTreeFinishExpansion)
 imap <C-e> <Plug>(PearTreeJump)
 "* Startify
@@ -151,8 +164,7 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
-let g:startify_custom_header =
-        \ map(split(system('fortune -a | cowsay'), '\n'), '"   ". v:val')
+let g:startify_custom_header = map(split(system('fortune -a | cowsay'), '\n'), '"   ". v:val')
 let g:startify_enable_unsafe = 1
 let g:startify_skiplist = [
   \   '\.vim/',
@@ -177,8 +189,7 @@ let g:lightline = {
   \   'colorscheme': 'PaperColor',
   \   'active': {
   \     'left':  [ [ 'mode' ], [ 'path' ], ['readonly', 'modified' ] ],
-  \     'right': [ [ 'wordcount', 'lineinfo' ], [ 'filetype', 'percent' ],
-  \                [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
+  \     'right': [ [ 'wordcount', 'lineinfo' ], [ 'filetype', 'percent' ], ],
   \   },
   \   'inactive': {
   \     'left':  [ [ 'path' ] ],

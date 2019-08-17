@@ -3,7 +3,7 @@
 "+----------------------------------------------------------------------------+
 "* Load plugins
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-set nocp                        " Always do this first
+set nocompatible
 set guioptions=
 let maplocalleader = ","
 let mapleader = "§"
@@ -21,6 +21,10 @@ colorscheme PaperColor | set background=light
 set dict+=~/.vim/dict/basic
 if has("gui_macvim")
   set viminfo='100,n~/.vim/viminfo
+  set guiheadroom=60
+  set maxmemtot=2000000         " Max mem for all buffers combined
+  set maxmem=2000000            " Max mem for buffers
+  set macthinstrokes            " Tighter font
 el
   set viminfo='100,n~/.vim/nviminfo
 en
@@ -87,9 +91,7 @@ set undofile                    " Use persistent undo
 set undodir=~/.vimundo          " Stored here
 set undolevels=2000             " Max number of changes that can be undone
 set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
-set foldexpr=MyFoldExpr()       " Custom folding expression
 set foldnestmax=4
-set foldtext=FoldText()
 set updatetime=250              " Write to disk after 250 ms
 set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
@@ -101,13 +103,6 @@ set shortmess=aoOstTWAIcF
 set completeopt=noinsert,menuone,noselect
 set formatoptions=rownlj
 set maxmempattern=2000000       " Max memory for pattern matching
-" Macvim specifics
-if has("gui_macvim")
-  set guiheadroom=60
-  set maxmemtot=2000000         " Max mem for all buffers combined
-  set maxmem=2000000            " Max mem for buffers
-  set macthinstrokes            " Tighter font
-endif
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -116,8 +111,8 @@ let g:loaded_tar              = 1
 let g:loaded_zipPlugin        = 1
 let g:loaded_zip              = 1
 let g:loaded_gzip             = 1
-" let g:loaded_netrw            = 1
-" let g:loaded_netrwPlugin      = 1
+let g:loaded_netrw            = 1
+let g:loaded_netrwPlugin      = 1
 let g:loaded_vimballPlugin    = 1
 let g:loaded_vimball          = 1
 let g:loaded_logiPat          = 1
@@ -133,21 +128,18 @@ nno          ∏          :e ~/PhD/Survey/Notes/
 " Rust
 nno          <          i<><C-c>i| " Generics
 " Plugins
-nno          <C-s>      :CycleColorNext<CR>
-" xmap         S          <Plug>(operator-sandwich-add)
 nno <expr>   q          &ma?':TComment<CR>':''
 vno <expr>   q          &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
 nno <silent> +          :Neoformat<CR>
 nno <silent> gb         :Gbrowse<CR>
 nno          M          <Plug>ToggleMarkbar
 nno          <C-p>      :Rg<CR>
-nno          <C-u>      :MRU<CR>
-xno          <C-r>      :s/ //g<Left><Left>
+nno          <C-u>      :History<CR>
+nno          <C-s>      :GFiles<CR>
 nm           :          \l
 nm  <nowait><buffer> <C-c> <Plug>(VM-Reset)
 nno          <C-x>      :Stealth<CR>
 nno          Ö          :ArgWrap<CR>
-nno          χ          :Calendar<CR>|                    " <M-c>
 nno          Å          :Bdelete!<CR>
 nno          gh         :GHActivity<CR>
 nno          ü          :PlugUpdate<CR>|                  " <M-u>
@@ -157,9 +149,15 @@ nno          <D-u>      :UndotreeToggle<CR>
 nno          λ          :NextColorScheme<CR>|             " <M-l>
 nno          η          :PrevColorScheme<CR>|             " <M-h>
 nno          •          :TableModeToggle<CR>|             " <M-q>
-nno          t          :ALEGoToDefinition<CR>zz
-nno          ö          :call ToggleDrawIt()<CR>
-nno          ω          :call ToggleWordMode()<CR>        " <M-w>
+" nno          t          :ALEGoToDefinition<CR>zz
+nmap         t          <Plug>(coc-definition)
+nmap         Ω          <Plug>(coc-refactor)|             " <D-w>
+nmap         É          <Plug>(coc-references)|           " <D-e>
+nmap         √          <Plug>(coc-rename)|               " <D-r>
+nmap         Θ          <Plug>(coc-declaration)|          " <D-t>
+nmap         Ü          <Plug>(coc-type-definition)|      " <D-u>
+nmap         ˆ          <Plug>(coc-implementation)|       " <D-i>
+nno          →          :call ToggleDrawIt()<CR>
 nno          d<Tab>     :ThesaurusQueryReplaceCurrentWord<CR>
 " nno          <C-a>      :call ZoomNERDTreeFromOtherWindow()<CR>
 nno          g.         :SortScalaImports<CR>
@@ -176,14 +174,12 @@ nm           K          <Plug>ManPreGetPage<CR>
 no           <C-w>m     :WinResizerStartMove<CR>
 map          ;          <Plug>(expand_region_expand)
 map          :          <Plug>(expand_region_shrink)
-nno          <D-g>      :GitGutterLineHighlightsToggle<CR>
-nno          <D-S-g>    :GitGutterFold<CR>
-nno          <D-j>      :GitGutterNextHunk<CR>
-nno          <D-k>      :GitGutterPrevHunk<CR>
-vno          <D-S>      :SortGroup <details>.*<CR>
+nm           Γ          <Plug>GitGutterLineHighlightsToggle| " <D-g>
+nm           »          <Plug>GitGutterFold|              " <D-b>
+nm           ¬          <Plug>GitGutterNextHunk|          " <D-j>
+nm           º          <Plug>GitGutterPrevHunk|          " <D-k>
+nm           ö          <Plug>(choosewin)|                " <C-d>
 " Fixes
-" ino          \          <Nop>|                            " Terrible
-" :set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 nno          <C-q>      q|                                " Record with <C-q>
 nno          n          nzz
 nno          N          Nzz
@@ -213,36 +209,36 @@ ino          <C-j>      <Down>
 ino          <C-k>      <Up>
 ino          <C-l>      <Right>
 no           !          :!
-if has("gui_macvim")
-	no         <C-d>      <C-w>w|                           " Cycle windows
-el
-	no         <C-d>      :x<CR>
-en
-nno          <Right>    <C-w>l|                           " Navigate splits
-nno          <Left>     <C-w>h
-nno          <Up>       <C-w>k
-nno          <Down>     <C-w>j
+" if has("gui_macvim")
+" 	no         <C-d>      <C-w>w|                           " Cycle windows
+" el
+no         <C-d>      :x<CR>
+" en
 nno          S          :%s//g<Left><Left>
-" xno          S          :s//g<Left><Left>
-nno <expr>   C          ':%s/' . @/ . '//g<Left><Left>'
-xno <expr>   C          ':s/' . @/ . '//g<Left><Left>'
-nno          <C-n>      gt|                           " Tab page management
+nno <expr>   C          ':%s/'.@/.'//g<Left><Left>'
+xno <expr>   C          ':s/'.@/.'//g<Left><Left>'
+nno          <C-n>      gt|                               " Tab page management
 nno          <C-b>      gT|
 nno          gt         :tabnew<CR>
 nno          <C-CR>     kk<CR>|                           " Reverse <CR>
 nno          k          gk
 nno          j          gj
 nno          <C-f>      vapkJVgqo<Esc>|                   " Reformat paragraph
+" Disabled
+cno          <Up>       <Nop>
+cno          <Down>     <Nop>
+cno          <Left>     <Nop>
+cno          <Right>    <Nop>
+nno          <Right>    <Nop>
+nno          <Left>     <Nop>
+nno          <Up>       <Nop>
+nno          <Down>     <Nop>
 " Command line
 cno          <C-c>      <C-u><C-c>
 cno          <C-h>      <Left>
 cno          <C-l>      <Right>
 cno          <C-k>      <Up>
 cno          <C-j>      <Down>
-cno          <Up>       <Nop>|                            " Disable arrow keys
-cno          <Down>     <Nop>
-cno          <Left>     <Nop>
-cno          <Right>    <Nop>
 cno          <C-b>      <S-Left>
 cno          <C-e>      <S-Right>
 cno          <C-v>      <C-r><C-l>
@@ -263,17 +259,11 @@ vno          <C-y>      ygvr<Space>|                      " Yank & clear
 nno          cu         gg=G``|                           " Format file
 nno          gl         <C-w>TgT|                         " Move to new tab
 " Commands
-" nno          <S-D-d>    :ALEDetail<CR>
-nno          <Leader>e  :Ix<CR>                           " Upload to pastebin
-no           å          :x<CR>
+no  <expr>   å          :x<CR>
 nno          ä          :%s/\s\+$//e<CR>|                 " Remove whitespaces
 nno          cd         :cd %:p:h<CR>:Nnn<CR>|            " Change directory
-"nno          <C-o>      :reg<CR>|                         " View yanks
 nno          <C-o>      :ALEDetail<CR><C-w>j              " Ale Detail"
-nno          ˆ          :%s///g<Left><Left>|              " Replace <M-I>
-nno          Δ          :put =strftime('[%d-%m-%Y]')<CR>| " Insert date <M-D>
-" nno          <C-f>      :let @/ = ""<CR>|                 " Clear matches
-" xno          <C-f>      :<BS><BS><BS><BS><BS>let @/ = ""<CR>| " Clear matches
+" nno          ˆ          :%s///g<Left><Left>|              " Replace <M-I>
 nno          <D-i>      :terminal ++close<CR>|            " Terminal
 nno          <D-b>      :!cargo build<CR>                 " Cargo
 nno          <D-r>      :!cargo run<CR>
@@ -303,84 +293,28 @@ nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
 nno          φ          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
 nno          β          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
 "* Syntax
-hi ColorColumn guibg=lightred
-" hi StatusLine guifg=#F5F5F5
-hi StatusLineNC guifg=#F5F5F5
-"** C
-let c_gnu              = 1   " GNU gcc specific items
-let c_space_errors     = 1   " trailing white space and spaces before a <Tab>
-let c_curly_error      = 1   " highlight a missing }; this forces syncing from the
-let c_syntax_for_h     = 1   " for *.h files use C syntax instead of C++ and use objc
-let c_comment_strings  = 1   " strings and numbers inside a comment
-let c_no_bracket_error = 1   " don't highlight {}; inside [] as errors
-let c_no_curly_error   = 1   " don't highlight {}; inside [] and () as errors;
-let c_minlines         = 200
-"fun! HighlightKeywords_gcc()
-  "hi _PRE_PROCESSOR guifg=#f1d200
-  "hi _CCOMMENT guifg=#928374 gui=NONE
-  "syn match _CCOMMENT /[\*:]/     containedin=.*cComment.*
-  "syn match _PRE_PROCESSOR /[A-Z_][A-Z0-9_]\+/ containedin=.*PreCondit.*
-  "syn match _PRE_PROCESSOR /[A-Z_][A-Z0-9_]\+/ containedin=.*Macro.*
-  "syn match _PRE_PROCESSOR /[A-Z_][A-Z0-9_]\+/ containedin=.*cComment.*
-"endfun
-"** HTML
-let g:html_whole_filler = 1
-let g:html_prevent_copy = "fn"
-let g:html_pre_wrap = 0
-"let g:html_dynamic_folds = 1
-"let g:html_no_foldcolumn = 1
-"let g:html_hover_unfold = 1
-"** Keywords
-" TODO DANGER ERROR WARNING Klas Segeljakt <klasseg@kth.se> [2017-10-21 01:26]
-fun HighlightKeywords()
-  hi _TODO    guibg=#95bc0a guifg=black
-  hi _DANGER  guibg=#dd8225 guifg=black
-  hi _ERR     guibg=#ea1822 guifg=black
-  hi _WARNING guibg=#f1d200 guifg=black gui=underline,italic
-  hi _AUTHOR  guifg=#95bc0a gui=italic
-  hi _EMAIL   guifg=#95bc0a gui=underline,italic
-  hi _DATE    guifg=#1d829e
-  hi _COMMENT guifg=#928374 gui=NONE
-  syn keyword _TODO    TODO NOTE containedin=.*Comment.*
-  syn keyword _DANGER  DANGER    containedin=.*Comment.*
-  syn keyword _WARNING WARNING   containedin=.*Comment.*
-  syn keyword _ERR     ERROR     containedin=.*Comment.*
-  exe "syn keyword _AUTHOR ".g:author." containedin=.*Comment.*"
-  syn match _EMAIL /<*[a-zA-Z]\+@[a-zA-Z]\+\.[a-zA-Z]\+>*/ containedin=.*Comment.*
-  syn match _DATE /\[[0-9?]\+-[0-9?]\+-[0-9?]\+ [0-9?]\+:[0-9?]\+\]/ containedin=.*Comment.*
-endfun
-"* Folding
-" Fold Expression
-fun! MyFoldExpr()
-  let line = getline(v:lnum)
-  if line =~ '^<details>'
-    return ">1"
-  elseif line =~ '^</p></details>'
-    return "<1"
-  el
-    return "="
-  en
-"   let last = matchend(getline(v:lnum), '^.\*\+')
-"   if last == -1
-"     return "="
-"   el
-"     return ">".(last-1)
-"   en
-endfun
-fun! FoldText()
-  let line = getline(v:foldstart)
-  let list = matchlist(line, '^<details><summary>\(.*\)</summary><p>')
-  let inner = get(list, 1, "???")
-  let stripped = substitute(inner, '<.\{-}>', '', 'g')
-  return '# '.stripped
-endfun
+hi ColorColumn ctermfg=Red guibg=lightred
+" " hi StatusLine gctermfg= uifg=#F5F5F5
+" hi StatusLineNC ctermfg=1 guifg=#F5F5F5
+" "** Keywords
+" " TODO DANGER ERROR WARNING Klas Segeljakt <klasseg@kth.se> [2017-10-21 01:26]
+" hi _TODO    ctermfg=grey guibg=#95bc0a guifg=black
+" hi _DANGER  ctermfg=grey guibg=#dd8225 guifg=black
+" hi _ERR     ctermfg=grey guibg=#ea1822 guifg=black
+" hi _WARNING ctermfg=grey guibg=#f1d200 guifg=black gui=underline,italic
+" hi _AUTHOR  ctermfg=grey guifg=#95bc0a gui=italic
+" hi _EMAIL   ctermfg=grey guifg=#95bc0a gui=underline,italic
+" hi _DATE    ctermfg=grey guifg=#1d829e
+" hi _COMMENT ctermfg=grey guifg=#928374 gui=NONE
+" syn keyword _TODO    TODO NOTE containedin=.*Comment.*
+" syn keyword _DANGER  DANGER    containedin=.*Comment.*
+" syn keyword _WARNING WARNING   containedin=.*Comment.*
+" syn keyword _ERR     ERROR     containedin=.*Comment.*
+" exe "syn keyword _AUTHOR ".g:author." containedin=.*Comment.*"
+" syn match _EMAIL /<*[a-zA-Z]\+@[a-zA-Z]\+\.[a-zA-Z]\+>*/            containedin=.*Comment.*
+" syn match _DATE  /\[[0-9?]\+-[0-9?]\+-[0-9?]\+ [0-9?]\+:[0-9?]\+\]/ containedin=.*Comment.*
 "* Autocmd
 aug Autocommands | au!
-  au FileType vim-plug syn match Normal '\v(Ok|Already up to date)\.' conceal
-  au BufEnter tex set formatoptions+=w textwidth=83 nowrap
-  au BufLeave tex set formatoptions-=w textwidth=0 wrap
-  au BufEnter markdown set nonumber
-  au BufLeave markdown set number
   au BufReadPost .vimrc set nowrap
   au FocusLost * silent! wall
   au Syntax * match none
@@ -399,7 +333,6 @@ aug Autocommands | au!
     \ | endif
   au BufRead,BufNewFile *.sbt set filetype=scala
   au BufWinEnter * if &previewwindow | wincmd L | en
-  au BufNewFile,BufRead *.agda setf agda
 aug END
 "* Spell correction / Abbreviations
 iab    retrun return
@@ -410,13 +343,3 @@ iab  liekwise likewise
 iab      moer more
 iab  previosu previous
 iab      pset pest
-"* Cursor fix
-if exists('$ITERM_PROFILE')
-  if exists('$TMUX')
-    let &t_SI = "\<Esc>[3 q"
-    let &t_EI = "\<Esc>[0 q"
-  else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-  endif
-end
