@@ -18,6 +18,7 @@
 !.vim/plugins.vim
 !.vim/plugin-conf.vim
 !.vim/vimrc
+!.vim/after
 
 # Zsh
 !.zsh/
@@ -39,8 +40,8 @@
 .config/nvim/pack/*
 
 # Weechat
-!.weechat/
-.weechat/*
-!.weechat/*.conf
+# !.weechat/
+# .weechat/*
+# !.weechat/*.conf
 
 # Mutt
