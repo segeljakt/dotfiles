@@ -163,6 +163,19 @@ function w-contents() {
   fi
   zle redisplay
 }
+function w-spell() {
+  zle -I
+  RESULT=$(
+    /bin/cat /usr/share/dict/words | \
+    fzf --preview 'wn {} -over | fold' \
+        --preview-window=up:60%
+  )
+  if [[ "$RESULT" != "" ]]; then
+    BUFFER="$LBUFFER$RESULT$RBUFFER"
+    CURSOR=$CURSOR+$#RESULT
+  fi
+  zle redisplay
+}
 function w-enter() {
   if [[ "$BUFFER" == "" ]]; then
     # LINES
@@ -207,5 +220,6 @@ zle -N w-backward-kill-dir
 zle -N w-cargo-run
 zle -N w-cargo-run-stacktrace
 zle -N w-open-vim
+zle -N w-spell
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

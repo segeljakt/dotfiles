@@ -1,3 +1,8 @@
+# If not running interactively, don't do anything
+case $- in
+  *i*) ;;
+    *) return;;
+esac
 #zmodload zsh/zprof # top of your .zshrc file
 #: STARTUP
 export TERM=screen-256color
@@ -9,7 +14,9 @@ path=(
   /opt/local/bin
   /opt/local/sbin
   /usr/local/opt/ncurses/bin
+  /usr/local/opt/llvm/bin
   /usr/local/lib/ruby/gems/2.6.0/bin
+  /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
   $HOME/.local/bin
   $HOME/.cargo/bin
   $HOME/.cabal/bin
@@ -34,11 +41,11 @@ alias names="nvim ~/PhD/names"
 # Fixes
 #alias   gdb="sudo gdb"
 alias  cgdb="sudo cgdb"
-alias  htop="sudo htop"
+# alias  htop="sudo htop"
 alias mkdir="mkdir -pv" # Make parent directories
 alias  make="clear && make"
-alias  zath="zathura --fork" # Run zathura in background
 alias emacs="open -a emacs"
+alias    df="df -h"
 # GUI
 alias  mvim="skhd -k 'cmd + shift - k'; mvim"
 # Git
@@ -69,7 +76,8 @@ alias .....=../../../..
 alias  comp="~/.zsh/zsh-completion-generator/help2comp.py"
 alias    xp="xpanes"
 alias     v="nvim"
-alias     t="trans -view" # translate
+alias     t="trans en:sv -view" # translate
+alias    tt="trans sv:en -view" # translate
 alias     u="w-upgrade-all"
 alias     a="brew search"
 alias     i="brew info"
@@ -78,6 +86,7 @@ alias     r="brew cleanup"
 alias     c="clear"
 alias     z="nvim ~/.zshrc"
 alias    zz="nvim ~/.tmux.conf"
+alias    zg="nvim ~/.gitconfig"
 alias   zzz="nvim ~/.config/nvim/init.vim"
 alias  zzzz="nvim ~/.cheat-sheet"
 alias    zx="nvim ~/.zsh/widgets.zsh"
@@ -96,24 +105,23 @@ alias    cb="cargo build --color always 2>&1 | less"
 alias    ct="cargo test --color always 2>&1 | less"
 alias   hdp="ssh klas@109.225.89.18 -p 8209"
 #: ENV
-export DYLD_LIBRARY_PATH="/Users/Klas/Workspace/python/weld/python/pyweld/weld/:/usr/local/lib/python3.7/site-packages/grizzly/"
-export WELD_HOME="~/Workspace/weld/"
-#export         LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
-export         LESS="-R"
-export          PS1="%F{red}%D{%H:%M:%S}%f "
-#export         TERM=xterm-color
-export       EDITOR=nvim
-export       LC_ALL=en_US.UTF-8
-export         LANG=en_US.UTF-8
-export HISTFILESIZE=5000 # Disk (BASH??)
-export     HISTSIZE=5000 # Memory
-export     SAVEHIST=5000 # Disk
-export     HISTFILE=~/.zsh/hist
-export     HISTSIZE=$HISTFILESIZE
-export      FIGNORE=$FIGNORE:DS_Store
-export   HISTIGNORE="ls";    # Ignore certain commands from history
-export    WORDCHARS=""
-export    LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
+#export           LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
+export            LESS="-R"
+export LESS_TERMCAP_so=$'\E[30;43m'
+export             PS1="%F{red}%D{%H:%M:%S}%f "
+#export           TERM=xterm-color
+export         EDITOR=nvim
+export         LC_ALL=en_US.UTF-8
+export           LANG=en_US.UTF-8
+export   HISTFILESIZE=5000 # Disk (BASH??)
+export       HISTSIZE=5000 # Memory
+export       SAVEHIST=5000 # Disk
+export       HISTFILE=~/.zsh/hist
+export       HISTSIZE=$HISTFILESIZE
+export        FIGNORE=$FIGNORE:DS_Store
+export     HISTIGNORE="ls";    # Ignore certain commands from history
+export      WORDCHARS=""
+export      LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
 export CARGO_HOME=~/.cargo/
 # export CARGO_TARGET_DIR="/Users/Klas/.cargo/target/"
@@ -122,6 +130,10 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/libffi/lib/pkgconfig"
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/gstreamer/lib/pkgconfig"
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/local/opt/gst-plugins-base/lib/pkgconfig"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
 setopt NO_AUTOREMOVESLASH;
@@ -181,7 +193,17 @@ zstyle ':completion:*' menu select            # Show menu selection
 zstyle ':completion:*' verbose true           # Verbose completion results
 zstyle ':completion:*' accept-exact-dirs true # Keep dirs and files separated
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} # Colors for files completion
-fignore=(class lock aux fls log out fdb_latexmk synctex.gz) # Never complete these
+fignore=(
+  class
+  lock
+  aux
+  fls
+  log
+  out
+  fdb_latexmk
+  synctex.gz
+  mzp
+) # Never complete these
 #: KEYBINDS
 # Custom widgets
 bindkey 'Œ'    w-bin
@@ -212,6 +234,7 @@ bindkey '^[[.' w-cargo-run # <D-R>
 bindkey '^[[,' w-cargo-run-stacktrace # <D-S-R>
 bindkey '^[[~' w-backward-kill-dir # <C-BS>
 bindkey '^G'   w-open-vim
+bindkey ö      w-spell # <C-d>
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -234,3 +257,7 @@ function pdftojpg {
   convert -density 300 -trim -quality 100 $1 +append $(echo $1 | sed "s/\.pdf/\.png")
 }
 #zprof # bottom of .zshrc
+
+# opam configuration
+#test -r /Users/Klas/.opam/opam-init/init.zsh && . /Users/Klas/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+#eval $(opam env)
