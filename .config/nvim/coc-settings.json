@@ -58,5 +58,6 @@
         "~"
       ]
     }
-  }
+  },
+  "rust-analyzer.enableCargoWatchOnStartup": "enabled"
 }

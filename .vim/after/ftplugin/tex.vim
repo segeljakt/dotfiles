@@ -1,2 +1,2 @@
 
-setlocal formatoptions+=w textwidth=83 nowrap
+setlocal formatoptions+=w textwidth=83

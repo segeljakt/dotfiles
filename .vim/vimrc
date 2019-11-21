@@ -2,24 +2,23 @@
 "|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
 "+----------------------------------------------------------------------------+
 "* Load plugins
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 set nocompatible
 set guioptions=
-let maplocalleader = ","
-let mapleader = "§"
+let maplocalleader = '§'
+let mapleader      = '§'
 call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim
 call plug#end()
 source ~/.vim/private.vim
 source ~/.vim/plugin-conf.vim
 "* General settings
-let g:author = "Klas Segeljakt"
-let g:email = "klasseg@kth.se"
+let g:author = 'Klas Segeljakt'
+let g:email = 'klasseg@kth.se'
 syntax enable
 filetype plugin indent on       " Detect filetypes
 colorscheme PaperColor | set background=light
 set dict+=~/.vim/dict/basic
-if has("gui_macvim")
+if has('gui_macvim')
   set viminfo='100,n~/.vim/viminfo
   set guiheadroom=60
   set maxmemtot=2000000         " Max mem for all buffers combined
@@ -73,7 +72,7 @@ set wildmenu                    " Tabcompletion for commandline
 set wildcharm=<Tab>             " Allow macros to tabcomplete
 set matchpairs=(:),{:},[:],<:>,":" " Separators
 set shell=/usr/local/bin/zsh    " Shell program
-" let &shell="/usr/local/bin/zsh -f"    " Shell program
+" let &shell='/usr/local/bin/zsh -f'    " Shell program
 set shellcmdflag=-c
 set emoji                       " Emoji characters are full-width
 set autochdir                   " Change directory to file in buffer !WARNING!
@@ -103,6 +102,7 @@ set shortmess=aoOstTWAIcF
 set completeopt=noinsert,menuone,noselect
 set formatoptions=rownlj
 set maxmempattern=2000000       " Max memory for pattern matching
+set nrformats=alpha,octal,hex,bin
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -123,178 +123,145 @@ let g:loaded_spellfile_plugin = 1
 let g:no_pdf_maps             = 1
 "* Keybindings
 " PhD
-nno <silent> <Leader>d  :AsyncRun open dict://<cword><CR><CR>
-nno          ∏          :e ~/PhD/Survey/Notes/
-" Rust
-nno          <          i<><C-c>i| " Generics
+nno <silent> <Leader>d    :AsyncRun open dict://<cword><CR><CR>
+nno <silent> ∏            :e ~/PhD/Survey/Notes/
 " Plugins
-nno <expr>   q          &ma?':TComment<CR>':''
-vno <expr>   q          &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
-nno <silent> +          :Neoformat<CR>
-nno <silent> gb         :Gbrowse<CR>
-nno          M          <Plug>ToggleMarkbar
-nno          <C-p>      :Rg<CR>
-nno          <C-u>      :History<CR>
-nno          <C-s>      :GFiles<CR>
-nm           :          \l
-nm  <nowait><buffer> <C-c> <Plug>(VM-Reset)
-nno          <C-x>      :Stealth<CR>
-nno          Ö          :ArgWrap<CR>
-nno          Å          :Bdelete!<CR>
-nno          gh         :GHActivity<CR>
-nno          ü          :PlugUpdate<CR>|                  " <M-u>
-nno          <C-H>      :SidewaysLeft<CR>
-nno          <C-L>      :SidewaysRight<CR>
-nno          <D-u>      :UndotreeToggle<CR>
-nno          λ          :NextColorScheme<CR>|             " <M-l>
-nno          η          :PrevColorScheme<CR>|             " <M-h>
-nno          •          :TableModeToggle<CR>|             " <M-q>
-" nno          t          :ALEGoToDefinition<CR>zz
-nmap         t          <Plug>(coc-definition)
-nmap         Ω          <Plug>(coc-refactor)|             " <D-w>
-nmap         É          <Plug>(coc-references)|           " <D-e>
-nmap         √          <Plug>(coc-rename)|               " <D-r>
-nmap         Θ          <Plug>(coc-declaration)|          " <D-t>
-nmap         Ü          <Plug>(coc-type-definition)|      " <D-u>
-nmap         ˆ          <Plug>(coc-implementation)|       " <D-i>
-nno          →          :call ToggleDrawIt()<CR>
-nno          d<Tab>     :ThesaurusQueryReplaceCurrentWord<CR>
-" nno          <C-a>      :call ZoomNERDTreeFromOtherWindow()<CR>
-nno          g.         :SortScalaImports<CR>
-xno          T          :Tabularize/
-" vm           i          <Plug>SchleppToggleReindent
-vm           H          <Plug>SchleppLeft
-vm           J          <Plug>SchleppDown
-vm           K          <Plug>SchleppUp
-vm           L          <Plug>SchleppRight
-vm           D          <Plug>SchleppDup
-nm <silent>  <C-k>      <Plug>(ale_previous_wrap)zz
-nm <silent>  <C-j>      <Plug>(ale_next_wrap)zz
-nm           K          <Plug>ManPreGetPage<CR>
-no           <C-w>m     :WinResizerStartMove<CR>
-map          ;          <Plug>(expand_region_expand)
-map          :          <Plug>(expand_region_shrink)
-nm           Γ          <Plug>GitGutterLineHighlightsToggle| " <D-g>
-nm           »          <Plug>GitGutterFold|              " <D-b>
-nm           ¬          <Plug>GitGutterNextHunk|          " <D-j>
-nm           º          <Plug>GitGutterPrevHunk|          " <D-k>
-nm           ö          <Plug>(choosewin)|                " <C-d>
+nno <expr>   q            &ma?':TComment<CR>':''
+vno <expr>   q            &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
+nno <silent> +            :Neoformat<CR>
+nno <silent> gb           :Gbrowse<CR>
+nno <silent> <C-p>        :Rg<CR>
+nno <silent> <C-u>        :History<CR>
+nno <silent> <C-s>        :GFiles<CR>
+nno <silent> Ö            :ArgWrap<CR>
+nno <silent> Å            :Bdelete!<CR>
+nno <silent> ü            :PlugUpdate<CR>|                  " <M-u>
+nno <silent> <C-H>        :SidewaysLeft<CR>
+nno <silent> <C-L>        :SidewaysRight<CR>
+nno <silent> <F5>         :UndotreeToggle<CR>
+" nno <expr>   <C-o>        ':ALEDetail<CR><C-w> '.(&columns < 160? 'K':'L')
+nno <silent> <C-o>        :ALEDetail<CR>
+nno <silent> →            :call ToggleDrawIt()<CR>
+no  <silent> <C-w>m       :WinResizerStartMove<CR>
+xno <silent> <expr> ?     mode()=~'V' ? ':Tabularize' : '?'
+nm <nowait><buffer> <C-c> <Plug>(VM-Reset)
+nm           <C-x>        <Plug>Stealth
+nm           t            <Plug>(coc-definition)
+nm           Ω            <Plug>(coc-refactor)|        " <D-w>
+nm           É            <Plug>(coc-references)|      " <D-e>
+nm           √            <Plug>(coc-rename)|          " <D-r>
+nm           Θ            <Plug>(coc-declaration)|     " <D-t>
+nm           Ü            <Plug>(coc-type-definition)| " <D-u>
+nm           ˆ            <Plug>(coc-implementation)|  " <D-i>
+vm           H            <Plug>SchleppLeft
+vm           J            <Plug>SchleppDown
+vm           K            <Plug>SchleppUp
+vm           L            <Plug>SchleppRight
+vm           D            <Plug>SchleppDup
+nm           <C-k>        <Plug>(ale_previous_wrap)zz
+nm           <C-j>        <Plug>(ale_next_wrap)zz
+nm           K            <Plug>ManPreGetPage<CR>
+map          ;            <Plug>(expand_region_expand)
+map          :            <Plug>(expand_region_shrink)
+nm           γ            <Plug>(GitGutterLineHighlightsToggle)| " <M-g>
+nm           ƒ            <Plug>(GitGutterFold)|                 " <M-f>
+nm           ¬            <Plug>(GitGutterNextHunk)|             " <M-j>
+nm           º            <Plug>(GitGutterPrevHunk)|             " <M-k>
+nm           ö            <Plug>(choosewin)|                     " <C-d>
+" nm           <C-e>        <Plug>(SmoothieDownwards)
+" nm           E            <Plug>(SmoothieUpwards)
 " Fixes
-nno          <C-q>      q|                                " Record with <C-q>
-nno          n          nzz
-nno          N          Nzz
-no           #          gd|                               " Swap # with *
-no           *          #N
-nno          R          gR
-nno <expr>   <Tab>      col('$') == 1? "i<Tab>" : ">>"
-nno          <S-Tab>    <<
-vno          <Tab>      >gv
-vno          <S-Tab>    <gv
-vno <expr>   A          mode()=~'v' ? '$h' : 'A'|         " Fix A
-vno          P          "_dp|                             " No yank on paste
-vno          p          "_dP
-vno          <BS>       <BS>|                             " Fix defaults
-nno          <C-c>      <Esc>
-nno          <C-w>H     <C-w>H<C-w>x<C-w>l|               " NERDTree compatibility
-" cno          <C-c>      <Esc>
+nno          <C-q>        q|                                " Record with <C-q>
+nno          n            nzz
+nno          N            Nzz
+nno          R            gR
+nno <expr>   <Tab>        col('$') == 1? 'i<Tab>' : '>>'
+nno          <S-Tab>      <<
+vno          <Tab>        >gv
+vno          <S-Tab>      <gv
+vno <expr>   A            mode()=~'v' ? '$h' : 'A'
+vno          P            "_dp|                             " No yank on paste
+vno          p            "_dP
+vno          <BS>         <BS>|                             " Fix defaults
+nno          <C-c>        <Esc>
+nno          <C-w>H       <C-w>H<C-w>x<C-w>l|               " NERDTree compatibility
 " Overrides
-" nno          <BS>       <C-^>|                            " Change buffer
-nno          B          ^|                                " Go to start of line
-nno          E          <C-y>|                            " Scroll up
-no           <S-Space>  /|                                " Spacebar
-no           <Space>    :
-nno          y          vy|                               " Yank char
-ino          <C-h>      <Left>|                           " Move in insert mode
-ino          <C-j>      <Down>
-ino          <C-k>      <Up>
-ino          <C-l>      <Right>
-no           !          :!
-" if has("gui_macvim")
-" 	no         <C-d>      <C-w>w|                           " Cycle windows
-" el
-no         <C-d>      :x<CR>
-" en
-nno          S          :%s//g<Left><Left>
-nno <expr>   C          ':%s/'.@/.'//g<Left><Left>'
-xno <expr>   C          ':s/'.@/.'//g<Left><Left>'
-nno          <C-n>      gt|                               " Tab page management
-nno          <C-b>      gT|
-nno          gt         :tabnew<CR>
-nno          <C-CR>     kk<CR>|                           " Reverse <CR>
-nno          k          gk
-nno          j          gj
-nno          <C-f>      vapkJVgqo<Esc>|                   " Reformat paragraph
+nno          D            "Add                              " 
+nno          B            ^|                                " Go to start of line
+nno          E            <C-y>|                            " Scroll up
+no           <Space>      :
+ino          <C-h>        <Left>|                           " Move in insert mode
+ino          <C-j>        <Down>
+ino          <C-k>        <Up>
+ino          <C-l>        <Right>
+no           !            :!
+no           <C-d>        :x<CR>
+nno          S            :%s//g<Left><Left>
+nno <expr>   C            ':%s/'.@/.'//g<Left><Left>'
+xno <expr>   C            ':s/'.@/.'//g<Left><Left>'
+nno          <C-n>        gt|                               " Tab page management
+nno          <C-b>        gT|
+nno          gt           :tabnew<CR>
+nno          <C-CR>       kk<CR>|                           " Reverse <CR>
+nno          k            gk
+nno          j            gj
+nno          <C-f>        vapkJVgqo<Esc>|                   " Reformat paragraph
 " Disabled
-cno          <Up>       <Nop>
-cno          <Down>     <Nop>
-cno          <Left>     <Nop>
-cno          <Right>    <Nop>
-nno          <Right>    <Nop>
-nno          <Left>     <Nop>
-nno          <Up>       <Nop>
-nno          <Down>     <Nop>
+cno          <Up>         <Nop>
+cno          <Down>       <Nop>
+cno          <Left>       <Nop>
+cno          <Right>      <Nop>
+nno          <Right>      i<Right>
+nno          <Left>       i<Left>
+nno          <Up>         i<Up>
+nno          <Down>       i<Down>
 " Command line
-cno          <C-c>      <C-u><C-c>
-cno          <C-h>      <Left>
-cno          <C-l>      <Right>
-cno          <C-k>      <Up>
-cno          <C-j>      <Down>
-cno          <C-b>      <S-Left>
-cno          <C-e>      <S-Right>
-cno          <C-v>      <C-r><C-l>
-cno          <C-f>      <C-\>e
+cno          <C-c>        <C-u><C-c>
+cno          <C-h>        <Left>
+cno          <C-l>        <Right>
+cno          <C-k>        <Up>
+cno          <C-j>        <Down>
+cno          <C-b>        <S-Left>
+cno          <C-e>        <S-Right>
+cno          <C-v>        <C-r><C-l>
+cno          <C-f>        <C-\>e
 " Toggles / Sliders
-nno          <Leader>b  :set ri!<CR>|                     " Write backwards
-nno          <Leader>fu :set fu!<CR>|                     " Fullscreen toggle
-nno          <Leader>dd :set diff!<CR>|                   " Diff mode
-nno          <Leader>g  :set crb! scb!<CR>                " Bind cursor/scroll
-nno          Θ          :set wrap!<CR>|                   " <M-O>
+nno <silent> <Leader>b    :set ri!<CR>|                     " Write backwards
+nno <silent> <Leader>dd   :set diff!<CR>|                   " Diff mode
+nno <silent> <Leader>l    :set cursorbind! scrollbind!<CR>  " Bind cursor/scroll
+nno <silent> Θ            :set wrap!<CR>|                   " <M-O>
 " Shortcuts
-ino          <C-f>      \
-ino          <C-d>      <C-c>A
-" nno          <C-s>      :w<CR>
-" nno          <D-j>      j<C-e>|                           " Move without scroll
-" nno          <D-k>      k<C-y>
-vno          <C-y>      ygvr<Space>|                      " Yank & clear
-nno          cu         gg=G``|                           " Format file
-nno          gl         <C-w>TgT|                         " Move to new tab
+ino          <C-z>        \                                 " <C-f>
+vno          <C-y>        ygvr<Space>|                      " Yank & clear
+nno          cu           gg=G``|                           " Format file
+nno          gl           <C-w>TgT|                         " Move to new tab
 " Commands
-no  <expr>   å          :x<CR>
-nno          ä          :%s/\s\+$//e<CR>|                 " Remove whitespaces
-nno          cd         :cd %:p:h<CR>:Nnn<CR>|            " Change directory
-nno          <C-o>      :ALEDetail<CR><C-w>j              " Ale Detail"
-" nno          ˆ          :%s///g<Left><Left>|              " Replace <M-I>
-nno          <D-i>      :terminal ++close<CR>|            " Terminal
-nno          <D-b>      :!cargo build<CR>                 " Cargo
-nno          <D-r>      :!cargo run<CR>
-nno          <D-c>      :!cargo clean<CR>
-nno          <D-d>      :!cargo doc --open<CR>
-nno          <D-f>      :!cargo test<CR>
-nno          <D-e>      :!cargo search 
-nno          <D-x>      :!cargo check<CR>
-nno          <D-z>      :!cargo bench<CR>
+nno <silent> å            :x<CR>
+nno <silent> ä            :%s/\s\+$//e<CR>|                 " Remove whitespaces
+nno <silent> cd           :cd %:p:h<CR>:Nnn<CR>|            " Change directory
+nno <silent> <D-i>        :terminal ++close<CR>|            " Terminal
+nno <silent> <D-b>        :!cargo build<CR>                 " Cargo
+nno <silent> <D-r>        :!cargo run<CR>
+nno <silent> <D-c>        :!cargo clean<CR>
+nno <silent> <D-d>        :!cargo doc --open<CR>
+nno <silent> <D-f>        :!cargo test<CR>
+nno <silent> <D-e>        :!cargo search 
+nno <silent> <D-x>        :!cargo check<CR>
+nno <silent> <D-z>        :!cargo bench<CR>
 " Macros
-nno          <D-1>      @1
-nno          <D-2>      @2
-nno          <D-3>      @3
-nno          <D-4>      @4
-nno          <D-5>      @5
-nno          <D-6>      @6
-nno          <D-7>      @7
-nno          <D-8>      @8
-nno          <D-9>      @9
-nno          <D-E>      <C-q>
+nno          ®            <C-q>|                            " <M-r>
+nno          ©            @1|                               " <M-1>
 " File shortcuts
-nno          π          :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
-nno          ⊢          :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
-nno          Æ          :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
-nno          θ          :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
-nno          ø          :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
-nno          φ          :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
-nno          β          :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
+nno <silent> π            :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
+nno <silent> ⊢            :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
+nno <silent> Æ            :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
+nno <silent> θ            :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
+nno <silent> ø            :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
+nno <silent> φ            :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
+nno <silent> β            :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
 "* Syntax
 hi ColorColumn ctermfg=Red guibg=lightred
-" " hi StatusLine gctermfg= uifg=#F5F5F5
+" hi StatusLine gctermfg= uifg=#F5F5F5
 " hi StatusLineNC ctermfg=1 guifg=#F5F5F5
 " "** Keywords
 " " TODO DANGER ERROR WARNING Klas Segeljakt <klasseg@kth.se> [2017-10-21 01:26]
@@ -310,7 +277,7 @@ hi ColorColumn ctermfg=Red guibg=lightred
 " syn keyword _DANGER  DANGER    containedin=.*Comment.*
 " syn keyword _WARNING WARNING   containedin=.*Comment.*
 " syn keyword _ERR     ERROR     containedin=.*Comment.*
-" exe "syn keyword _AUTHOR ".g:author." containedin=.*Comment.*"
+" exe 'syn keyword _AUTHOR '.g:author.' containedin=.*Comment.*'
 " syn match _EMAIL /<*[a-zA-Z]\+@[a-zA-Z]\+\.[a-zA-Z]\+>*/            containedin=.*Comment.*
 " syn match _DATE  /\[[0-9?]\+-[0-9?]\+-[0-9?]\+ [0-9?]\+:[0-9?]\+\]/ containedin=.*Comment.*
 "* Autocmd
@@ -319,7 +286,7 @@ aug Autocommands | au!
   au FocusLost * silent! wall
   au Syntax * match none
   au Syntax vim,c,cpp,rust match ColorColumn /\%121v.*/
-  au BufReadPost * silent norm! g`"
+  au BufReadPost * silent! norm! g`"
   au TabLeave * silent! w
   au StdinReadPre * silent let s:std_in=1
   au VimEnter,BufWinEnter *
@@ -343,3 +310,5 @@ iab  liekwise likewise
 iab      moer more
 iab  previosu previous
 iab      pset pest
+"* Scripts
+" com! Replace 
