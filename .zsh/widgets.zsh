@@ -194,6 +194,11 @@ function w-enter() {
     zle accept-line
   fi
 }
+function w-pipe() {
+  BUFFER="$BUFFER | less"
+  CURSOR=$#BUFFER
+  zle accept-line
+}
 zle -N w-bin
 zle -N w-cd-or-expand
 zle -N w-clear-ls
@@ -221,5 +226,6 @@ zle -N w-cargo-run
 zle -N w-cargo-run-stacktrace
 zle -N w-open-vim
 zle -N w-spell
+zle -N w-pipe
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

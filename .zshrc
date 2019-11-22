@@ -105,8 +105,15 @@ alias    cb="cargo build --color always 2>&1 | less"
 alias    ct="cargo test --color always 2>&1 | less"
 alias   hdp="ssh klas@109.225.89.18 -p 8209"
 #: ENV
-#export           LESS="-R -I -j.3 -J -Q -s -x4 -y2 -F"
-export            LESS="-R"
+#:: Brew
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_BAT=1
+export HOMEBREW_DISPLAY_INSTALL_TIMES=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK=1
+#:: MAN
+export           PAGER=/usr/local/bin/less
+export            LESS="--RAW-CONTROL-CHARS --IGNORE-CASE --SILENT --quit-if-one-screen"
 export LESS_TERMCAP_so=$'\E[30;43m'
 export             PS1="%F{red}%D{%H:%M:%S}%f "
 #export           TERM=xterm-color
@@ -122,8 +129,8 @@ export        FIGNORE=$FIGNORE:DS_Store
 export     HISTIGNORE="ls";    # Ignore certain commands from history
 export      WORDCHARS=""
 export      LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
-export CARGO_HOME=~/.cargo/
+export      JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
+export     CARGO_HOME=~/.cargo/
 # export CARGO_TARGET_DIR="/Users/Klas/.cargo/target/"
 export CARGO_INCREMENTAL=1
 export RANGER_LOAD_DEFAULT_RC=FALSE
@@ -235,6 +242,7 @@ bindkey '^[[,' w-cargo-run-stacktrace # <D-S-R>
 bindkey '^[[~' w-backward-kill-dir # <C-BS>
 bindkey '^G'   w-open-vim
 bindkey ö      w-spell # <C-d>
+bindkey ¥      w-pipe # <S-Enter>
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -261,3 +269,4 @@ function pdftojpg {
 # opam configuration
 #test -r /Users/Klas/.opam/opam-init/init.zsh && . /Users/Klas/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 #eval $(opam env)
+function man() { /usr/bin/man $1 } # Fix that lag
