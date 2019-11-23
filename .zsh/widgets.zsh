@@ -94,6 +94,13 @@ function w-git-log {
     BUFFER="$LBUFFER*$RBUFFER"; CURSOR=$CURSOR+1
   fi
 }
+function w-git-diff {
+  if [[ "$BUFFER" == "" ]]; then
+    zle -I; clear; git diff
+  else
+    BUFFER="$LBUFFER*$RBUFFER"; CURSOR=$CURSOR+1
+  fi
+}
 function w-cd-or-expand {
   if [[ "$BUFFER" == "" ]]; then
     BUFFER="cd "
@@ -207,6 +214,7 @@ zle -N w-fg
 zle -N w-cd-parent
 zle -N w-git-status
 zle -N w-git-log
+zle -N w-git-diff
 zle -N w-dot
 zle -N w-contents
 zle -N w-hunter

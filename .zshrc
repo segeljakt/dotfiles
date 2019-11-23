@@ -221,6 +221,7 @@ bindkey '^Z'   w-fg
 bindkey '^[[Z' w-cd-parent
 bindkey "'"    w-git-status
 bindkey '*'    w-git-log
+bindkey '^'    w-git-diff
 bindkey '…'    w-dot
 bindkey '^P'   w-contents
 bindkey '^R'   w-hunter
