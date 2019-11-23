@@ -22,7 +22,7 @@ if has("macvim")
 en
 
 " [General-purpose]
-Plug 'psliwka/vim-smoothie'            " Smooth scrolling
+" Plug 'psliwka/vim-smoothie'            " Smooth scrolling
 Plug 'simeji/winresizer'               " (*) Window management
 Plug '/usr/local/opt/fzf'              " (*) FZF installation
 Plug 'junegunn/fzf.vim'                " (*) FZF

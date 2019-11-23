@@ -10,6 +10,7 @@ export TERM=screen-256color
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
 path=(
+  /usr/local/opt/gnu-sed/libexec/gnubin
   /usr/local/sbin
   /opt/local/bin
   /opt/local/sbin
