@@ -10,12 +10,12 @@ export TERM=screen-256color
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
 path=(
+  /usr/local/opt/llvm/bin
   /usr/local/opt/gnu-sed/libexec/gnubin
   /usr/local/sbin
   /opt/local/bin
   /opt/local/sbin
   /usr/local/opt/ncurses/bin
-  /usr/local/opt/llvm/bin
   /usr/local/lib/ruby/gems/2.6.0/bin
   /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
   $HOME/.local/bin
@@ -106,8 +106,9 @@ alias    cb="cargo build --color always 2>&1 | less"
 alias    ct="cargo test --color always 2>&1 | less"
 alias   hdp="ssh klas@109.225.89.18 -p 8209"
 #: ENV
+#:: Ripgrep
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
 #:: Brew
-export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_BAT=1
 export HOMEBREW_DISPLAY_INSTALL_TIMES=1
 export HOMEBREW_NO_ANALYTICS=1
@@ -262,6 +263,7 @@ bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete
 bindkey '^[[3~' delete-char # <FN-BS>
+# bindkey Ü w-upgrade-all
 # FUNCTIONS
 function pdftojpg {
   convert -density 300 -trim -quality 100 $1 +append $(echo $1 | sed "s/\.pdf/\.png")

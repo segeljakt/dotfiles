@@ -98,7 +98,7 @@ function w-git-diff {
   if [[ "$BUFFER" == "" ]]; then
     zle -I; clear; git diff
   else
-    BUFFER="$LBUFFER*$RBUFFER"; CURSOR=$CURSOR+1
+    BUFFER="$LBUFFER^$RBUFFER"; CURSOR=$CURSOR+1
   fi
 }
 function w-cd-or-expand {

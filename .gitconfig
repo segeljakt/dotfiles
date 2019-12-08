@@ -6,7 +6,7 @@
   helper = osxkeychain
 [core]
   editor = nvim
-  pager = delta --light
+  pager = delta --light --theme GitHub --highlight-removed --tabs 2
   hooksPath = ~/.githooks
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
   excludesfile = ~/.gitignore_global
@@ -20,8 +20,9 @@
   mnemonicPrefix = true
   renames = true
   wordRegex = .
-  submodule = log
-  recurseSubmodules = on-demand
+#   submodule = log
+#   recurseSubmodules = on-demand
+  ignoreSubmodules = dirty
 [grep]
   break = true
   heading = true
@@ -62,4 +63,5 @@
 [push]
   default = upstream
 [status]
-  showUntrackedFiles = all
+  showUntrackedFiles = normal
+  ignoreSubmodules = all

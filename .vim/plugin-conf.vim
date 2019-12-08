@@ -1,5 +1,7 @@
 "* Plugged
 let g:plug_window = 'enew'
+"* Clap
+hi link ClapSpinner PmenuSel
 "* vim-smoothie
 let g:smoothie_use_default_mappings = v:false
 "* vim-silicon
@@ -27,7 +29,29 @@ let g:choosewin_color_other = {
 "* vim-stealth
 let g:stealth#trigger_after = 1000
 "* fzf.vim
-let g:fzf_layout = { 'up': '~40%' }
+hi NormalFloat guibg=None
+if exists('g:fzf_colors.bg')
+  call remove(g:fzf_colors, 'bg')
+endif
+
+if stridx($FZF_DEFAULT_OPTS, '--border') == -1
+  let $FZF_DEFAULT_OPTS .= ' --border'
+endif
+
+function! FloatingFZF()
+  let width = float2nr(&columns * 0.8)
+  let height = float2nr(&lines * 0.6)
+  let opts = { 'relative': 'editor',
+              \ 'row': (&lines - height) / 2,
+              \ 'col': (&columns - width) / 2,
+              \ 'width': width,
+              \ 'height': height }
+
+  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+endfunction
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" let g:fzf_layout = { 'up': '~40%' }
 "* markdown-preview.nvim
 let g:mkdp_preview_options = {
       \ 'disable_sync_scroll': 1,
@@ -133,8 +157,8 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_keep_list_window_open = 1
 let g:ale_linters = {
-      \  'c':        ['clang'],
-      \  'cpp':      ['clang'],
+      \  'c':        ['ccls'],
+      \  'cpp':      ['ccls'],
       \  'zsh':      ['shell'],
       \  'sh':       ['shell'],
       \  'rust':     ['rls'],
@@ -149,6 +173,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
       \  'tex':    [''],
       \  'c':      ['remove_trailing_lines', 'trim_whitespace', 'clang-format', 'uncrustify'],
+      \  'cpp':    ['remove_trailing_lines', 'trim_whitespace', 'clang-format', 'uncrustify'],
       \  'rust':   ['remove_trailing_lines', 'trim_whitespace', 'rustfmt'],
       \  'zsh':    ['remove_trailing_lines', 'trim_whitespace'],
       \  'sh':     ['remove_trailing_lines', 'trim_whitespace', 'shfmt'],
@@ -156,8 +181,15 @@ let g:ale_fixers = {
       \ }
 let g:ale_rust_rls_toolchain = 'nightly' 
 let g:ale_rust_cargo_use_clippy = 1
-let g:ale_c_gcc_executable = 'gcc-8'
 let g:ale_scala_sbtserver_address = '127.0.0.1:4273'
+let g:ale_c_ccls_init_options = {
+    \   'cacheDirectory': '/tmp/ccls',
+    \   'cacheFormat': 'binary',
+    \   'diagnostics': {
+    \     'onOpen': 0,
+    \     'opChange': 1000,
+    \   },
+    \ }
 "* pear-tree
 let g:pear_tree_pairs = {
       \   '(':   {'closer': ')'},

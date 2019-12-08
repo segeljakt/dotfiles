@@ -23,6 +23,7 @@ en
 
 " [General-purpose]
 " Plug 'psliwka/vim-smoothie'            " Smooth scrolling
+Plug 'liuchengxu/vim-clap'
 Plug 'simeji/winresizer'               " (*) Window management
 Plug '/usr/local/opt/fzf'              " (*) FZF installation
 Plug 'junegunn/fzf.vim'                " (*) FZF
@@ -57,11 +58,11 @@ Plug 'dhruvasagar/vim-table-mode',     { 'for':['markdown', 'latex'] } " (*) Dra
 Plug 'lervag/vimtex',                  { 'for':'latex'  }
 Plug 'KeitaNakamura/tex-conceal.vim',  { 'for':'latex'  }
 Plug 'metakirby5/codi.vim',            { 'for':'python' } " (*) Live coding REPL
-Plug 'mattn/gist-vim',                 { 'for':'rust'   } " Create gist from buffer
-Plug 'AndrewRadev/splitjoin.vim',      { 'for':'rust'   } " Split and join code
-Plug 'rrethy/vim-illuminate',          { 'for':'rust'   } " Highlight word under cursor
-Plug 'iandingx/leetcode.vim'
-Plug 'w0rp/ale',                       { 'for':'rust' }   " (*) Async linting
+Plug 'mattn/gist-vim',                                    " Create gist from buffer
+Plug 'AndrewRadev/splitjoin.vim',                         " Split and join code
+Plug 'rrethy/vim-illuminate',                             " Highlight word under cursor
+Plug 'iandingx/leetcode.vim'                             
+Plug 'w0rp/ale',                                          " (*) Async linting
 Plug 'andrewradev/sideways.vim'                             " (*) Move arguments sideways
 Plug 'foosoft/vim-argwrap'                                  " (*) Wrap/unwrap arguments
 Plug 'sbdchd/neoformat',                                    " (*) Format code
@@ -93,4 +94,4 @@ Plug 'OCamlPro/ocp-indent' "Ocaml
 " Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
 " Plug 'mechatroner/rainbow_csv',          { 'for':'csv'          } " (*) .csv
 " Plug 'jrozner/vim-antlr',                { 'for':'antlr4'       } " .antlr
-" Plug 'julialang/julia-vim',              { 'for':'julia'        }
+Plug 'julialang/julia-vim',              { 'for':'julia'        }
