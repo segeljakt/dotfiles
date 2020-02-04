@@ -99,10 +99,11 @@ set belloff=all                 " STOP IT
 set whichwrap=b,s,h,l           " Allow these keys to move past EOL
 set nojoinspaces                " Insert only one space when joining
 set shortmess=aoOstTWAIcF
-set completeopt=noinsert,menuone,noselect
+set completeopt=noinsert,menuone,noselect,preview
 set formatoptions=rownlj
 set maxmempattern=2000000       " Max memory for pattern matching
 set nrformats=alpha,octal,hex,bin
+set selection=exclusive
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -124,7 +125,6 @@ let g:no_pdf_maps             = 1
 "* Keybindings
 " PhD
 nno <silent> <Leader>d    :AsyncRun open dict://<cword><CR><CR>
-nno <silent> ∏            :e ~/PhD/Survey/Notes/
 " Plugins
 nno <expr>   q            &ma?':TComment<CR>':''
 vno <expr>   q            &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
@@ -140,36 +140,70 @@ nno <silent> <C-H>        :SidewaysLeft<CR>
 nno <silent> <C-L>        :SidewaysRight<CR>
 nno <silent> <F5>         :UndotreeToggle<CR>
 " nno <expr>   <C-o>        ':ALEDetail<CR><C-w> '.(&columns < 160? 'K':'L')
-nno <silent> <C-o>        :ALEDetail<CR>
+" nno <silent> <C-o>        :ALEDetail<CR>
 nno <silent> →            :call ToggleDrawIt()<CR>
 no  <silent> <C-w>m       :WinResizerStartMove<CR>
 xno <silent> <expr> ?     mode()=~'V' ? ':Tabularize' : '?'
 nm <nowait><buffer> <C-c> <Plug>(VM-Reset)
-nm           <C-x>        <Plug>Stealth
-nm           t            <Plug>(coc-definition)
-nm           Ω            <Plug>(coc-refactor)|        " <D-w>
-nm           É            <Plug>(coc-references)|      " <D-e>
-nm           √            <Plug>(coc-rename)|          " <D-r>
-nm           Θ            <Plug>(coc-declaration)|     " <D-t>
-nm           Ü            <Plug>(coc-type-definition)| " <D-u>
-nm           ˆ            <Plug>(coc-implementation)|  " <D-i>
-vm           H            <Plug>SchleppLeft
-vm           J            <Plug>SchleppDown
-vm           K            <Plug>SchleppUp
-vm           L            <Plug>SchleppRight
-vm           D            <Plug>SchleppDup
-nm           <C-k>        <Plug>(ale_previous_wrap)zz
-nm           <C-j>        <Plug>(ale_next_wrap)zz
-nm           K            <Plug>ManPreGetPage<CR>
-map          ;            <Plug>(expand_region_expand)
-map          :            <Plug>(expand_region_shrink)
-nm           γ            <Plug>(GitGutterLineHighlightsToggle)| " <M-g>
-nm           ƒ            <Plug>(GitGutterFold)|                 " <M-f>
-nm           ¬            <Plug>(GitGutterNextHunk)|             " <M-j>
-nm           º            <Plug>(GitGutterPrevHunk)|             " <M-k>
-nm           ö            <Plug>(choosewin)|                     " <C-d>
+nm  <silent> <C-x>        <Plug>Stealth
+nm  <silent> t            <Plug>(coc-definition)
+nno <silent> <C-t>        <C-o>
+nm  <silent> gx           <Plug>(coc-openlink)
+nm  <silent> Ω            <Plug>(coc-refactor)|            " <D-w>
+nm  <silent> É            <Plug>(coc-references)|          " <D-e>
+nm  <silent> √            <Plug>(coc-rename)|              " <D-r>
+nm  <silent> Θ            <Plug>(coc-declaration)|         " <D-t>
+nm  <silent> Ü            <Plug>(coc-type-definition)|     " <D-u>
+nm  <silent> ˆ            <Plug>(coc-implementation)|      " <D-i>
+nm  <silent> Σ            <Plug>(coc-format-selected)|     " <D-s>
+nm  <silent> ◊            <Plug>(coc-codeaction-selected)| " <D-s>
+vm  <silent> ◊            <Plug>(coc-codeaction-selected)| " <D-s>
+nm  <silent> Δ            <Plug>(coc-format-selected)|     " <D-d>
+vm  <silent> Δ            <Plug>(coc-format-selected)|     " <D-d>
+nm  <silent> Λ            <Plug>(coc-codelens-action)|     " <D-l>
+nm  <silent> ↦            <Plug>(coc-metals-expand-decoration) " <D-ö>
+nno <silent> Φ            :CocList outline<CR>|            " <D-o>
+nno <silent> »            :CocRestart<CR>              " <D-b>
+nno <silent> K            :call CocAction('doHover')<CR>
+nno <silent> ⁄            :call CocAction('fold')<CR>
+ino <silent><expr> <C-Space> coc#refresh()
+ino <silent><expr> <CR> pumvisible() ?
+      \ coc#_select_confirm() :
+      \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+ino <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+fun! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfun
+" nm           Ä            
+vm  <silent> H            <Plug>SchleppLeft
+vm  <silent> J            <Plug>SchleppDown
+vm  <silent> K            <Plug>SchleppUp
+vm  <silent> L            <Plug>SchleppRight
+vm  <silent> D            <Plug>SchleppDup
+nm  <silent> <C-k>        <Plug>(coc-diagnostic-prev)zz
+nm  <silent> <C-j>        <Plug>(coc-diagnostic-next)zz
+" nm  <silent> K            <Plug>ManPreGetPage<CR>
+map <silent> ;            <Plug>(expand_region_expand)
+map <silent> :            <Plug>(expand_region_shrink)
+nm  <silent> γ            <Plug>(GitGutterLineHighlightsToggle)| " <M-g>
+nm  <silent> ƒ            <Plug>(GitGutterFold)|                 " <M-f>
+nm  <silent> ¬            <Plug>(GitGutterNextHunk)|             " <M-j>
+nm  <silent> º            <Plug>(GitGutterPrevHunk)|             " <M-k>
+nm  <silent> ö            <Plug>(choosewin)|                     " <C-d>
 " nm           <C-e>        <Plug>(SmoothieDownwards)
 " nm           E            <Plug>(SmoothieUpwards)
+map <silent> w            <Plug>CamelCaseMotion_w
+map <silent> b            <Plug>CamelCaseMotion_b
+map <silent> e            <Plug>CamelCaseMotion_e
+map <silent> ge           <Plug>CamelCaseMotion_ge
+sunm         w
+sunm         b
+sunm         e
+sunm         ge
 " Fixes
 nno          <C-q>        q|                                " Record with <C-q>
 nno          n            nzz
@@ -203,8 +237,8 @@ nno          <C-n>        gt|                               " Tab page managemen
 nno          <C-b>        gT|
 nno          gt           :tabnew<CR>
 nno          <C-CR>       kk<CR>|                           " Reverse <CR>
-nno          k            gk
-nno          j            gj
+nno <silent> k            gk
+nno <silent> j            gj
 nno          <C-f>        vapkJVgqo<Esc>|                   " Reformat paragraph
 " Disabled
 cno          <Up>         <Nop>
@@ -229,7 +263,7 @@ cno          <C-f>        <C-\>e
 nno <silent> <Leader>b    :set ri!<CR>|                     " Write backwards
 nno <silent> <Leader>dd   :set diff!<CR>|                   " Diff mode
 nno <silent> <Leader>l    :set cursorbind! scrollbind!<CR>  " Bind cursor/scroll
-nno <silent> Θ            :set wrap!<CR>|                   " <M-O>
+" nno <silent> Θ            :set wrap!<CR>|                   " <M-O>
 " Shortcuts
 ino          <C-z>        \                                 " <C-f>
 vno          <C-y>        ygvr<Space>|                      " Yank & clear
@@ -252,12 +286,13 @@ nno <silent> <D-z>        :!cargo bench<CR>
 nno          ®            <C-q>|                            " <M-r>
 nno          ©            @1|                               " <M-1>
 " File shortcuts
+nno <silent> ∏            :CocConfig<CR>|                                " <M-P>
 nno <silent> π            :tab drop ~/.vim/plugins.vim<CR>|              " <M-p>
 nno <silent> ⊢            :tab drop ~/.vim/vimrc<CR>|                    " <M-ä>
 nno <silent> Æ            :tab drop ~/.gvimrc<CR>|                       " <M-Ä>
 nno <silent> θ            :tab drop ~/.vim/plugin-conf.vim<CR>|          " <M-o>
 nno <silent> ø            :tab drop ~/.vim/bibtex/library.bib<CR>|       " <M-ö>
-nno <silent> φ            :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
+" nno <silent> φ            :AsyncRun open https://www.kth.se/en/kthb<CR>| " <M-v>
 nno <silent> β            :AsyncRun open https://scholar.google.se<CR>|  " <M-b>
 "* Syntax
 hi ColorColumn ctermfg=Red guibg=lightred
@@ -280,12 +315,45 @@ hi ColorColumn ctermfg=Red guibg=lightred
 " exe 'syn keyword _AUTHOR '.g:author.' containedin=.*Comment.*'
 " syn match _EMAIL /<*[a-zA-Z]\+@[a-zA-Z]\+\.[a-zA-Z]\+>*/            containedin=.*Comment.*
 " syn match _DATE  /\[[0-9?]\+-[0-9?]\+-[0-9?]\+ [0-9?]\+:[0-9?]\+\]/ containedin=.*Comment.*
+hi ALEError ctermbg=210
+hi ALEInfo ctermbg=200
+hi ALEWarning ctermbg=216
+hi link ALEErrorSign ALEError
+hi link ALEInfoSign ALEInfo
+hi link ALEWarningSign ALEInfo
+
+hi CocError ctermbg=210
+hi CocWarning ctermbg=216
+hi CocInfo ctermbg=200
+hi CocHint ctermbg=226
+hi Pmenu ctermbg=253 ctermfg=16
+
+hi link CocErrorHighlight CocError
+hi link CocWarningHighlight CocWarning
+hi link CocInfoHighlight CocInfo
+hi link CocHintHighlight CocHint
+
+hi link CocErrorSign CocError
+hi link CocWarningSign CocWarning
+hi link CocInfoSign CocInfo
+hi link CocHintSign CocHint
+
+hi link CocErrorVirtualText CocError
+hi link CocWarningVirtualText CocWarning
+hi link CocInfoVirtualText CocInfo
+hi link CocHintVirtualText CocHint
+
+hi link CocErrorFloat CocError
+hi link CocWarningFloat Pmenu
+hi link CocInfoFloat Pmenu
+hi link CocHintFloat Pmenu
 "* Autocmd
 aug Autocommands | au!
   au BufReadPost .vimrc set nowrap
   au FocusLost * silent! wall
   au Syntax * match none
-  au Syntax vim,c,cpp,rust match ColorColumn /\%121v.*/
+  au Syntax c,cpp,rust match ColorColumn /\%>120v.\+/
+  au Syntax vim match ColorColumn /\%>79v.\+/
   au BufReadPost * silent! norm! g`"
   au TabLeave * silent! w
   au StdinReadPre * silent let s:std_in=1
@@ -300,6 +368,7 @@ aug Autocommands | au!
     \ | endif
   au BufRead,BufNewFile *.sbt set filetype=scala
   au BufWinEnter * if &previewwindow | wincmd L | en
+  au CursorHold * silent call CocActionAsync('highlight')
 aug END
 "* Spell correction / Abbreviations
 iab    retrun return
@@ -312,3 +381,42 @@ iab  previosu previous
 iab      pset pest
 "* Scripts
 " com! Replace 
+function! FloatScroll(forward) abort
+  let float = coc#util#get_float()
+  if !float | return '' | endif
+  let buf = nvim_win_get_buf(float)
+  let buf_height = nvim_buf_line_count(buf)
+  let win_height = nvim_win_get_height(float)
+  if buf_height < win_height | return '' | endif
+  let pos = nvim_win_get_cursor(float)
+  if a:forward
+    if pos[0] == 1
+      let pos[0] += 3 * win_height / 4
+    elseif pos[0] + win_height / 2 + 1 < buf_height
+      let pos[0] += win_height / 2 + 1
+    else
+      let pos[0] = buf_height
+    endif
+  else
+    if pos[0] == buf_height
+      let pos[0] -= 3 * win_height / 4
+    elseif pos[0] - win_height / 2 + 1  > 1
+      let pos[0] -= win_height / 2 + 1
+    else
+      let pos[0] = 1
+    endif
+  endif
+  call nvim_win_set_cursor(float, pos)
+  return ''
+endfunction
+
+nnoremap <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
+nnoremap <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) :  "\<up>"
+fun! s:gitgutter_highlight()
+  GitGutterLineHighlightsEnable
+  timer_start(100, { -> execute("GitGutterLineHighlightsDisable")})
+endfun
+
+fun! s:gitgutter_next()
+  
+endfun

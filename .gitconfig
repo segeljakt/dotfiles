@@ -16,7 +16,7 @@
   user = segeljakt
   token = 2015c559ae1917a39629e22cb86806a9838e1021
 [diff]
-  tool = nvim -d
+  tool = vimdiff
   mnemonicPrefix = true
   renames = true
   wordRegex = .
@@ -59,7 +59,11 @@
   keepBackup = false
   keepTemporaries = false
   writeToTemp = true
-  prompt = false
+  prompt = true
+[merge]
+  tool = vimdiff
+[mergetool "vimdiff"]
+  cmd = nvim -d $MERGED
 [push]
   default = upstream
 [status]

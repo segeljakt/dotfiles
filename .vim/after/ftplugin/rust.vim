@@ -1,2 +1,2 @@
 
-nno          <          i<><C-c>i
+nno <buffer> < a<><C-c>i

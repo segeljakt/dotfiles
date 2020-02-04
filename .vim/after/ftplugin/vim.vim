@@ -1,4 +1,9 @@
 
+" if !empty(expand("%:e"))
+"   match ColorColumn "\%>79v.\+"
+"   highlight ColorColumn guibg=red
+" en
+
 setlocal foldtext=VimFoldExpr()
 
 fun! VimFoldExpr()

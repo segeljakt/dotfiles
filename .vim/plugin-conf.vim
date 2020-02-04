@@ -1,21 +1,23 @@
 "* Plugged
 let g:plug_window = 'enew'
+"* Hexokinase
+let g:Hexokinase_highlighters = ['backgroundfull']
 "* Clap
 hi link ClapSpinner PmenuSel
 "* vim-smoothie
 let g:smoothie_use_default_mappings = v:false
 "* vim-silicon
-let g:silicon = {
-      \ 'line-pad': 1,
-      \ 'line-number': v:false,
-      \ 'background': '#FFFFFF',
-      \ 'pad-horiz': 500,
-      \ 'pad-vert': 500,
-      \ 'window-controls': v:false,
-      \ 'theme': 'Dracula',
-      \ 'output': '~/Desktop/silicon_{time:%Y-%m-%d_%H-%M-%S}.png',
-      \ 'to-clipboard': v:false
-      \ }
+" let g:silicon = {
+"       \ 'theme':                'Dracula',
+"       \ 'background':           '#FFFFFF',
+"       \ 'line-pad':                     1,
+"       \ 'pad-horiz':                  500,
+"       \ 'pad-vert':                   500,
+"       \ 'line-number':            v:false,
+"       \ 'window-controls':        v:false,
+"       \ 'to-clipboard':           v:true,
+"       \ 'output': '~/Desktop/silicon_{time:%Y-%m-%d_%H-%M-%S}.png',
+"       \ }
 "* vim-choosewin
 let g:choosewin_return_on_single_win = 1
 let g:choosewin_color_label = {
@@ -35,19 +37,19 @@ if exists('g:fzf_colors.bg')
 endif
 
 if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-  let $FZF_DEFAULT_OPTS .= ' --border'
-endif
+  let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+en
 
 function! FloatingFZF()
-  let width = float2nr(&columns * 0.8)
+  let width = float2nr(&columns * 0.9)
   let height = float2nr(&lines * 0.6)
-  let opts = { 'relative': 'editor',
+  let opts = { 'relative': 'cursor',
               \ 'row': (&lines - height) / 2,
               \ 'col': (&columns - width) / 2,
               \ 'width': width,
               \ 'height': height }
-
-  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
 endfunction
 
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
@@ -153,6 +155,7 @@ let g:ale_virtualtext_prefix = ''
 let g:ale_completion_enabled = 0
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
+let g:ale_sign_info = '*'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_keep_list_window_open = 1
@@ -179,6 +182,8 @@ let g:ale_fixers = {
       \  'sh':     ['remove_trailing_lines', 'trim_whitespace', 'shfmt'],
       \  'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
       \ }
+let g:ale_rust_rls_config = { 'rust': { 'clippy_preference': 'on' } }
+" let g:ale_rust_rls_executable = 'ra_lsp_server'
 let g:ale_rust_rls_toolchain = 'nightly' 
 let g:ale_rust_cargo_use_clippy = 1
 let g:ale_scala_sbtserver_address = '127.0.0.1:4273'
@@ -222,15 +227,6 @@ let g:startify_lists = [
       \   { 'header': ['   MRU'], 'type': 'files' },
       \   { 'header': ['   Sessions'], 'type': 'sessions' },
       \ ]
-"* camelCaseMotion
-map <silent> w  <Plug>CamelCaseMotion_w
-map <silent> b  <Plug>CamelCaseMotion_b
-map <silent> e  <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
 "* Lightline
 let g:lightline = {
       \   'colorscheme': 'PaperColor',

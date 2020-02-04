@@ -5,6 +5,8 @@
 Plug 'nlknguyen/papercolor-theme'
 Plug 'ayu-theme/ayu-vim'
 Plug 'camgunz/amber'
+Plug 'endel/vim-github-colorscheme'
+Plug 'sainnhe/edge'
 
 " [Libraries]
 Plug 'mattn/webapi-vim'                " (*) Needed by vim-gist
@@ -23,7 +25,9 @@ en
 
 " [General-purpose]
 " Plug 'psliwka/vim-smoothie'            " Smooth scrolling
-Plug 'liuchengxu/vim-clap'
+" Plug 'skywind3000/vim-quickui'
+Plug 'farmergreg/vim-lastplace'
+" Plug 'RRethy/vim-hexokinase'           " Hex colors
 Plug 'simeji/winresizer'               " (*) Window management
 Plug '/usr/local/opt/fzf'              " (*) FZF installation
 Plug 'junegunn/fzf.vim'                " (*) FZF
@@ -71,6 +75,8 @@ Plug 'mg979/vim-visual-multi'
 Plug 'https://gist.github.com/PeterRincker/582ea9be24a69e6dd8e237eb877b8978.git',
   \ { 'as': 'SortGroup', 'do': 'mkdir plugin; mv -f *.vim plugin/', 'on': 'SortGroup' } " Sort Multi Line Groups
 Plug 't9md/vim-choosewin'
+Plug 'AaronLasseigne/yank-code'
+" Plug 'vim/killersheep'
 " Plug 'IMOKURI/line-number-interval.nvim'
 " Plug 'norcalli/nvim-colorizer.lua'
 " Plug 'mhinz/vim-crates'
@@ -81,11 +87,12 @@ Plug 'elzr/vim-json',                    { 'for':'json'         } " .json
 Plug 'derekwyatt/vim-scala',             { 'for':'scala'        } " (*) Scala - Filetype plugin
 Plug 'cespare/vim-toml',                 { 'for':'toml'         } " (*) .toml
 Plug 'darfink/vim-plist',                                         " .plist
-Plug 'neovimhaskell/haskell-vim'
-Plug 'vale1410/vim-minizinc'
+" Plug 'neovimhaskell/haskell-vim'
+" Plug 'vale1410/vim-minizinc'
 Plug 'tie/llvm.vim'
-Plug 'ocaml/merlin' " Ocaml
-Plug 'OCamlPro/ocp-indent' "Ocaml
+" Plug 'ocaml/merlin' " Ocaml
+" Plug 'OCamlPro/ocp-indent' "Ocaml
+Plug 'chrisbra/vim-zsh'
 
 " Plug 'derekelkins/agda-vim',             { 'for':'agda'         } " (*) .agda
 " Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
@@ -94,4 +101,4 @@ Plug 'OCamlPro/ocp-indent' "Ocaml
 " Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
 " Plug 'mechatroner/rainbow_csv',          { 'for':'csv'          } " (*) .csv
 " Plug 'jrozner/vim-antlr',                { 'for':'antlr4'       } " .antlr
-Plug 'julialang/julia-vim',              { 'for':'julia'        }
+" Plug 'julialang/julia-vim',              { 'for':'julia'        }

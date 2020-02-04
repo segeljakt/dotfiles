@@ -9,9 +9,10 @@ function w-upgrade-all {
     "cargo install-update -a" \
     "brew upgrade"
 }
-function w-cargo-run  { zle -I; export RUST_BACKTRACE=0; cargo run             }
-function w-cargo-run-stacktrace  { zle -I; export RUST_BACKTRACE=1; cargo run  }
+function w-cargo-run  { zle -I; RUST_BACKTRACE=0; cargo run                    }
+function w-cargo-run-stacktrace  { zle -I; RUST_BACKTRACE=1; cargo run         }
 function w-open-vim   { zle -I; nvim                                           }
+function w-open-tig   { zle -I; tig < /dev/tty                                 }
 function w-clear-ls   { zle -I; clear; ls                                      }
 function w-clear      { zle -I; clear;                                         }
 function w-fg         { zle -I; fg                                             }
@@ -40,7 +41,7 @@ function w-fzf-toggle-exact {
 }
 function w-fzf-set-filter {
   BUFFER="export FZF_FILTERS='$FZF_FILTERS'"
-  CURSOR=$#BUFFER
+  CURSOR=$#BUFFER-2
 }
 function w-fg {
   if [ $(jobs | head -c1 | wc -c) -ne 0 ]; then
@@ -170,6 +171,32 @@ function w-contents() {
   fi
   zle redisplay
 }
+function w-emoji() {
+  zle -I
+  RESULT=$(                                                                \
+    emoji-fzf preview |                                                    \
+    fzf --multi                                                            \
+        -i                                                                 \
+        ${FZF_EXACT}                                                       \
+        --inline-info                                                      \
+        --height=$FZF_HEIGHT                                               \
+        --reverse                                                          \
+        --tabstop=2                                                        \
+        --color=hl+:1,hl:1                                                 \
+        --algo=v2                                                          \
+        --bind="ctrl-a:select-all+accept"                                  \
+        --preview-window=up:1:noborder                                     \
+        --preview 'emoji-fzf get {1}' |                                    \
+    cut -d ' ' -f 1 |                                                      \
+    emoji-fzf get   |                                                      \
+    tr '\n' ' '
+  )
+  if [[ "$RESULT" != "" ]]; then
+    BUFFER="$LBUFFER$RESULT$RBUFFER"
+    CURSOR=$CURSOR+$#RESULT
+  fi
+  zle redisplay
+}
 function w-spell() {
   zle -I
   RESULT=$(
@@ -206,6 +233,10 @@ function w-pipe() {
   CURSOR=$#BUFFER
   zle accept-line
 }
+function w-exec-last() {
+  zle up-history
+  zle accept-line
+}
 zle -N w-bin
 zle -N w-cd-or-expand
 zle -N w-clear-ls
@@ -233,7 +264,10 @@ zle -N w-backward-kill-dir
 zle -N w-cargo-run
 zle -N w-cargo-run-stacktrace
 zle -N w-open-vim
+zle -N w-open-tig
 zle -N w-spell
 zle -N w-pipe
+zle -N w-exec-last
+zle -N w-emoji
 # Functions
 function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }

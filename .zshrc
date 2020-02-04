@@ -10,6 +10,7 @@ export TERM=screen-256color
 stty -ixon -ixoff werase undef # Unbind <C-s> <C-q> <C-w>
 #: PATHS
 path=(
+  /usr/local/opt/ccache/libexec
   /usr/local/opt/llvm/bin
   /usr/local/opt/gnu-sed/libexec/gnubin
   /usr/local/sbin
@@ -56,6 +57,7 @@ alias    gc="git commit"
 alias   gcl="git clone"
 alias    gg="git pull"
 # Overrides
+alias    bc="eva"
 alias    ls="lsd --group-dirs=first"
 alias   lst="lsd --tree"
 alias   lsa="lsd --date relative --all"
@@ -76,7 +78,10 @@ alias  ....=../../..
 alias .....=../../../..
 alias  comp="~/.zsh/zsh-completion-generator/help2comp.py"
 alias    xp="xpanes"
-alias     v="nvim"
+alias     n="nvim"
+alias    na="nvim **/**.rs -p"
+alias    ns="nvim **/**.scala -p"
+alias    nv="nvim **/**.vim -p"
 alias     t="trans en:sv -view" # translate
 alias    tt="trans sv:en -view" # translate
 alias     u="w-upgrade-all"
@@ -102,9 +107,11 @@ alias     o="n-options"
 alias    gl="git log --pretty"
 alias    ed="ed -p'* '"
 alias    sc="nvim ~/PhD/Plan.md"
+alias    cf="cargo fetch"
 alias    cb="cargo build --color always 2>&1 | less"
 alias    ct="cargo test --color always 2>&1 | less"
 alias   hdp="ssh klas@109.225.89.18 -p 8209"
+alias   cps="pax -rw -k -pe . . -s"
 #: ENV
 #:: Ripgrep
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
@@ -115,9 +122,9 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK=1
 #:: MAN
 export           PAGER=/usr/local/bin/less
-export            LESS="--RAW-CONTROL-CHARS --IGNORE-CASE --SILENT --quit-if-one-screen"
+export            LESS='--RAW-CONTROL-CHARS --IGNORE-CASE --SILENT --quit-if-one-screen'
 export LESS_TERMCAP_so=$'\E[30;43m'
-export             PS1="%F{red}%D{%H:%M:%S}%f "
+export             PS1='$(prompt)'
 #export           TERM=xterm-color
 export         EDITOR=nvim
 export         LC_ALL=en_US.UTF-8
@@ -128,9 +135,9 @@ export       SAVEHIST=5000 # Disk
 export       HISTFILE=~/.zsh/hist
 export       HISTSIZE=$HISTFILESIZE
 export        FIGNORE=$FIGNORE:DS_Store
-export     HISTIGNORE="ls";    # Ignore certain commands from history
-export      WORDCHARS=""
-export      LS_COLORS="di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32"
+export     HISTIGNORE='ls';    # Ignore certain commands from history
+export      WORDCHARS=''
+export      LS_COLORS='di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32'
 export      JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
 export     CARGO_HOME=~/.cargo/
 # export CARGO_TARGET_DIR="/Users/Klas/.cargo/target/"
@@ -143,12 +150,13 @@ export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=red,bg=black,bold"
 #: OPTIONS
 setopt AUTO_CD;              # CD to directory
-setopt NO_AUTOREMOVESLASH;
+setopt NO_AUTO_REMOVE_SLASH; # Do not remove trailing slash for completions
 setopt MENU_COMPLETE;        # Press tab twice to autocomplete
 setopt INC_APPEND_HISTORY;   # Append to history immediately, not just on exit
-setopt LIST_PACKED;
+setopt LIST_PACKED;          # Make the completion list smaller
 setopt HIST_IGNORE_SPACE;    # Don't save commands starting with space to history
 setopt HIST_IGNORE_ALL_DUPS; # Ignore all duplicate commands
 #setopt EXTENDED_HISTORY;     # Store time of each command
@@ -162,13 +170,15 @@ setopt SHARE_HISTORY;        # Share history between shells
 setopt INTERACTIVE_COMMENTS; # Allow interactive comments in shell
 setopt PROMPT_SUBST;         # Allow stuff in prompts
 setopt TRANSIENT_RPROMPT;    # Clear RPS1 when accepting command
-setopt EXTENDED_GLOB;
+setopt EXTENDED_GLOB;        # Treat # ~ ^ as globs
 #: CUSTOM OPTIONS
 export FZF_HEIGHT=20
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
 export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
 export FZF_FILTERS='*.{c,h,cpp,rs,java,scala,py}'
+export FZF_DEFAULT_OPTS="--bind 'tab:down' --bind 'btab:up'"
+export FZF_TAB_OPTS="--bind 'space:accept'"
 export SCROLLBACK=10
 #: SOURCES
 #function zr_update {
@@ -185,6 +195,8 @@ source ~/.zsh/zsh-autopair/autopair.zsh
 source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 
+source ~/Workspace/zsh/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh
+source ~/Workspace/zsh/zce.zsh/zce.zsh
 autoload -Uz edit-command-line; zle -N edit-command-line
 #: COMPLETION
 fpath=(
@@ -243,9 +255,11 @@ bindkey '^N'   w-clear # TODO: IRC
 bindkey '^[[.' w-cargo-run # <D-R>
 bindkey '^[[,' w-cargo-run-stacktrace # <D-S-R>
 bindkey '^[[~' w-backward-kill-dir # <C-BS>
-bindkey '^G'   w-open-vim
-bindkey ö      w-spell # <C-d>
+bindkey '^G'   w-open-tig
+bindkey '^S'   w-spell # <C-d>
 bindkey ¥      w-pipe # <S-Enter>
+bindkey º      w-exec-last # <D-k>
+bindkey É      w-emoji
 # Builtin widgets
 bindkey '\eq'  push-input
 bindkey '^Q'   push-line-or-edit
@@ -263,10 +277,19 @@ bindkey '^X'   edit-command-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect '^I'   menu-expand-or-complete
 bindkey '^[[3~' delete-char # <FN-BS>
+bindkey 'ö' zce
 # bindkey Ü w-upgrade-all
 # FUNCTIONS
 function pdftojpg {
   convert -density 300 -trim -quality 100 $1 +append $(echo $1 | sed "s/\.pdf/\.png")
+}
+function prompt {
+  if [[ "$?" != "0" ]]; then
+    echo "%F{red}%D{%H:%M:%S}%f "
+  else
+    echo "%F{green}%D{%H:%M:%S}%f "
+  fi
+#   local prefix = $(($($last_status != '0')?'✘':'✔'))
 }
 #zprof # bottom of .zshrc
 
@@ -274,3 +297,13 @@ function pdftojpg {
 #test -r /Users/Klas/.opam/opam-init/init.zsh && . /Users/Klas/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 #eval $(opam env)
 function man() { /usr/bin/man $1 } # Fix that lag
+source ~/Workspace/zsh/fzf-tab/fzf-tab.plugin.zsh
+source ~/Workspace/zsh/forgit/forgit.plugin.zsh
+source ~/Workspace/zsh/git-open/git-open.plugin.zsh
+
+function play() {
+  vlc ftp://192.168.1.3:5115/$1 \
+    --video-x=100 \
+    --video-y=20 \
+    --scale=0.2
+}
