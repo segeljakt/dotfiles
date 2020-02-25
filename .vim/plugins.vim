@@ -12,10 +12,11 @@ Plug 'sainnhe/edge'
 Plug 'mattn/webapi-vim'                " (*) Needed by vim-gist
 Plug 'shougo/vimproc.vim'              " (*) Asynchronous execution library
 Plug 'vim-scripts/ingo-library'        " (*) Blockwise-repeat
+" Plug 'camspiers/animate.vim'
 
 " [My Plugins]
-Plug '/Users/Klas/Workspace/vim/vim-sentencer'
-Plug '/Users/Klas/Workspace/vim/vim-stealth'
+" Plug '/Users/Klas/Workspace/vim/vim-sentencer'
+" Plug '/Users/Klas/Workspace/vim/vim-stealth'
 Plug '/Users/Klas/Workspace/vim/vim-isotope'
 Plug '/Users/Klas/Workspace/vim/vim-silicon'
 
@@ -46,6 +47,7 @@ Plug 'tpope/vim-abolish'               " (*) iabbrev, %S, snake_case => camelCas
 Plug 'tpope/vim-fugitive'              " (*) Git essentials
 Plug 'romainl/vim-cool'                " (*) Turn off hlsearch
 Plug 'vim-scripts/DrawIt'              " (*) Draw lines
+Plug 'gyim/vim-boxdraw'
 Plug 'tmsvg/pear-tree'                 " (*) Auto-pairs but better
 Plug 'bkad/camelcasemotion'            " (*) camelCaseMotion and snake_case_motion
 Plug 'tomtom/tcomment_vim'             " (*) Commenting plugin
@@ -66,7 +68,7 @@ Plug 'mattn/gist-vim',                                    " Create gist from buf
 Plug 'AndrewRadev/splitjoin.vim',                         " Split and join code
 Plug 'rrethy/vim-illuminate',                             " Highlight word under cursor
 Plug 'iandingx/leetcode.vim'                             
-Plug 'w0rp/ale',                                          " (*) Async linting
+" Plug 'w0rp/ale',                                          " (*) Async linting
 Plug 'andrewradev/sideways.vim'                             " (*) Move arguments sideways
 Plug 'foosoft/vim-argwrap'                                  " (*) Wrap/unwrap arguments
 Plug 'sbdchd/neoformat',                                    " (*) Format code
@@ -80,6 +82,8 @@ Plug 'AaronLasseigne/yank-code'
 " Plug 'IMOKURI/line-number-interval.nvim'
 " Plug 'norcalli/nvim-colorizer.lua'
 " Plug 'mhinz/vim-crates'
+Plug 'APZelos/blamer.nvim'
+Plug 'camspiers/lens.vim'
 
 " [Filetype]
 Plug 'rust-lang/rust.vim',               { 'for':'rust'         } " (*) .rs
@@ -95,7 +99,11 @@ Plug 'tie/llvm.vim'
 Plug 'chrisbra/vim-zsh'
 
 " Plug 'derekelkins/agda-vim',             { 'for':'agda'         } " (*) .agda
-" Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
+" Plug 'bfrg/vim-cpp-modern'
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
+" Plug 'lyuts/vim-rtags'
+" Plug 'Yilin-Yang/vim-markbar'
+" Plug 'majutsushi/tagbar'
 " Plug 'justinmk/vim-syntax-extra',        { 'for':'c'            } " (*) C - Better syntax highlighting
 " Plug 'valloric/matchtagalways',          { 'for':['xml','html'] } " .xml/.html
 " Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest

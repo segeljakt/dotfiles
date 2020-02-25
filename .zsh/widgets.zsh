@@ -16,7 +16,7 @@ function w-open-tig   { zle -I; tig < /dev/tty                                 }
 function w-clear-ls   { zle -I; clear; ls                                      }
 function w-clear      { zle -I; clear;                                         }
 function w-fg         { zle -I; fg                                             }
-function w-cd-parent  { zle -I; cd ..; clear; pwd; ls                          }
+function w-cd-parent  { zle -I; cd ..; pwd; ls                                 }
 function w-help       { zle -I; cat ~/.help                                    }
 function w-todo       { zle -I; nvim ~/.todo                                   }
 function w-copy       { echo "$BUFFER" | pbcopy                                }
@@ -270,4 +270,4 @@ zle -N w-pipe
 zle -N w-exec-last
 zle -N w-emoji
 # Functions
-function fcd () { [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; } ; pwd; }
+function fcd () [ -f "$1" ] && { cd "$(dirname "$1")"; } || { cd "$1"; }; pwd;

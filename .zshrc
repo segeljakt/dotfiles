@@ -35,6 +35,7 @@ path=(
 #: ALIASES
 alias     g="nvim ~/.gym.md"
 alias   tid="python3 ~/Workspace/other/tid/tid.py '$TID'"
+alias  mlir="rg ~/Workspace/scala/arc/arc-mlir/llvm-project/mlir/include/mlir/IR -e"
 # Files
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
@@ -52,11 +53,17 @@ alias    df="df -h"
 alias  mvim="skhd -k 'cmd + shift - k'; mvim"
 # Git
 alias    gp="git push"
+alias   gpf="git push --force"
 alias   gpl="git pull"
-alias    gc="git commit"
+alias   gca="git commit --amend"
 alias   gcl="git clone"
-alias    gg="git pull"
+alias   grc="git rebase --continue"
+alias   gra="git rebase --abort"
+alias   gco="git checkout"
+alias   gcb="git checkout -b"
 # Overrides
+# alias    mv="adaptive-mv"
+# alias touch="adaptive-touch"
 alias    bc="eva"
 alias    ls="lsd --group-dirs=first"
 alias   lst="lsd --tree"
@@ -82,6 +89,7 @@ alias     n="nvim"
 alias    na="nvim **/**.rs -p"
 alias    ns="nvim **/**.scala -p"
 alias    nv="nvim **/**.vim -p"
+alias    np="nvim **/**.{cpp,h,td} -p"
 alias     t="trans en:sv -view" # translate
 alias    tt="trans sv:en -view" # translate
 alias     u="w-upgrade-all"
@@ -177,7 +185,7 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
 export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
 export FZF_FILTERS='*.{c,h,cpp,rs,java,scala,py}'
-export FZF_DEFAULT_OPTS="--bind 'tab:down' --bind 'btab:up'"
+export FZF_DEFAULT_OPTS="--bind 'btab:up'"
 export FZF_TAB_OPTS="--bind 'space:accept'"
 export SCROLLBACK=10
 #: SOURCES
@@ -197,6 +205,7 @@ source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 
 source ~/Workspace/zsh/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh
 source ~/Workspace/zsh/zce.zsh/zce.zsh
+source ~/Workspace/zsh/zsh-utils/utils.zsh
 autoload -Uz edit-command-line; zle -N edit-command-line
 #: COMPLETION
 fpath=(

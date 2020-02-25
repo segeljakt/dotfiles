@@ -103,7 +103,7 @@ set completeopt=noinsert,menuone,noselect,preview
 set formatoptions=rownlj
 set maxmempattern=2000000       " Max memory for pattern matching
 set nrformats=alpha,octal,hex,bin
-set selection=exclusive
+set selection=inclusive
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -148,7 +148,7 @@ nm <nowait><buffer> <C-c> <Plug>(VM-Reset)
 nm  <silent> <C-x>        <Plug>Stealth
 nm  <silent> t            <Plug>(coc-definition)
 nno <silent> <C-t>        <C-o>
-nm  <silent> gx           <Plug>(coc-openlink)
+" nm  <silent> gx           <Plug>(coc-openlink)
 nm  <silent> Ω            <Plug>(coc-refactor)|            " <D-w>
 nm  <silent> É            <Plug>(coc-references)|          " <D-e>
 nm  <silent> √            <Plug>(coc-rename)|              " <D-r>
@@ -191,9 +191,14 @@ map <silent> ;            <Plug>(expand_region_expand)
 map <silent> :            <Plug>(expand_region_shrink)
 nm  <silent> γ            <Plug>(GitGutterLineHighlightsToggle)| " <M-g>
 nm  <silent> ƒ            <Plug>(GitGutterFold)|                 " <M-f>
-nm  <silent> ¬            <Plug>(GitGutterNextHunk)|             " <M-j>
-nm  <silent> º            <Plug>(GitGutterPrevHunk)|             " <M-k>
+nm  <silent> ¬            <Plug>(GitGutterNextHunk)|             " <D-j>
+nm  <silent> º            <Plug>(GitGutterPrevHunk)|             " <D-k>
+nm  <silent> Γ            <Plug>(GitGutterStageHunk)|            " <D-g>
+nm  <silent> ˘            <Plug>(GitGutterPreviewHunk)|          " <D-h>
+nm  <silent> gu           <Plug>(GitGutterUndoHunk)
 nm  <silent> ö            <Plug>(choosewin)|                     " <C-d>
+im  <C-c>                 <Plug>(PearTreeFinishExpansion)
+im  <C-e>                 <Plug>(PearTreeJump)
 " nm           <C-e>        <Plug>(SmoothieDownwards)
 " nm           E            <Plug>(SmoothieUpwards)
 map <silent> w            <Plug>CamelCaseMotion_w
@@ -222,7 +227,7 @@ nno          <C-w>H       <C-w>H<C-w>x<C-w>l|               " NERDTree compatibi
 " Overrides
 nno          D            "Add                              " 
 nno          B            ^|                                " Go to start of line
-nno          E            <C-y>|                            " Scroll up
+no           E            <C-y>|                            " Scroll up
 no           <Space>      :
 ino          <C-h>        <Left>|                           " Move in insert mode
 ino          <C-j>        <Down>
@@ -255,7 +260,7 @@ cno          <C-h>        <Left>
 cno          <C-l>        <Right>
 cno          <C-k>        <Up>
 cno          <C-j>        <Down>
-cno          <C-b>        <S-Left>
+cno          <C-b>        <S-Left><Left>
 cno          <C-e>        <S-Right>
 cno          <C-v>        <C-r><C-l>
 cno          <C-f>        <C-\>e
@@ -266,7 +271,7 @@ nno <silent> <Leader>l    :set cursorbind! scrollbind!<CR>  " Bind cursor/scroll
 " nno <silent> Θ            :set wrap!<CR>|                   " <M-O>
 " Shortcuts
 ino          <C-z>        \                                 " <C-f>
-vno          <C-y>        ygvr<Space>|                      " Yank & clear
+" vno          <C-y>        ygvr<Space>|                      " Yank & clear
 nno          cu           gg=G``|                           " Format file
 nno          gl           <C-w>TgT|                         " Move to new tab
 " Commands
@@ -352,8 +357,8 @@ aug Autocommands | au!
   au BufReadPost .vimrc set nowrap
   au FocusLost * silent! wall
   au Syntax * match none
-  au Syntax c,cpp,rust match ColorColumn /\%>120v.\+/
-  au Syntax vim match ColorColumn /\%>79v.\+/
+  au Syntax rust match ColorColumn /\%>120v.\+/
+  au Syntax c,cpp,vim match ColorColumn /\%>80v.\+/
   au BufReadPost * silent! norm! g`"
   au TabLeave * silent! w
   au StdinReadPre * silent let s:std_in=1

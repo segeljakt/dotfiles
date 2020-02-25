@@ -75,7 +75,7 @@
         "~"
       ]
     },
-    "ccls": {
+    /*"ccls": {
       "command": "ccls",
       "filetypes": [
         "c",
@@ -95,7 +95,7 @@
           "directory": "/tmp/ccls"
         }
       }
-    },
+    },*/
     "julia": {
       "command": "/usr/local/bin/julia",
       "args": [

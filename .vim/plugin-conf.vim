@@ -7,17 +7,17 @@ hi link ClapSpinner PmenuSel
 "* vim-smoothie
 let g:smoothie_use_default_mappings = v:false
 "* vim-silicon
-" let g:silicon = {
-"       \ 'theme':                'Dracula',
-"       \ 'background':           '#FFFFFF',
-"       \ 'line-pad':                     1,
-"       \ 'pad-horiz':                  500,
-"       \ 'pad-vert':                   500,
-"       \ 'line-number':            v:false,
-"       \ 'window-controls':        v:false,
-"       \ 'to-clipboard':           v:true,
-"       \ 'output': '~/Desktop/silicon_{time:%Y-%m-%d_%H-%M-%S}.png',
-"       \ }
+let g:silicon = {
+      \ 'theme':                 'GitHub',
+      \ 'background':           '#FFFFFF',
+      \ 'line-pad':                     1,
+      \ 'pad-horiz':                    0,
+      \ 'pad-vert':                     0,
+      \ 'line-number':            v:false,
+      \ 'window-controls':        v:false,
+      \ 'to-clipboard':           v:true,
+      \ 'output': '~/Desktop/silicon_{time:%Y-%m-%d_%H-%M-%S}.png',
+      \ }
 "* vim-choosewin
 let g:choosewin_return_on_single_win = 1
 let g:choosewin_color_label = {
@@ -207,8 +207,6 @@ let g:pear_tree_pairs = {
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_repeatable_expand = 0
-imap <C-c> <Plug>(PearTreeFinishExpansion)
-imap <C-e> <Plug>(PearTreeJump)
 "* Startify
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
