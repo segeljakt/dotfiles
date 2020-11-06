@@ -1,6 +1,34 @@
 {
   "suggest.maxPreviewWidth": 80,
   "suggest.enablePreview": true,
+  //"rust.full_docs": true,
+  //"rust.clippy_preference": "on",
+  //"rust.show_hover_context": true,
+  //"rust.wait_to_build": 0,
+  //"rust.racer_completion": true,
+  //"rust.target": "wasm32-unknown-unknown",
+  "rust-analyzer.completion.addCallParenthesis": true,
+  "rust-analyzer.inlayHints.refreshOnInsertMode": true,
+  "rust-analyzer.completion.addCallArgumentSnippets": true,
+  "highlight.colors.enable": true,
+  "rust-analyzer.completion.postfix.enable": true,
+  "rust-analyzer.lens.run": true,
+  "rust-analyzer.callInfo.full": true,
+  "rust-analyzer.cargo.autoreload": true,
+  "rust-analyzer.lens.enable": true,
+  "rust-analyzer.lens.implementations": true,
+  "rust-analyzer.inlayHints.chainingHints": true,
+  "rust-analyzer.diagnostics.enable": true,
+  "rust-analyzer.updates.channel": "stable",
+  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.cargo.features": ["all"],
+  "rust-analyzer.serverPath": "~/Workspace/rust-analyzer/target/release/rust-analyzer",
+  "rust-analyzer.hoverActions.enable": true,
+  "rust-analyzer.hoverActions.linksInHover": true,
+  "rust-analyzer.assist.importMergeBehaviour": "full",
+  "rust-analyzer.checkOnSave.allTargets": true,
+  "rust-analyzer.checkOnSave.command": "clippy",
   "suggest.detailMaxLength": 30,
   "suggest.detailField": "menu",
   "suggest.autoTrigger": "always",
@@ -23,19 +51,20 @@
   "suggest.completionItemKindLabels": {},
   "suggest.floatEnable": true,
   "signature.triggerSignatureWait": 50,
-  "snippets.autoTrigger": true,
-  "list.maxHeight": 20,
-  "list.autoResize": true,
+  //"list.maxHeight": 20,
+  //"list.autoResize": true,
+  "coc.preferences.highlightTimeout": 200,
   "list.indicator": ">",
   "list.maxPreviewHeight": 20,
   "list.extendedSearchMode": true,
-  "diagnostic.enable": false,
-  "diagnostic.displayByAle": true,
+  "diagnostic.enable": true,
+  "diagnostic.displayByAle": false,
   "diagnostic.refreshOnInsertMode": true,
-  "diagnostic.infoSign": ">>",
-  "diagnostic.hintSign": ">>",
-  "diagnostic.errorSign": ">>",
-  "diagnostic.enableSign": true,
+  "diagnostic.infoSign": ">",
+  "diagnostic.hintSign": ">",
+  "diagnostic.errorSign": ">",
+  "diagnostic.enableSign": false,
+  "diagnostic.enableHighlightLineNumber": true,
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextLineSeparator": "; ",
   "diagnostic.virtualTextLines": 3,
@@ -49,8 +78,10 @@
   "coc.preferences.jumpCommand": "edit",
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.enableFloatHighlight": true,
+  "coc.preferences.formatOnSaveFiletypes": [],
   "coc.source.file.enable": true,
   "coc.source.buffer.enable": false,
+  "coc.source.around.enable": true,
   "codeLens.enable": true,
   "languageserver": {
     "metals": {
@@ -63,19 +94,7 @@
         "sbt"
       ]
     },
-    "bash": {
-      "command": "bash-language-server",
-      "args": [
-        "start"
-      ],
-      "filetypes": [
-        "sh"
-      ],
-      "ignoredRootPaths": [
-        "~"
-      ]
-    },
-    /*"ccls": {
+    "ccls": {
       "command": "ccls",
       "filetypes": [
         "c",
@@ -95,17 +114,35 @@
           "directory": "/tmp/ccls"
         }
       }
-    },*/
-    "julia": {
-      "command": "/usr/local/bin/julia",
+    },
+    "arc-script": {
+      "command": "/home/klas/Workspace/arc/arc-script/target/release/arc-script",
       "args": [
-        "--startup-file=no",
-        "--history-file=no",
-        "-e",
-        "using LanguageServer;\n       using Pkg;\n       import StaticLint;\n       import SymbolServer;\n       env_path = dirname(Pkg.Types.Context().env.project_file);\n       debug = false;\n       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, \"\", Dict());\n       server.runlinter = true;\n       run(server);"
+        "lsp"
       ],
       "filetypes": [
-        "julia"
+        "arc-script"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
+    },
+    "tower-lsp": {
+      "command": "/home/klas/Workspace/tower-lsp/target/debug/examples/server",
+      "filetypes": [
+        "tower-lsp"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
+    },
+    "ocaml": {
+      "command": "ocamllsp",
+      "filetypes": [
+        "ocaml"
+      ],
+      "ignoredRootPaths": [
+        "~"
       ]
     }
   }

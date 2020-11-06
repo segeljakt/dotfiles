@@ -7,6 +7,9 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'camgunz/amber'
 Plug 'endel/vim-github-colorscheme'
 Plug 'sainnhe/edge'
+Plug 'yassinebridi/vim-purpura'
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'lifepillar/vim-wwdc17-theme'
 
 " [Libraries]
 Plug 'mattn/webapi-vim'                " (*) Needed by vim-gist
@@ -17,26 +20,32 @@ Plug 'vim-scripts/ingo-library'        " (*) Blockwise-repeat
 " [My Plugins]
 " Plug '/Users/Klas/Workspace/vim/vim-sentencer'
 " Plug '/Users/Klas/Workspace/vim/vim-stealth'
-Plug '/Users/Klas/Workspace/vim/vim-isotope'
-Plug '/Users/Klas/Workspace/vim/vim-silicon'
-
-if has("macvim")
-  Plug '/Users/Klas/Workspace/vim/vim-commando'
-en
+Plug 'segeljakt/vim-isotope'
+Plug 'segeljakt/vim-silicon'
+Plug '/home/klas/Workspace/vim-commando'
 
 " [General-purpose]
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+Plug 'ryanoasis/vim-devicons'
 " Plug 'psliwka/vim-smoothie'            " Smooth scrolling
 " Plug 'skywind3000/vim-quickui'
 Plug 'farmergreg/vim-lastplace'
-" Plug 'RRethy/vim-hexokinase'           " Hex colors
+" Plug 'lilydjwg/colorizer', { 'do': 'make install' }
+" Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'simeji/winresizer'               " (*) Window management
-Plug '/usr/local/opt/fzf'              " (*) FZF installation
-Plug 'junegunn/fzf.vim'                " (*) FZF
+" Plug '/usr/local/opt/fzf'              " (*) FZF installation
+" Plug 'junegunn/fzf.vim'                " (*) FZF
+Plug 'rhysd/git-messenger.vim'
+"Plug 'tjdevries/cyclist.vim'
+Plug 'haorenW1025/floatLf-nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'               " (*) Align stuff
 Plug 'zirrostig/vim-schlepp'           " (*) Drag visual block and visual line
 Plug 'mhinz/vim-startify'              " (*) Start-screen
 Plug 'mbbill/undotree'                 " (*) Undo history
-Plug 'scrooloose/nerdtree'             " (*) Would be nice to find a replacement
+" Plug 'scrooloose/nerdtree'             " (*) Would be nice to find a replacement
 Plug 'danro/rename.vim'                " (*) Rename current buffer
 Plug 'moll/vim-bbye'                   " (*) Delete buffers and close files
 Plug 'nelstrom/vim-visual-star-search' " (*) Search by visual block
@@ -51,8 +60,8 @@ Plug 'gyim/vim-boxdraw'
 Plug 'tmsvg/pear-tree'                 " (*) Auto-pairs but better
 Plug 'bkad/camelcasemotion'            " (*) camelCaseMotion and snake_case_motion
 Plug 'tomtom/tcomment_vim'             " (*) Commenting plugin
-Plug 'terryma/vim-expand-region'       " (*) Expand/close closest text-object
-Plug '~/Workspace/vim/lightline.vim'   " (*) The best statusline
+" Plug '~/Workspace/vim/lightline.vim'   " (*) The best statusline
+Plug 'itchyny/lightline.vim'
 Plug 'andymass/vim-matchup'            " (*) Better matching
 Plug 'airblade/vim-gitgutter'          " (*) Git - Show changes in git (Better)
 " [File-specific]
@@ -61,9 +70,11 @@ Plug 'plasticboy/vim-markdown',        { 'for':'markdown' } " (Must come after T
 Plug 'junegunn/limelight.vim',         { 'for':['markdown', 'latex'] } " (*) Fade adjacent paragraphs
 Plug 'junegunn/goyo.vim',              { 'for':['markdown', 'latex'] } " (*) Distraction-less mode
 Plug 'dhruvasagar/vim-table-mode',     { 'for':['markdown', 'latex'] } " (*) Draw tables
-Plug 'lervag/vimtex',                  { 'for':'latex'  }
-Plug 'KeitaNakamura/tex-conceal.vim',  { 'for':'latex'  }
-Plug 'metakirby5/codi.vim',            { 'for':'python' } " (*) Live coding REPL
+Plug 'da-x/name-assign.vim'
+Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+" Plug 'lervag/vimtex',                  { 'for':'latex'  }
+" Plug 'KeitaNakamura/tex-conceal.vim',  { 'for':'latex'  }
+" Plug 'metakirby5/codi.vim',            { 'for':'python' } " (*) Live coding REPL
 Plug 'mattn/gist-vim',                                    " Create gist from buffer
 Plug 'AndrewRadev/splitjoin.vim',                         " Split and join code
 Plug 'rrethy/vim-illuminate',                             " Highlight word under cursor
@@ -71,9 +82,13 @@ Plug 'iandingx/leetcode.vim'
 " Plug 'w0rp/ale',                                          " (*) Async linting
 Plug 'andrewradev/sideways.vim'                             " (*) Move arguments sideways
 Plug 'foosoft/vim-argwrap'                                  " (*) Wrap/unwrap arguments
-Plug 'sbdchd/neoformat',                                    " (*) Format code
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'sbdchd/neoformat',                                    " (*) Format code
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'hyhugh/coc-erlang_ls', {'do': 'yarn install --frozen-lockfile'}
 Plug 'mg979/vim-visual-multi'
+Plug 'Xuyuanp/scrollbar.nvim'
 Plug 'https://gist.github.com/PeterRincker/582ea9be24a69e6dd8e237eb877b8978.git',
   \ { 'as': 'SortGroup', 'do': 'mkdir plugin; mv -f *.vim plugin/', 'on': 'SortGroup' } " Sort Multi Line Groups
 Plug 't9md/vim-choosewin'
@@ -94,9 +109,13 @@ Plug 'darfink/vim-plist',                                         " .plist
 " Plug 'neovimhaskell/haskell-vim'
 " Plug 'vale1410/vim-minizinc'
 Plug 'tie/llvm.vim'
-" Plug 'ocaml/merlin' " Ocaml
+Plug 'idris-hackers/idris-vim' " Idris
+Plug 'ocaml/merlin' " Ocaml
+Plug 'vim-syntastic/syntastic',          { 'for':'idris' }
+Plug 'Shougo/vimshell.vim',              { 'for':'idris' }
 " Plug 'OCamlPro/ocp-indent' "Ocaml
 Plug 'chrisbra/vim-zsh'
+Plug 'lifepillar/pgsql.vim'
 
 " Plug 'derekelkins/agda-vim',             { 'for':'agda'         } " (*) .agda
 " Plug 'bfrg/vim-cpp-modern'
@@ -106,7 +125,7 @@ Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
 " Plug 'majutsushi/tagbar'
 " Plug 'justinmk/vim-syntax-extra',        { 'for':'c'            } " (*) C - Better syntax highlighting
 " Plug 'valloric/matchtagalways',          { 'for':['xml','html'] } " .xml/.html
-" Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
+Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
 " Plug 'mechatroner/rainbow_csv',          { 'for':'csv'          } " (*) .csv
 " Plug 'jrozner/vim-antlr',                { 'for':'antlr4'       } " .antlr
 " Plug 'julialang/julia-vim',              { 'for':'julia'        }

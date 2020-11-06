@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/usr/bin/zsh
 file=$1; line=$2; num_lines=$3; half=$(($num_lines/2))
 if [[ $line -le $half ]]; then
   start=1

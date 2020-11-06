@@ -4,7 +4,7 @@
 "* Load plugins
 set nocompatible
 set guioptions=
-let maplocalleader = '§'
+let maplocalleader = '-'
 let mapleader      = '§'
 call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim
@@ -27,6 +27,7 @@ if has('gui_macvim')
 el
   set viminfo='100,n~/.vim/nviminfo
 en
+set cmdheight=1
 set autoread                    " Automatically read changes
 set autowriteall                " Automatically write when changing file
 set bufhidden=hide              " Delete buffer when closing window
@@ -34,7 +35,7 @@ set cindent                     " Automatic c indentation
 set cinkeys-=0#,:               " Comments don't fiddle with indenting
 set cinoptions=l1,c0,C0,\0      " Do not indent switch-cases
 set concealcursor=              " Conceal only when on a different line
-set conceallevel=2              " Replace concealed text with char, if any
+set conceallevel=0              " Replace concealed text with char, if any
 set cpoptions-=aA               " Read and write shouldn't set #
 set fileformats=unix,mac,dos    " Handle all, but prefer unix
 set fileignorecase              " Always do the above
@@ -62,16 +63,18 @@ set showfulltag                 " Show full tag when matching from tagfile
 set showtabline=2               " Always show tabline
 set spelllang=en_us             " We speak American
 set splitright                  " Puts splits on right hand side
+set signcolumn=yes              " Always show signcolumn
 set tagcase=match               " Case-sensitive tag search
 set notitle                     " Do not display title
 set titleold=                   " Do not display title
 set virtualedit=block           " Select whitespaces
+set nowrap
 set wildignore=*.class,*.o,*~,*.pyc,.git,*.lock,target,*.out
 set wildignorecase              " Ignore case when completing filenames
 set wildmenu                    " Tabcompletion for commandline
 set wildcharm=<Tab>             " Allow macros to tabcomplete
 set matchpairs=(:),{:},[:],<:>,":" " Separators
-set shell=/usr/local/bin/zsh    " Shell program
+set shell=/usr/bin/zsh    " Shell program
 " let &shell='/usr/local/bin/zsh -f'    " Shell program
 set shellcmdflag=-c
 set emoji                       " Emoji characters are full-width
@@ -91,8 +94,8 @@ set undodir=~/.vimundo          " Stored here
 set undolevels=2000             " Max number of changes that can be undone
 set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
 set foldnestmax=4
-set updatetime=250              " Write to disk after 250 ms
-set redrawtime=1000             " timeout for 'hlsearch' and :match highlighting
+set updatetime=150              " Write to disk after 150 ms
+set redrawtime=500             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
 set belloff=all                 " STOP IT
 "set verbose                    " Lengthen messages
@@ -126,13 +129,15 @@ let g:no_pdf_maps             = 1
 " PhD
 nno <silent> <Leader>d    :AsyncRun open dict://<cword><CR><CR>
 " Plugins
+nno          ´            /HEAD<CR>
+nno          gfs          :GitGutterStageHunk<CR>
+nno          gp           :GitGutterPreviewHunk<CR>
 nno <expr>   q            &ma?':TComment<CR>':''
 vno <expr>   q            &ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''
-nno <silent> +            :Neoformat<CR>
 nno <silent> gb           :Gbrowse<CR>
 nno <silent> <C-p>        :Rg<CR>
 nno <silent> <C-u>        :History<CR>
-nno <silent> <C-s>        :GFiles<CR>
+nno <silent> ı            :GitFiles<CR>|                    " <C-i>
 nno <silent> Ö            :ArgWrap<CR>
 nno <silent> Å            :Bdelete!<CR>
 nno <silent> ü            :PlugUpdate<CR>|                  " <M-u>
@@ -145,51 +150,69 @@ nno <silent> →            :call ToggleDrawIt()<CR>
 no  <silent> <C-w>m       :WinResizerStartMove<CR>
 xno <silent> <expr> ?     mode()=~'V' ? ':Tabularize' : '?'
 nm <nowait><buffer> <C-c> <Plug>(VM-Reset)
-nm  <silent> <C-x>        <Plug>Stealth
+" nm  <silent> <C-x>        <Plug>Stealth
 nm  <silent> t            <Plug>(coc-definition)
-nno <silent> <C-t>        <C-o>
+nno <silent> <C-t>        <C-^>
 " nm  <silent> gx           <Plug>(coc-openlink)
-nm  <silent> Ω            <Plug>(coc-refactor)|            " <D-w>
-nm  <silent> É            <Plug>(coc-references)|          " <D-e>
-nm  <silent> √            <Plug>(coc-rename)|              " <D-r>
-nm  <silent> Θ            <Plug>(coc-declaration)|         " <D-t>
-nm  <silent> Ü            <Plug>(coc-type-definition)|     " <D-u>
-nm  <silent> ˆ            <Plug>(coc-implementation)|      " <D-i>
-nm  <silent> Σ            <Plug>(coc-format-selected)|     " <D-s>
-nm  <silent> ◊            <Plug>(coc-codeaction-selected)| " <D-s>
-vm  <silent> ◊            <Plug>(coc-codeaction-selected)| " <D-s>
-nm  <silent> Δ            <Plug>(coc-format-selected)|     " <D-d>
-vm  <silent> Δ            <Plug>(coc-format-selected)|     " <D-d>
-nm  <silent> Λ            <Plug>(coc-codelens-action)|     " <D-l>
-nm  <silent> ↦            <Plug>(coc-metals-expand-decoration) " <D-ö>
-nno <silent> Φ            :CocList outline<CR>|            " <D-o>
-nno <silent> »            :CocRestart<CR>              " <D-b>
+ino <silent> <C-p>        \|> |                            " OCAML
+ino <silent> ˆ            \| |                             " <M-S-i>
+ino <silent> <C-x>        <C-c>:IsotopeInsert DOUBLE_STRUCK<CR>a
 nno <silent> K            :call CocAction('doHover')<CR>
-nno <silent> ⁄            :call CocAction('fold')<CR>
+nno <silent> ⁄            :call CocAction('fold')<CR>|     " <D-z>
+nno <silent> +            :call CocAction('format')<CR>
+nno <silent> ca           :CocAction<CR>
+nno <silent> cd           :CocFix<CR>
+nm  <silent> ;            <Plug>(coc-range-select)
+xm  <silent> ;            <Plug>(coc-range-select)
+nm  <silent> :            <Plug>(coc-range-select-backward)
+xm  <silent> :            <Plug>(coc-range-select-backward)
+nno <silent> -            :noa w<CR>
+nm           gm           <Plug>(git-messenger)
+nm           Ω            <Plug>(coc-refactor)|            " <D-w>
+nm           É            <Plug>(coc-references)|          " <D-e>
+nm           √            <Plug>(coc-rename)|              " <D-r>
+vm           √            <Plug>NameAssign|                " <D-r>
+nm           Θ            <Plug>(coc-declaration)|         " <D-t>
+nm           Ü            <Plug>(coc-type-definition)|     " <D-u>
+nm           ˆ            <Plug>(coc-implementation)|      " <D-i>
+nm           Σ            <Plug>(coc-format-selected)|     " <D-s>
+nm           ◊            <Plug>(coc-codeaction)|          " <D-a>
+vm           ◊            <Plug>(coc-codeaction-selected)| " <D-a>
+nm           Δ            <Plug>(coc-format-selected)|     " <D-d>
+vm           Δ            <Plug>(coc-format-selected)|     " <D-d>
+nm           M            <Plug>(coc-fix-current)
+nm           Λ            <Plug>(coc-codelens-action)|     " <D-l>
+nno          “            :CocCommand document.jumpToNextSymbol<CR>| "<S-C-n>"
+nno          ”            :CocCommand document.jumpToPrevSymbol<CR>| "<S-C-b>"
+nno          Ç            :CocCommand editor.action.organizeImport<CR>| "<D-c>"
+nno          Φ            :CocList outline<CR>|            " <D-o>
+nno          »            :CocRestart<CR>              " <D-b>
+xm           if           <Plug>(coc-funcobj-i)
+xm           af           <Plug>(coc-funcobj-a)
+om           if           <Plug>(coc-funcobj-i)
+om           af           <Plug>(coc-funcobj-a)
+xm <silent> <TAB>         <Plug>(coc-range-select)
 ino <silent><expr> <C-Space> coc#refresh()
+" ino <silent><expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 ino <silent><expr> <CR> pumvisible() ?
       \ coc#_select_confirm() :
       \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 ino <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
-fun! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfun
+ino <silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+nno <silent> K :call <SID>show_documentation()<CR>
 " nm           Ä            
 vm  <silent> H            <Plug>SchleppLeft
 vm  <silent> J            <Plug>SchleppDown
 vm  <silent> K            <Plug>SchleppUp
 vm  <silent> L            <Plug>SchleppRight
 vm  <silent> D            <Plug>SchleppDup
-nm  <silent> <C-k>        <Plug>(coc-diagnostic-prev)zz
-nm  <silent> <C-j>        <Plug>(coc-diagnostic-next)zz
+nm  <silent> <C-k>        <Plug>(coc-diagnostic-prev)
+nm  <silent> <C-j>        <Plug>(coc-diagnostic-next)
 " nm  <silent> K            <Plug>ManPreGetPage<CR>
-map <silent> ;            <Plug>(expand_region_expand)
-map <silent> :            <Plug>(expand_region_shrink)
-nm  <silent> γ            <Plug>(GitGutterLineHighlightsToggle)| " <M-g>
+nno <silent> gh           :GitGutterLineHighlightsToggle<CR>| " <M-g>
 nm  <silent> ƒ            <Plug>(GitGutterFold)|                 " <M-f>
 nm  <silent> ¬            <Plug>(GitGutterNextHunk)|             " <D-j>
 nm  <silent> º            <Plug>(GitGutterPrevHunk)|             " <D-k>
@@ -197,6 +220,9 @@ nm  <silent> Γ            <Plug>(GitGutterStageHunk)|            " <D-g>
 nm  <silent> ˘            <Plug>(GitGutterPreviewHunk)|          " <D-h>
 nm  <silent> gu           <Plug>(GitGutterUndoHunk)
 nm  <silent> ö            <Plug>(choosewin)|                     " <C-d>
+im  <BS>                  <Plug>(PearTreeBackspace)
+im  <CR>                  <Plug>(PearTreeExpand)
+im  <Esc>                 <Plug>(PearTreeFinishExpansion)
 im  <C-c>                 <Plug>(PearTreeFinishExpansion)
 im  <C-e>                 <Plug>(PearTreeJump)
 " nm           <C-e>        <Plug>(SmoothieDownwards)
@@ -223,7 +249,9 @@ vno          P            "_dp|                             " No yank on paste
 vno          p            "_dP
 vno          <BS>         <BS>|                             " Fix defaults
 nno          <C-c>        <Esc>
-nno          <C-w>H       <C-w>H<C-w>x<C-w>l|               " NERDTree compatibility
+nno          gn           :cnext<CR>
+nno          gN           :cNext<CR>
+" nno <silent> <C-o>        :bp<CR>
 " Overrides
 nno          D            "Add                              " 
 nno          B            ^|                                " Go to start of line
@@ -270,11 +298,13 @@ nno <silent> <Leader>dd   :set diff!<CR>|                   " Diff mode
 nno <silent> <Leader>l    :set cursorbind! scrollbind!<CR>  " Bind cursor/scroll
 " nno <silent> Θ            :set wrap!<CR>|                   " <M-O>
 " Shortcuts
-ino          <C-z>        \                                 " <C-f>
+" ino          <C-z>        \                                 " <C-f>
 " vno          <C-y>        ygvr<Space>|                      " Yank & clear
 nno          cu           gg=G``|                           " Format file
 nno          gl           <C-w>TgT|                         " Move to new tab
 " Commands
+nno <silent> cn           :cn<CR>
+nno <silent> cN           :cN<CR>
 nno <silent> å            :x<CR>
 nno <silent> ä            :%s/\s\+$//e<CR>|                 " Remove whitespaces
 nno <silent> cd           :cd %:p:h<CR>:Nnn<CR>|            " Change directory
@@ -330,7 +360,7 @@ hi link ALEWarningSign ALEInfo
 hi CocError ctermbg=210
 hi CocWarning ctermbg=216
 hi CocInfo ctermbg=200
-hi CocHint ctermbg=226
+hi CocHint ctermbg=226 cterm=italic
 hi Pmenu ctermbg=253 ctermfg=16
 
 hi link CocErrorHighlight CocError
@@ -348,14 +378,16 @@ hi link CocWarningVirtualText CocWarning
 hi link CocInfoVirtualText CocInfo
 hi link CocHintVirtualText CocHint
 
-hi link CocErrorFloat CocError
-hi link CocWarningFloat Pmenu
-hi link CocInfoFloat Pmenu
-hi link CocHintFloat Pmenu
+
+
+" hi link CocErrorFloat CocError
+" hi link CocWarningFloat Pmenu
+" hi link CocInfoFloat Pmenu
+" hi link CocHintFloat Pmenu
 "* Autocmd
 aug Autocommands | au!
   au BufReadPost .vimrc set nowrap
-  au FocusLost * silent! wall
+"   au focusLost * silent! wall
   au Syntax * match none
   au Syntax rust match ColorColumn /\%>120v.\+/
   au Syntax c,cpp,vim match ColorColumn /\%>80v.\+/
@@ -371,8 +403,13 @@ aug Autocommands | au!
     \ |   let t:startify_new_tab = 1
     \ |   Startify
     \ | endif
+  au BufRead,BufNewFile *.lalrpop set syntax=rust
   au BufRead,BufNewFile *.sbt set filetype=scala
+  au BufRead,BufNewFile *.arc-script set filetype=arc-script
+  au BufRead,BufNewFile *.tower-lsp set filetype=tower-lsp
+  au BufRead,BufNewFile .psqlrc set filetype=sql
   au BufWinEnter * if &previewwindow | wincmd L | en
+  au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   au CursorHold * silent call CocActionAsync('highlight')
 aug END
 "* Spell correction / Abbreviations
@@ -385,7 +422,6 @@ iab      moer more
 iab  previosu previous
 iab      pset pest
 "* Scripts
-" com! Replace 
 function! FloatScroll(forward) abort
   let float = coc#util#get_float()
   if !float | return '' | endif
@@ -415,13 +451,33 @@ function! FloatScroll(forward) abort
   return ''
 endfunction
 
-nnoremap <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
-nnoremap <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) :  "\<up>"
-fun! s:gitgutter_highlight()
-  GitGutterLineHighlightsEnable
-  timer_start(100, { -> execute("GitGutterLineHighlightsDisable")})
+nno <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
+nno <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) : "\<up>"
+
+fun! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfun
 
-fun! s:gitgutter_next()
-  
+fun! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
 endfun
+
+function! SynStack()
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" if &term =~ "xterm"
+    " SecureCRT versions prior to 6.1.x do not support 4-digit DECSET
+    "     let &t_ti = "\<Esc>[?1049h"
+    "     let &t_te = "\<Esc>[?1049l"
+    " Use 2-digit DECSET instead
+set t_ti="\<Esc>[?47h"
+set t_te="\<Esc>[?47l"
+" endif

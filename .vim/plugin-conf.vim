@@ -1,5 +1,23 @@
 "* Plugged
 let g:plug_window = 'enew'
+"* pgsql-vim
+let g:sql_type_default = 'pgsql'
+"* floatLf-nvim
+let g:floatLf_border = 1
+let g:floatLf_topleft_border    = "╔"
+let g:floatLf_topright_border   = "╗"
+let g:floatLf_botleft_border    = "╚"
+let g:floatLf_botright_border   = "╝"
+let g:floatLf_vertical_border   = "║"
+let g:floatLf_horizontal_border = "═"
+let g:floatLf_autoclose = 1
+let g:floatLf_lf_close  = 'q'
+let g:floatLf_lf_open   = '<Enter>'
+let g:floatLf_lf_split  = '<C-x>'
+let g:floatLf_lf_vsplit = '<C-v>'
+let g:floatLf_lf_tab    = '<C-t>'
+"* PaperColor
+
 "* Hexokinase
 let g:Hexokinase_highlighters = ['backgroundfull']
 "* Clap
@@ -54,6 +72,18 @@ endfunction
 
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 " let g:fzf_layout = { 'up': '~40%' }
+com! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({ 'dir': systemlist('git rev-parse --show-toplevel')[0] }), <bang>0)
+fun! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfun
+com! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 "* markdown-preview.nvim
 let g:mkdp_preview_options = {
       \ 'disable_sync_scroll': 1,
@@ -79,9 +109,11 @@ let g:sandwich#recipes += [
       \   }
       \ ]
 "* vim-multiple-cursors
+let g:VM_leader = '’'
 let g:VM_maps = {
-      \   'Find Under':         '’',
-      \   'Find Subword Under': '’',
+      \   'Align Char':       '’',
+      \   'Find Under':         '',
+      \   'Find Subword Under': '',
       \   'Select l':           '<S-Right>',
       \   'Select h':           '<S-Left>',
       \ }
@@ -94,6 +126,7 @@ fun! VM_Exit()
   iunmap <buffer> <C-C>
 endfun
 "* vim-gitgutter
+let g:gitgutter_preview_win_floating = 1
 let g:gitgutter_diff_args =
   \  ' --no-color'
   \ .' --ignore-cr-at-eol'
@@ -205,8 +238,10 @@ let g:pear_tree_pairs = {
       \   '/\*': {'closer': '\*/'}
       \ }
 let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_openers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_repeatable_expand = 0
+let g:pear_tree_map_special_keys = 0
 "* Startify
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
@@ -230,7 +265,7 @@ let g:lightline = {
       \   'colorscheme': 'PaperColor',
       \   'active': {
       \     'left':  [ [ 'mode' ], [ 'path' ], ['readonly', 'modified' ] ],
-      \     'right': [ [ 'wordcount', 'lineinfo' ], [ 'filetype', 'percent' ], ],
+      \     'right': [ [ 'diff', 'lineinfo' ], [ 'filetype', 'percent' ], ],
       \   },
       \   'inactive': {
       \     'left':  [ [ 'path' ] ],
@@ -238,7 +273,7 @@ let g:lightline = {
       \   },
       \   'tabline': {
       \     'left':  [ [ 'tabs' ] ],
-      \     'right': [ [ 'branch', 'time' ] ],
+      \     'right': [ [ ] ],
       \   },
       \   'tab': {
       \     'active':   [ 'filename', 'modified' ],
@@ -249,7 +284,7 @@ let g:lightline = {
       \   'tabline_separator':    { 'left': '', 'right': '' },
       \   'tabline_subseparator': { 'left': '', 'right': '' },
       \   'component': {
-      \     'path':       '%{&ft!="nnn"?expand("%"):""}',
+      \     'path':       '%{&ft!="nnn"?expand("%:p"):""}',
       \     'filename':   '%t',
       \     'modified':   '%M',
       \     'readonly':   '%{&readonly?"":""}',
@@ -263,6 +298,7 @@ let g:lightline = {
       \   'component_function': {
       \     'branch': 'LightlineBranch',
       \     'mode':   'LightlineMode',
+      \     'diff':   'LightLineDiff',
       \   },
       \   'component_visible_condition': {
       \     'modified':  '&modified||!&modifiable',
@@ -287,15 +323,15 @@ let g:lightline = {
       \     'readonly': 'lightline#tab#readonly',
       \   },
       \   'mode_map': {
-      \     'n' :     'NORMAL',
-      \     'i' :     'INSERT',
-      \     'R' :     'REPLACE',
-      \     'v' :     'VISUAL',
-      \     'V' :     'V-LINE',
+      \     'n':      'NORMAL',
+      \     'i':      'INSERT',
+      \     'R':      'REPLACE',
+      \     'v':      'VISUAL',
+      \     'V':      'V-LINE',
       \     "\<C-v>": 'V-BLOCK',
-      \     'c' :     'COMMAND',
-      \     's' :     'SELECT',
-      \     'S' :     'S-LINE',
+      \     'c':      'COMMAND',
+      \     's':      'SELECT',
+      \     'S':      'S-LINE',
       \     "\<C-s>": 'S-BLOCK',
       \     't':      'TERMINAL',
       \   },
@@ -315,6 +351,10 @@ fun! LightlineMode()
         \ cmdtype == '?' ? 'REV-SEARCH' :
         \                   lightline#mode()
 endfun
+fun! LightLineDiff()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('+%d ~%d -%d', a, m, r)
+endfun
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors   = "\uf05e"
@@ -333,5 +373,5 @@ fun! ToggleDrawIt()
   let g:draw_it_is_active = !g:draw_it_is_active
 endfun
 " merlin
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+"let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+"execute "set rtp+=" . g:opamshare . "/merlin/vim"

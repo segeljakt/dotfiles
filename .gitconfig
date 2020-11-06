@@ -3,10 +3,10 @@
   email = klasseg@kth.se
   username = segeljakt
 [credential]
-  helper = osxkeychain
+	helper = cache
 [core]
   editor = nvim
-  pager = delta --light --theme GitHub --highlight-removed --tabs 2
+  pager = /bin/cat #delta --light --theme GitHub --highlight-removed --tabs 2 --paging always
   hooksPath = ~/.githooks
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
   excludesfile = ~/.gitignore_global
@@ -20,6 +20,7 @@
   mnemonicPrefix = true
   renames = true
   wordRegex = .
+  color = always
 #   submodule = log
 #   recurseSubmodules = on-demand
   ignoreSubmodules = dirty
