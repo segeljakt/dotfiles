@@ -20,7 +20,7 @@
 \pset pager always
 
 -- Show how long it takes to run each query.
-\timing
+-- \timing on
 
 -- Formatting for tables
 \x auto
@@ -28,11 +28,8 @@
 -- Print date on startup
 \echo `date  +"%Y-%m-%d %H:%M:%S"`
 
--- Set client encoding to SQL_ASCII (to match what is on the server)
-\encoding SQL_ASCII
-
 -- Do NOT automatically commit after every statement!
-\set AUTOCOMMIT off
+\set AUTOCOMMIT on
 
 -- Make history ignore all lines entered that were preceded by spaces, and ignore any entries that matched the previous line entered.
 \set HISTCONTROL ignoreboth
@@ -52,10 +49,12 @@
 -- Show the application_name in pg_stat_activity.
 -- Good database citizens set this field so we know who to blame when a query hogs resources,
 -- or somebody stays idle in transaction for too long.
-set application_name to klas; commit;
+set application_name to klas; 
+--commit;
 
 -- Set bytea output to show as many ASCII letters as possible.
 -- (Handy if you are storing text whose encoding you do not know in bytea columns.)
-set bytea_output to escape; commit;
+set bytea_output to escape; 
+--commit;
 
 \unset QUIET

@@ -70,20 +70,63 @@ function! FloatingFZF()
   call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
 endfunction
 
+let g:fzf_preview_window = []
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 " let g:fzf_layout = { 'up': '~40%' }
 com! -bang -nargs=* GGrep
   \ call fzf#vim#grep(
   \   'git grep --line-number '.shellescape(<q-args>), 0,
   \   fzf#vim#with_preview({ 'dir': systemlist('git rev-parse --show-toplevel')[0] }), <bang>0)
-fun! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+fun! RgFzf(query, fullscreen)
+  let rg_fmt = 'rg'
+        \ .' --fixed-strings'
+        \ .' --trim'
+        \ .' --column'
+        \ .' --glob="*.rs"'
+        \ .' --glob="Cargo.toml"'
+        \ .' --glob="*.arc"'
+        \ .' --glob="*.py"'
+        \ .' --glob="*.ml"'
+        \ .' --line-number'
+        \ .' --no-heading'
+        \ .' --color=always'
+        \ .' --ignore-case'
+        \ .' -- %s || true'
+  let rg_init = printf(rg_fmt, shellescape(a:query))
+  let rg_reload = printf(rg_fmt, '{q}')
+  let git_dir = 'git'
+        \ .' -C '.expand('%:p:h')
+        \ .' rev-parse'
+        \ .' --show-toplevel'
+        \ .' 2> /dev/null'
+  let fzf_spec = {
+    \ 'options': [
+    \     '--no-extended',
+    \     '--no-mouse',
+    \     '--prompt', 'Σ ',
+    \     '--exact',
+    \     '-i',
+    \     '--phony',
+    \     '--query', a:query,
+    \     '--bind', 'change:reload:'.rg_reload
+    \ ],
+    \ 'dir': systemlist(git_dir)[0]
+    \ }
+  call fzf#vim#grep(rg_init, 1, fzf_spec, a:fullscreen)
 endfun
-com! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+com! -bang -nargs=* RG call RgFzf(<q-args>, <bang>0)
+
+" com! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'bat {}']}, <bang>0)
+com! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
+      \ {'options': [
+      \    '--layout=reverse',
+      \    '--info=inline',
+      \    '--preview', '~/.zsh/scripts/preview-file.zsh {}',
+      \    '--preview-window=right:90%'
+      \   ]
+      \ }, <bang>0)
+" com! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
 "* markdown-preview.nvim
 let g:mkdp_preview_options = {
       \ 'disable_sync_scroll': 1,
@@ -246,7 +289,7 @@ let g:pear_tree_map_special_keys = 0
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
-let g:startify_files_number = 5
+let g:startify_files_number = 10
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_custom_header = map(split(system('fortune -s | cowsay'), '\n'), '"   ". v:val')
@@ -264,7 +307,9 @@ let g:startify_lists = [
 let g:lightline = {
       \   'colorscheme': 'PaperColor',
       \   'active': {
-      \     'left':  [ [ 'mode' ], [ 'path' ], ['readonly', 'modified' ] ],
+      \     'left':  [ [ 'mode', 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok' ],
+      \                [ 'path' ],
+      \                ['readonly', 'modified' ], ],
       \     'right': [ [ 'diff', 'lineinfo' ], [ 'filetype', 'percent' ], ],
       \   },
       \   'inactive': {
@@ -340,6 +385,7 @@ let g:lightline = {
       \     'tabline': 1
       \   },
       \ }
+call lightline#coc#register()
 fun! LightlineBranch()
   let branch = fugitive#head()
   return branch !=# '' ? ''.branch : ''
@@ -375,3 +421,7 @@ endfun
 " merlin
 "let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 "execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" copilot
+let g:copilot_filetypes = {
+  \ 'haskell': v:false,
+  \ }

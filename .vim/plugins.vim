@@ -10,6 +10,7 @@ Plug 'sainnhe/edge'
 Plug 'yassinebridi/vim-purpura'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'lifepillar/vim-wwdc17-theme'
+Plug 'katawful/kat.vim'
 
 " [Libraries]
 Plug 'mattn/webapi-vim'                " (*) Needed by vim-gist
@@ -23,9 +24,15 @@ Plug 'vim-scripts/ingo-library'        " (*) Blockwise-repeat
 Plug 'segeljakt/vim-isotope'
 Plug 'segeljakt/vim-silicon'
 Plug '/home/klas/Workspace/vim-commando'
+Plug '~/Workspace/arc/arc-script/editor/vim/'
 
 " [General-purpose]
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+Plug 'josa42/vim-lightline-coc'
+Plug 'itchyny/vim-highlighturl'
+Plug 'flwyd/vim-conjoin'
+Plug 'vim-utils/vim-troll-stopper'
+Plug 'puremourning/vimspector'
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'ryanoasis/vim-devicons'
 " Plug 'psliwka/vim-smoothie'            " Smooth scrolling
 " Plug 'skywind3000/vim-quickui'
@@ -38,7 +45,8 @@ Plug 'simeji/winresizer'               " (*) Window management
 Plug 'rhysd/git-messenger.vim'
 "Plug 'tjdevries/cyclist.vim'
 Plug 'haorenW1025/floatLf-nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'ruanyl/vim-gh-line'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'               " (*) Align stuff
@@ -55,11 +63,12 @@ Plug 'tpope/vim-repeat'                " (*) Improved '.'
 Plug 'tpope/vim-abolish'               " (*) iabbrev, %S, snake_case => camelCase
 Plug 'tpope/vim-fugitive'              " (*) Git essentials
 Plug 'romainl/vim-cool'                " (*) Turn off hlsearch
-Plug 'vim-scripts/DrawIt'              " (*) Draw lines
+" Plug 'vim-scripts/DrawIt'              " (*) Draw lines
 Plug 'gyim/vim-boxdraw'
 Plug 'tmsvg/pear-tree'                 " (*) Auto-pairs but better
 Plug 'bkad/camelcasemotion'            " (*) camelCaseMotion and snake_case_motion
 Plug 'tomtom/tcomment_vim'             " (*) Commenting plugin
+Plug 'github/copilot.vim'              " AI Overlords
 " Plug '~/Workspace/vim/lightline.vim'   " (*) The best statusline
 Plug 'itchyny/lightline.vim'
 Plug 'andymass/vim-matchup'            " (*) Better matching
@@ -101,31 +110,40 @@ Plug 'APZelos/blamer.nvim'
 Plug 'camspiers/lens.vim'
 
 " [Filetype]
+Plug 'vmchale/ipkg-vim'
+Plug 'elliottcable/vim-menhir'
+" Plug 'wlangstroth/vim-racket'
 Plug 'rust-lang/rust.vim',               { 'for':'rust'         } " (*) .rs
 Plug 'elzr/vim-json',                    { 'for':'json'         } " .json
-Plug 'derekwyatt/vim-scala',             { 'for':'scala'        } " (*) Scala - Filetype plugin
+" Plug 'derekwyatt/vim-scala',             { 'for':'scala'        } " (*) Scala - Filetype plugin
 Plug 'cespare/vim-toml',                 { 'for':'toml'         } " (*) .toml
-Plug 'darfink/vim-plist',                                         " .plist
+" Plug 'darfink/vim-plist',                                         " .plist
 " Plug 'neovimhaskell/haskell-vim'
 " Plug 'vale1410/vim-minizinc'
 Plug 'tie/llvm.vim'
-Plug 'idris-hackers/idris-vim' " Idris
+" Plug 'idris-hackers/idris-vim' " Idris
 Plug 'ocaml/merlin' " Ocaml
-Plug 'vim-syntastic/syntastic',          { 'for':'idris' }
-Plug 'Shougo/vimshell.vim',              { 'for':'idris' }
+Plug 'vim-syntastic/syntastic',          { 'for':'idris2' }
+Plug 'Shougo/vimshell.vim',              { 'for':'idris2' }
+Plug 'edwinb/idris2-vim'
+Plug 'greymd/oscyank.vim'
+" Plug 'fcpg/vim-osc52'
 " Plug 'OCamlPro/ocp-indent' "Ocaml
 Plug 'chrisbra/vim-zsh'
-Plug 'lifepillar/pgsql.vim'
+" Plug 'lifepillar/pgsql.vim'
+" Plug 'tpope/vim-dadbod'
+" Plug 'kristijanhusak/vim-dadbod-ui'
 
 " Plug 'derekelkins/agda-vim',             { 'for':'agda'         } " (*) .agda
 " Plug 'bfrg/vim-cpp-modern'
-Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
+" Plug 'octol/vim-cpp-enhanced-highlight', { 'for':'cpp'          } " (*) .cpp
 " Plug 'lyuts/vim-rtags'
 " Plug 'Yilin-Yang/vim-markbar'
 " Plug 'majutsushi/tagbar'
 " Plug 'justinmk/vim-syntax-extra',        { 'for':'c'            } " (*) C - Better syntax highlighting
 " Plug 'valloric/matchtagalways',          { 'for':['xml','html'] } " .xml/.html
-Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
+" Plug 'pest-parser/pest.vim',             { 'for':'pest'         } " (*) .pest
+Plug 'karsai5/DES-Vim-Highlighting'
 " Plug 'mechatroner/rainbow_csv',          { 'for':'csv'          } " (*) .csv
 " Plug 'jrozner/vim-antlr',                { 'for':'antlr4'       } " .antlr
 " Plug 'julialang/julia-vim',              { 'for':'julia'        }

@@ -28,11 +28,16 @@ path=(
   /usr/local/opt/ncurses/bin
   /usr/local/lib/ruby/gems/2.6.0/bin
   /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+  /home/klas/Workspace/ddlog/ddlog/bin
+  $HOME/Workspace/bacon/target/release/
+  $HOME/Workspace/iterm/iterm2-website/source/utilities
   $HOME/.local/bin
   $HOME/.cargo/bin
   $HOME/.cabal/bin
+  $HOME/.idris2/bin
   $path
 )
+export DDLOG_HOME=/home/klas/Workspace/ddlog/ddlog
 #: HOOKS
 # function chpwd() {
 #   tput sc
@@ -42,11 +47,13 @@ path=(
   #export PS1="%F{yellow}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)%f$ "
 # }
 #: ALIASES
+alias    wa="watchexec"
 alias     g="nvim ~/.gym.md"
 alias   tid="python3 ~/Workspace/other/tid/tid.py '$TID'"
 # alias  mlir="rg ~/Workspace/scala/arc/arc-mlir/llvm-project/mlir/include/mlir/IR -e"
 alias mlir="~/Workspace/arc/arc-mlir/build/llvm-build/bin/arc-mlir -mlir-print-op-generic"
 alias python="python3"
+alias     p="ipython"
 # Files
 alias   bug="nvim ~/.bugs"
 alias  todo="nvim ~/.todo"
@@ -75,6 +82,8 @@ alias   gco="git checkout"
 alias   gcb="git checkout -b"
 alias    ga="git add -A"
 # Overrides
+alias   ytop="ytop -c default-dark"
+alias    btm="btm --color default-light"
 # alias    mv="adaptive-mv"
 # alias touch="adaptive-touch"
 alias    bc="eva"
@@ -89,9 +98,11 @@ alias  time="tally"
 alias   top="htop"
 alias   cat="bat --theme TwoDark"
 alias    vi="nvim"
+alias    fl="cd ~/Workspace/arc/arc-mlir/; ./arc-mlir-build; ninja -C build/llvm-build check-arc-mlir; cd -"
 #alias   vim="nvim"
 alias   gcc="gcc-10"
 # Shortcuts
+alias tokei="tokei --compact"
 alias     m="mvim --remote-tab-silent"
 alias   ...=../..
 alias  ....=../../..
@@ -106,7 +117,13 @@ alias    np="nvim **/**.{cpp,h,td} -p"
 alias    nd="nvim **/**.{arc,mlir} -p"
 alias     t="trans en:sv -view" # translate
 alias    tt="trans sv:en -view" # translate
-alias     u="rustup update && cargo install-update --all"
+alias     u="rustup update && cargo install-update --all; \
+             git -C ~/Workspace/rust-analyzer/ pull; \
+             cargo build --release --manifest-path ~/Workspace/rust-analyzer/Cargo.toml; \
+             zr --update; \
+             opam update; opam upgrade; \
+             nvim -c 'PlugUpdate' \
+                  -c 'CocUpdate'"
 alias    uu="sudo apt update -qq && sudo apt upgrade -qq -y"
 alias    gd='nvim -p $(git diff --name-only --relative)'
 alias     a="brew search"
@@ -133,7 +150,7 @@ alias     f="n-functions"
 alias    gl="git log --pretty"
 alias    ed="ed -p'* '"
 alias    sc="nvim ~/PhD/Plan.md"
-alias cargo="cargo --color always"
+# alias cargo="cargo --color always"
 alias    cf="cargo fetch"
 alias    ce="cargo check && cargo clippy && cargo fmt -- --check"
 alias    cb="cargo build --color always 2>&1 | less"
@@ -145,6 +162,7 @@ alias     d="n ~/dsl"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH="$PATH:/home/klas/Workspace/arc/arc-mlir/build/llvm-build/bin/"
 #:: Ripgrep
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 #:: Brew
@@ -174,6 +192,7 @@ export     HISTIGNORE='ls';    # Ignore certain commands from history
 export      WORDCHARS=''
 export      LS_COLORS='di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32'
 export      JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
+# export       MANPAGER="nvim -c 'set ft=man' -"
 # export      RUSTFLAGS="-Dwarnings:$RUSTFLAGS"
 export     CARGO_HOME=~/.cargo/
 # export CARGO_TARGET_DIR="/Users/Klas/.cargo/target/"
@@ -212,7 +231,7 @@ export FZF_HEIGHT=20
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 export FZF_PREVIEW_COMMAND="~/.zsh/scripts/preview-file.zsh"
 export FZF_EDIT_LINES_COMMAND="~/.zsh/scripts/edit-selected-lines.zsh"
-export FZF_FILTERS='*.{c,h,cpp,rs,java,scala,py}'
+export FZF_FILTERS='*.{c,h,cpp,rs,java,scala,py,toml}'
 export FZF_DEFAULT_OPTS="--bind 'btab:up'"
 # export FZF_TAB_OPTS="--bind 'space:accept'"
 export SCROLLBACK=10
@@ -236,10 +255,13 @@ autoload -Uz edit-command-line; zle -N edit-command-line
 #: COMPLETION
 fpath=(
   ~/.zsh/completions
+  ~/.zfunc
   $fpath
 )
 zmodload zsh/complist
 autoload -Uz compinit; compinit -C
+autoload -U +X bashcompinit; bashcompinit
+eval "$(idris2 --bash-completion-script idris2)"
 zstyle ":completion:*:" format "%B%d%b"
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' special-dirs true      # Tabcomplete parent dir
@@ -253,7 +275,6 @@ fignore=(
   aux
   fls
   log
-  out
   fdb_latexmk
   synctex.gz
   mzp
@@ -345,6 +366,7 @@ function play() {
 
 # NVM configuration
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export LD_LIBRARY_PATH="~/anaconda3/lib/:$LD_LIBRARY_PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -352,9 +374,32 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:~/Workspace/my-treesitter-parser/tree-sitter-arc/node_modules/.bin
 # source /home/klas/Workspace/javascript/emsdk/emsdk_env.sh
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+source "${HOME}/.iterm2_shell_integration.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/bitcomplete bit
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/klas/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/klas/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/klas/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/klas/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# GoLang
+export GOROOT=/home/klas/.go
+export PATH=$GOROOT/bin:$PATH
+export GOPATH=/home/klas/go
+export PATH=$GOPATH/bin:$PATH
+[ -f "/home/klas/.ghcup/env" ] && source "/home/klas/.ghcup/env" # ghcup-env
+
