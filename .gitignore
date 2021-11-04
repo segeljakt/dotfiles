@@ -27,6 +27,7 @@
 !.zsh/scripts/
 .zsh/scripts/*
 !.zsh/scripts/edit-selected-lines.zsh
+!.zsh/zsh-key-tweaks/
 !.zsh/scripts/preview-file.zsh
 !.zsh/widgets.zsh
 
