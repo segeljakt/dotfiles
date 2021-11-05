@@ -12,6 +12,7 @@
 !.cheat-sheet
 !.githooks/
 !.psqlrc
+!.psql/
 
 # Vim
 !.vim/
