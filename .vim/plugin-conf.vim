@@ -87,6 +87,8 @@ fun! RgFzf(query, fullscreen)
         \ .' --glob="*.arc"'
         \ .' --glob="*.py"'
         \ .' --glob="*.ml"'
+        \ .' --glob="*.cpp"'
+        \ .' --glob="*.cpp"'
         \ .' --line-number'
         \ .' --no-heading'
         \ .' --color=always'
@@ -99,7 +101,7 @@ fun! RgFzf(query, fullscreen)
         \ .' rev-parse'
         \ .' --show-toplevel'
         \ .' 2> /dev/null'
-  let fzf_spec = {
+  let spec = {
     \ 'options': [
     \     '--no-extended',
     \     '--no-mouse',
@@ -108,11 +110,13 @@ fun! RgFzf(query, fullscreen)
     \     '-i',
     \     '--phony',
     \     '--query', a:query,
-    \     '--bind', 'change:reload:'.rg_reload
+    \     '--bind', 'change:reload:'.rg_reload,
+    \     '--preview-window', 'hidden',
+    \     '--preview', '''/Users/klasseg/.vim/plugged/fzf.vim/bin/preview.sh'' {}'
     \ ],
     \ 'dir': systemlist(git_dir)[0]
     \ }
-  call fzf#vim#grep(rg_init, 1, fzf_spec, a:fullscreen)
+  call fzf#vim#grep(rg_init, 1, spec, a:fullscreen)
 endfun
 com! -bang -nargs=* RG call RgFzf(<q-args>, <bang>0)
 
@@ -179,6 +183,7 @@ let g:gitgutter_diff_args =
   \ .' --ignore-blank-lines'
 "* vim-markdown
 let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_fenced_languages = ['arc-lang=arc']
 "* NERDTree
 let NERDTreeIgnore = ['\.pyc$', '\.swp$', '\~$']
 let NERDTreeRespectWildIgnore = 1
@@ -190,31 +195,37 @@ let g:matchup_matchparen_stopline = 100
 let g:matchup_matchparen_deferred = 0
 let g:matchup_matchparen_status_offscreen = 0
 "* Vimtex
+" let g:vimtex_view_method = 'zathura'
 let g:vimtex_indent_bib_enabled = 0
 let g:tex_conceal = 'abdmgs'
 let g:vimtex_view_method = 'skim'
 let g:tex_flavor = 'latex'
+let g:vimtex_compiler_latexmk = {
+      \ 'build_dir': {-> system("git rev-parse --show-toplevel | tr -d '\\n'") . '/target'}
+      \}
+"* Thesaurus
+" let g:tq_python_version = 2
 " let g:vimtex_log_verbose = 0
 " let g:vimtex_quickfix_enabled = 0
 " let g:vimtex_quickfix_latexlog = {'default' : 0}
-let g:vimtex_quickfix_latexlog = {
-      \  'default'    : 1,
-      \  'general'    : 1,
-      \  'references' : 1,
-      \  'overfull'   : 1,
-      \  'underfull'  : 1,
-      \  'font'       : 1,
-      \  'packages'   : {
-      \    'default'  : 1,
-      \    'natbib'   : 1,
-      \    'biblatex' : 1,
-      \    'babel'    : 1,
-      \    'hyperref' : 1,
-      \    'scrreprt' : 1,
-      \    'fixltx2e' : 1,
-      \    'titlesec' : 1,
-      \  },
-      \ }
+" let g:vimtex_quickfix_latexlog = {
+"       \  'default'    : 1,
+"       \  'general'    : 1,
+"       \  'references' : 1,
+"       \  'overfull'   : 1,
+"       \  'underfull'  : 1,
+"       \  'font'       : 1,
+"       \  'packages'   : {
+"       \    'default'  : 1,
+"       \    'natbib'   : 1,
+"       \    'biblatex' : 1,
+"       \    'babel'    : 1,
+"       \    'hyperref' : 1,
+"       \    'scrreprt' : 1,
+"       \    'fixltx2e' : 1,
+"       \    'titlesec' : 1,
+"       \  },
+"       \ }
 "* winresizer
 let g:winresizer_start_key = '<C-w>,'
 "* vim-illuminate
@@ -289,7 +300,7 @@ let g:pear_tree_map_special_keys = 0
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
-let g:startify_files_number = 10
+let g:startify_files_number = 20
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_custom_header = map(split(system('fortune -s | cowsay'), '\n'), '"   ". v:val')
@@ -343,7 +354,6 @@ let g:lightline = {
       \   'component_function': {
       \     'branch': 'LightlineBranch',
       \     'mode':   'LightlineMode',
-      \     'diff':   'LightLineDiff',
       \   },
       \   'component_visible_condition': {
       \     'modified':  '&modified||!&modifiable',
@@ -397,10 +407,10 @@ fun! LightlineMode()
         \ cmdtype == '?' ? 'REV-SEARCH' :
         \                   lightline#mode()
 endfun
-fun! LightLineDiff()
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return printf('+%d ~%d -%d', a, m, r)
-endfun
+" fun! LightLineDiff()
+"   let [a,m,r] = GitGutterGetHunkSummary()
+"   return printf('+%d ~%d -%d', a, m, r)
+" endfun
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors   = "\uf05e"
@@ -421,7 +431,111 @@ endfun
 " merlin
 "let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 "execute "set rtp+=" . g:opamshare . "/merlin/vim"
-" copilot
+" [::Github Copilot::]
 let g:copilot_filetypes = {
   \ 'haskell': v:false,
+  \ 'markdown': v:true,
   \ }
+" [::Treesitter::]
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   ensure_installed = "maintained",
+"   sync_install = false,
+"   ignore_install = { },
+"   highlight = {
+"     enable = true,
+"     disable = { },
+"     additional_vim_regex_highlighting = true,
+"   },
+"   incremental_selection = {
+"     enable = true,
+"     keymaps = {
+"       init_selection = "gnn",
+"       node_incremental = "grn",
+"       scope_incremental = "grc",
+"       node_decremental = "grm",
+"     },
+"   },
+"   indent = {
+"     enable = true
+"   }
+" }
+" EOF
+" [::Dressing::]
+" lua <<EOF
+" require('dressing').setup({
+"   input = {
+"     -- Default prompt string
+"     default_prompt = "➤ ",
+"
+"     -- These are passed to nvim_open_win
+"     anchor = "SW",
+"     relative = "cursor",
+"     row = 0,
+"     col = 0,
+"     border = "rounded",
+"
+"     -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+"     prefer_width = 40,
+"     max_width = nil,
+"     min_width = 20,
+"
+"     -- see :help dressing_get_config
+"     get_config = nil,
+"   },
+"   select = {
+"     -- Priority list of preferred vim.select implementations
+"     backend = { "telescope", "fzf", "builtin", "nui" },
+"
+"     -- Options for telescope selector
+"     telescope = {
+"       -- can be 'dropdown', 'cursor', or 'ivy'
+"       theme = "dropdown",
+"     },
+"
+"     -- Options for fzf selector
+"     fzf = {
+"       window = {
+"         width = 0.5,
+"         height = 0.4,
+"       },
+"     },
+"
+"     -- Options for nui Menu
+"     nui = {
+"       position = "50%",
+"       size = nil,
+"       relative = "editor",
+"       border = {
+"         style = "rounded",
+"       },
+"       max_width = 80,
+"       max_height = 40,
+"     },
+"
+"     -- Options for built-in selector
+"     builtin = {
+"       -- These are passed to nvim_open_win
+"       anchor = "NW",
+"       relative = "cursor",
+"       row = 0,
+"       col = 0,
+"       border = "rounded",
+"
+"       -- Window options
+"       winblend = 10,
+"
+"       -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+"       width = nil,
+"       max_width = 0.8,
+"       min_width = 40,
+"       height = nil,
+"       max_height = 0.9,
+"       min_height = 10,
+"     },
+"
+"     -- see :help dressing_get_config
+"     get_config = nil,
+"   },
+" })
+" EOF

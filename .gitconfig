@@ -38,6 +38,7 @@
   uncommit = reset --soft HEAD~1
   amend = commit --amend
   untrack = rm --cache --
+  lg = log --reverse
 [log]
   date = format:%b %d %H:%M
 [format]

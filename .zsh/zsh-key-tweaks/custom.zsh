@@ -92,6 +92,16 @@ zle -N w-open-tig
 
 # -----------------------------------------------------------------------------
 
+function w-open-git-show {
+  zle -I
+  ROOT=$(git rev-parse --show-toplevel)
+  git show --pretty="" --name-only | xargs printf -- "$ROOT/%s\n" | xargs nvim -p
+}
+
+zle -N w-open-git-show
+
+# -----------------------------------------------------------------------------
+
 function w-fzf-set-filter {
   BUFFER="export FZF_FILTERS='$FZF_FILTERS'"
   CURSOR=$#BUFFER-2

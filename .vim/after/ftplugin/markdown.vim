@@ -12,7 +12,37 @@ setlocal formatoptions-=t
 
 let g:goyo_height = 100
 
-nno <silent> • :TableModeToggle<CR>:Goyo<CR>:Limelight<CR>| " <M-q>
+fun! Newline()
+  if match(getline('.'), ' *\*') == 0
+    return "o\<BS>\<BS>* "
+  elseif match(getline('.'), ' *') == 0
+    return "o\<C-c>i"
+  el
+    return "o"
+  en
+endfun
+
+fun! Dedent()
+  if match(getline('.'), ' *\*') == 0
+    return "\<C-c><<A"
+  el
+    return ""
+  en
+endfun
+
+fun! Indent()
+  if match(getline('.'), ' *\*') == 0
+    return "\<C-c>>>A"
+  el
+    return "\<C-c>i\<Tab>"
+  en
+endfun
+
+nno <silent> •     :TableModeToggle<CR>:Goyo<CR>:Limelight<CR>| " <M-q>
+nno <expr> o       Newline()
+ino <expr> <Tab>   Indent()
+ino <expr> <S-Tab> Dedent()
+vm ˆ               sa*|                                         " <M-i>
 
 fun! MarkdownFoldExpr()
   let line = getline(v:lnum)
@@ -37,3 +67,8 @@ endfun
 " Goyo
 " Limelight
 
+let b:unfo_ftplugin =
+      \ "nunmap •"
+      \ "| nunmap o"
+      \ "| iunmap <Tab>"
+      \ "| iunmap <S-Tab>"

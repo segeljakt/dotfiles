@@ -4,12 +4,13 @@
 "* Load plugins
 set nocompatible
 set guioptions=
-let maplocalleader='§'
+" let maplocalleader='§'
+let maplocalleader = ","
 let mapleader='§'
 call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim
 call plug#end()
-source ~/.vim/private.vim
+" source ~/.vim/private.vim
 source ~/.vim/plugin-conf.vim
 "* General settings
 let g:author = 'Klas Segeljakt'
@@ -68,13 +69,17 @@ set tagcase=match               " Case-sensitive tag search
 set notitle                     " Do not display title
 set titleold=                   " Do not display title
 set virtualedit=block           " Select whitespaces
-set nowrap
+" set nowrap
 set wildignore=*.class,*.o,*~,*.pyc,.git,*.lock,target,*.out
 set wildignorecase              " Ignore case when completing filenames
 set wildmenu                    " Tabcompletion for commandline
 set wildcharm=<Tab>             " Allow macros to tabcomplete
 set matchpairs=(:),{:},[:],<:>,":" " Separators
-set shell=/usr/bin/zsh    " Shell program
+if has('mac')
+  set shell=/opt/homebrew/bin/zsh  " Shell program
+el
+  set shell=/usr/bin/zsh  " Shell program
+en
 " let &shell='/usr/local/bin/zsh -f'    " Shell program
 set shellcmdflag=-c
 set emoji                       " Emoji characters are full-width
@@ -95,9 +100,10 @@ set undolevels=2000             " Max number of changes that can be undone
 set grepprg=rg\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 " set foldmethod=expr             " manual,indent,expr,marker,syntax,diff
+" set foldexpr=nvim_treesitter#foldexpr()
 set foldnestmax=4
-set updatetime=150              " Write to disk after 150 ms
-set redrawtime=500             " timeout for 'hlsearch' and :match highlighting
+set updatetime=100              " Write to disk after 150 ms
+set redrawtime=200             " timeout for 'hlsearch' and :match highlighting
 set terse                       " Shorten messages
 set belloff=all                 " STOP IT
 "set verbose                    " Lengthen messages
@@ -109,18 +115,18 @@ set formatoptions=rownlj
 set maxmempattern=2000000       " Max memory for pattern matching
 set nrformats=alpha,octal,hex,bin
 set selection=inclusive
-let g:clipboard = {
-      \   'name': 'RemoteClipboard',
-      \   'copy': {
-      \      '+': 'it2copy',
-      \      '*': 'it2copy',
-      \   },
-      \   'paste': {
-      \      '+': '+',
-      \      '*': '*',
-      \   },
-      \   'cache_enabled': 1,
-      \ }
+"let g:clipboard = {
+"      \   'name': 'RemoteClipboard',
+"      \   'copy': {
+"      \      '+': 'it2copy',
+"      \      '*': 'it2copy',
+"      \   },
+"      \   'paste': {
+"      \      '+': '+',
+"      \      '*': '*',
+"      \   },
+"      \   'cache_enabled': 1,
+"      \ }
 "* Disabled plugins
 let g:loaded_matchparen       = 1
 let g:loaded_matchit          = 1
@@ -129,8 +135,8 @@ let g:loaded_tar              = 1
 let g:loaded_zipPlugin        = 1
 let g:loaded_zip              = 1
 let g:loaded_gzip             = 1
-let g:loaded_netrw            = 1
-let g:loaded_netrwPlugin      = 1
+" let g:loaded_netrw            = 1
+" let g:loaded_netrwPlugin      = 1
 let g:loaded_vimballPlugin    = 1
 let g:loaded_vimball          = 1
 let g:loaded_logiPat          = 1
@@ -144,6 +150,8 @@ let g:no_pdf_maps             = 1
 " nno <silent> <Leader>d    :AsyncRun open dict://<cword><CR><CR>
 " Plugins
 nunmap Y
+nno <nowait><expr> ν coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nno <nowait><expr> μ coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 nno          ´            /HEAD<CR>
 nno          gfs          :GitGutterStageHunk<CR>
 nno          gp           :GitGutterPreviewHunk<CR>
@@ -161,6 +169,7 @@ nno <silent> <C-L>        :SidewaysRight<CR>
 nno <silent> <F5>         :UndotreeToggle<CR>
 " nno <expr>   <C-o>        ':ALEDetail<CR><C-w> '.(&columns < 160? 'K':'L')
 " nno <silent> <C-o>        :ALEDetail<CR>
+nnoremap <silent> <C-o>   :call GoBackToRecentBuffer()<Enter>
 nno <silent> →            :call ToggleDrawIt()<CR>
 no  <silent> <C-w>m       :WinResizerStartMove<CR>
 xno <silent> <expr> ?     mode()=~'V' ? ':Tabularize' : '?'
@@ -172,7 +181,7 @@ nno <silent> <C-t>        <C-^>
 ino <silent> <C-p>        \|> |                            " OCAML
 ino <silent> <C-o>        -> |                             " OCAML
 ino <silent> ˆ            \| |                             " <M-S-i>
-ino <silent> <C-x>        <C-c>:IsotopeInsert DOUBLE_STRUCK<CR>a
+" ino <silent> <C-x>        <C-c>:IsotopeInsert DOUBLE_STRUCK<CR>a
 ino <silent> ı            \| 
 nno <silent> K            :call CocAction('doHover')<CR>
 nno <silent> *            *N
@@ -204,10 +213,10 @@ vm           Δ            <Plug>(coc-format-selected)|     " <D-d>
 nm           M            <Plug>(coc-fix-current)
 nm           Λ            <Plug>(coc-codelens-action)|     " <D-l>
 nno          ck           :CocList symbols<CR>
-nno          cj           :CocList outline<CR>
+" nno          cj           :CocList outline<CR>
 nno          cl           :CocList diagnostics<CR>
 nno          cq           :CocCommand <Tab>
-nno          cm           :CocCommand rust-analyzer<Tab>
+nno          cm           :CocCommand rust-analyzer.<Tab><S-Tab>
 let g:conjoin_map_J = '<Leader>z'
 nno          c,           :cd %:p:h\|pwd<CR>
 nno          ↦            :Lines<CR>|                                " <D-ö>
@@ -264,7 +273,8 @@ map <silent> w            <Plug>CamelCaseMotion_w
 map <silent> b            <Plug>CamelCaseMotion_b
 map <silent> e            <Plug>CamelCaseMotion_e
 map <silent> ge           <Plug>CamelCaseMotion_ge
-vno <silent> Ç            :Oscyank<CR>| " <D-S-c>
+" vno <silent> Ç            :Oscyank<CR>| " <D-S-c>
+vno <silent> Ç            +y| " <D-S-c>
 sunm         w
 sunm         b
 sunm         e
@@ -303,6 +313,7 @@ xno <expr>   C            ':s/'.@/.'//g<Left><Left>'
 nno          <C-n>        gt|                               " Tab page management
 nno          <C-b>        gT|
 nno          gt           :tabnew<CR>
+nno          gj           :bnext<CR>
 nno          <C-CR>       kk<CR>|                           " Reverse <CR>
 " nno <silent> k            gk
 " nno <silent> j            gj
@@ -442,6 +453,7 @@ aug Autocommands | au!
     \ && !exists('t:goyo_master')
     \ && empty(expand('%'))
     \ && empty(&l:buftype)
+    \ && !&previewwindow
     \ && &l:modifiable
     \ |   let t:startify_new_tab = 1
     \ |   Startify
@@ -450,7 +462,7 @@ aug Autocommands | au!
   au BufRead,BufNewFile *.lalrpop set syntax=rust
   au BufRead,BufNewFile *.sbt set filetype=scala
   au BufRead,BufNewFile *.arc set filetype=arc
-  au BufRead,BufNewFile *.tower-lsp set filetype=tower-lsp
+  au BufRead,BufNewFile *.tex set filetype=tex
   au BufRead,BufNewFile .psqlrc set filetype=sql
   au BufWinEnter * if &previewwindow | wincmd L | en
   au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
@@ -532,4 +544,15 @@ fun! SynStack()
     return
   en
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfun
+
+fun! GoBackToRecentBuffer()
+  let startName = bufname('%')
+  while 1
+    exe "normal! \<c-o>"
+    let nowName = bufname('%')
+    if nowName != startName
+      break
+    en
+  endwhile
 endfun

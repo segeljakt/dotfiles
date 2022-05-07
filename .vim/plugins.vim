@@ -23,15 +23,18 @@ Plug 'vim-scripts/ingo-library'        " (*) Blockwise-repeat
 " Plug '/Users/Klas/Workspace/vim/vim-stealth'
 Plug 'segeljakt/vim-isotope'
 Plug 'segeljakt/vim-silicon'
-Plug '/home/klas/Workspace/vim-commando'
-Plug '~/Workspace/arc/arc-script/editor/vim/'
+Plug '~/Workspace/vim-commando'
+Plug '~/Workspace/arc/arc-lang/editor/vim/'
+Plug 'stevearc/dressing.nvim'
+Plug 'rcarriga/nvim-notify'
 
 " [General-purpose]
 Plug 'josa42/vim-lightline-coc'
 Plug 'itchyny/vim-highlighturl'
 Plug 'flwyd/vim-conjoin'
 Plug 'vim-utils/vim-troll-stopper'
-Plug 'puremourning/vimspector'
+" Plug 'tom-doerr/vim_codex'
+" Plug 'puremourning/vimspector'
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'ryanoasis/vim-devicons'
 " Plug 'psliwka/vim-smoothie'            " Smooth scrolling
@@ -47,6 +50,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'haorenW1025/floatLf-nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ruanyl/vim-gh-line'
+Plug 'andweeb/presence.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'               " (*) Align stuff
@@ -73,7 +77,13 @@ Plug 'github/copilot.vim'              " AI Overlords
 Plug 'itchyny/lightline.vim'
 Plug 'andymass/vim-matchup'            " (*) Better matching
 Plug 'airblade/vim-gitgutter'          " (*) Git - Show changes in git (Better)
+Plug 'lervag/vimtex'
+Plug 'ron89/thesaurus_query.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" Plug 'mhinz/vim-signify'
 " [File-specific]
+
 Plug 'iamcco/markdown-preview.nvim',   { 'do': 'cd app & yarn install'  }
 Plug 'plasticboy/vim-markdown',        { 'for':'markdown' } " (Must come after Tabular)
 Plug 'junegunn/limelight.vim',         { 'for':['markdown', 'latex'] } " (*) Fade adjacent paragraphs
@@ -101,7 +111,7 @@ Plug 'Xuyuanp/scrollbar.nvim'
 Plug 'https://gist.github.com/PeterRincker/582ea9be24a69e6dd8e237eb877b8978.git',
   \ { 'as': 'SortGroup', 'do': 'mkdir plugin; mv -f *.vim plugin/', 'on': 'SortGroup' } " Sort Multi Line Groups
 Plug 't9md/vim-choosewin'
-Plug 'AaronLasseigne/yank-code'
+" Plug 'AaronLasseigne/yank-code'
 " Plug 'vim/killersheep'
 " Plug 'IMOKURI/line-number-interval.nvim'
 " Plug 'norcalli/nvim-colorizer.lua'
