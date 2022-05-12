@@ -47,7 +47,6 @@ Plug 'simeji/winresizer'               " (*) Window management
 " Plug 'junegunn/fzf.vim'                " (*) FZF
 Plug 'rhysd/git-messenger.vim'
 "Plug 'tjdevries/cyclist.vim'
-Plug 'haorenW1025/floatLf-nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ruanyl/vim-gh-line'
 Plug 'andweeb/presence.nvim'
