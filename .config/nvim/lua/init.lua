@@ -1,10 +1,11 @@
 require('utils')
+require('plugins')
 
 -- set('filetype', {'plugin', 'indent', 'on'})
 vim.opt.compatible = false
-vim.opt.shada = "'1000,n~/.vim/nviminfo"
+vim.opt.shada = "'1000,n" .. vim.fn.expand('~/.vim/nviminfo')
 vim.opt.syntax = 'enable'
-vim.opt.dict:append('~/.vim/dict/basic')
+vim.opt.dict:append(vim.fn.expand('~/.vim/dict/basic'))
 vim.opt.background = 'light'
 vim.opt.cmdheight = 1
 vim.opt.autoread = true -- Automatically read changes
@@ -49,7 +50,7 @@ vim.opt.virtualedit = 'block' -- Select whitespaces
 vim.opt.wildignore = '*.class,*.o,*~,*.pyc,.git,*.lock,target,*.out'
 vim.opt.wildignorecase = true -- Ignore case when completing filenames
 vim.opt.wildmenu = true -- Tabcompletion for commandline
-vim.opt.wildcharm = termcode('<Tab>') -- Allow macros to tabcomplete
+vim.opt.wildcharm = string.byte(termcode('<Tab>')) -- Allow macros to tabcomplete
 vim.opt.matchpairs = '(:),{:},[:],<:>,":"' -- Separators
 -- vim.opt.wrap = true
 if vim.fn.has('mac') then
@@ -71,7 +72,7 @@ vim.opt.softtabstop = 2 -- ?
 vim.opt.shiftround = true -- Indent to round number of spaces
 vim.opt.preserveindent = true -- Preserve indent structure
 vim.opt.undofile = true -- Use persistent undo
-vim.opt.undodir = '~/.vimundo' -- Stored here
+vim.opt.undodir = vim.fn.expand('~/.vimundo') -- Stored here
 vim.opt.undolevels = 2000 -- Max number of changes that can be undone
 vim.opt.grepprg = 'rg --vimgrep'
 vim.opt.grepformat:prepend('%f:%l:%c:%m')
@@ -115,27 +116,32 @@ let('maplocalleader', ',')
 let('mapleader', '§')
 let('author', 'Klas Segeljakt')
 let('email', 'klasseg@kth.se')
+let('conjoin_map_J', '<Leader>z')
 
 cmd('colorscheme PaperColor')
 cmd('filetype plugin indent on') -- Detect filetypes
 cmd('syn sync minlines=256') -- Less syntax lagging
 -- vim.opt.background = 'light'
 
--- Unmaps
-unmap('n', 'Y')
-
-map('n', 'gfs', ':GitGutterStageHunk<CR>')
-map('n', 'gp', ':GitGutterPreviewHunk<CR>')
+map('n', 'ν', 'coc#float#has_scroll() ? coc#float#scroll(1) : "\\<C-f>"', {nowait=true,expr=true})
+map('n', 'μ', 'coc#float#has_scroll() ? coc#float#scroll(0) : "\\<C-b>"', {nowait=true,expr=true})
+map('n', '<C-c>', '<Plug>(VM-Reset)', {noremap=false, nowait=true, buffer=true})
+-- map('i', '<CR>', 'complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"', {expr=true,silent=true})
+map('i', '<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>\\<c-r>=coc#on_enter()\\<CR>"', {expr=true,silent=true})
+map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : CheckBackSpace() ? "\\<Tab>" : coc#refresh()', {expr=true,silent=true})
+map('i', '<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', {expr=true,silent=true})
 map('n', '´', '/HEAD<CR>')
 map('n', 'q', "&ma?':TComment<CR>':''", { expr = true })
 map('v', 'q', "&ma?mode()==#'V'?':TComment<CR>':':TCommentInline<CR>':''", { expr = true })
-map('n', 'gb', ':Gbrowse<CR>')
-map('n', '<C-p>', ':w|RG<CR>')
-map('n', '<C-u>', ':History<CR>')
-map('n', 'ı', ':w|GitFiles<CR>') --                  <C-i>
+-- map('n', '<C-p>', ':w|RG<CR>')
+-- map('n', '<C-u>', ':History<CR>')
+map('n', 'ı', ':Telescope git_files<CR>')
+map('n', '<C-u>', ':Telescope oldfiles<CR>')
+map('n', '<C-p>', ':Telescope live_grep<CR>')
+-- map('n', 'ı', ':w|GitFiles<CR>') -- <C-i>
 map('n', 'Ö', ':ArgWrap<CR>')
 map('n', 'Å', ':Bdelete!<CR>')
-map('n', 'ü', ':PlugUpdate<CR>') --                  <M-u>
+map('n', 'ü', ':PlugUpdate<CR>') -- <M-u>
 map('n', '<C-H>', ':SidewaysLeft<CR>')
 map('n', '<C-L>', ':SidewaysRight<CR>')
 map('n', '<F5>', ':UndotreeToggle<CR>')
@@ -143,38 +149,38 @@ map('n', '<C-o>', ':call GoBackToRecentBuffer()<CR>')
 map('n', '→', ':call ToggleDrawIt()<CR>')
 -- map('n', '<C-w>m', ':WinResizerStartMove<CR>', { }, true)
 map('x', '?', "mode()=~'V' ? ':Tabularize' : '?'", { expr = true })
-map('n', 't', '<Plug>(coc-definition)')
+map('n', 't', '<Plug>(coc-definition)', {noremap=false})
 map('n', '<C-t>', '<C-^>')
 map('i', '<C-p>', '|>') -- OCAML
 map('i', '<C-o>', '->') -- OCAML
-map('i', 'ı', '|') --
+map('i', 'ı', '|')
 map('n', 'K', ":call CocAction('doHover')<CR>")
-map('n', '*', '*N') --
+map('n', '*', '*N')
 map('n', 'ca', ':CocAction<CR>')
 map('n', 'cd', ':CocFix<CR>')
 map('n', '⁄', ':call CocAction("fold")<CR>') -- <D-z>
-map('n', ';', '<Plug>(coc-range-select)')
-map('x', ';', '<Plug>(coc-range-select)')
-map('n', ':', '<Plug>(coc-range-select-backward)')
-map('x', ':', '<Plug>(coc-range-select-backward)')
+map('n', ';', '<Plug>(coc-range-select)', {noremap=false})
+map('x', ';', '<Plug>(coc-range-select)', {noremap=false})
+map('n', ':', '<Plug>(coc-range-select-backward)', {noremap=false})
+map('x', ':', '<Plug>(coc-range-select-backward)', {noremap=false})
 map('n', '-', ':noa w<CR>')
-map('n', 'gm', '<Plug>(git-messenger)')
-map('n', 'Ω', '<Plug>(coc-refactor)') -- <D-w>
-map('n', 'É', '<Plug>(coc-references)') -- <D-e>
-map('n', '√', '<Plug>(coc-rename)') -- <D-r>
-map('v', '√', '<Plug>NameAssign') -- <D-r>
-map('n', 'Θ', '<Plug>(coc-declaration)') -- <D-t>
-map('n', 'Ü', '<Plug>(coc-type-definition)') -- <D-u>
-map('n', 'ˆ', '<Plug>(coc-implementation)') -- <D-i>
-map('n', 'Σ', '<Plug>(coc-format-selected)') -- <D-s>
-map('n', '+', '<Plug>(coc-format)')
-map('v', '◊', '<Plug>(coc-codeaction-selected)') -- <D-a>
-map('n', '◊', '<Plug>(coc-codeaction)') -- <D-a>
-map('n', 'Δ', '<Plug>(coc-format-selected)') -- <D-d>
-map('v', 'Δ', '<Plug>(coc-format-selected)') -- <D-d>
-map('n', 'M', '<Plug>(coc-fix-current)')
-map('n', 'Λ', '<Plug>(coc-codelens-action)') -- <D-l>
--- map('n', 'k', ':CocList symbols<CR>')
+map('n', 'gm', '<Plug>(git-messenger)', {noremap=false})
+map('n', 'Ω', '<Plug>(coc-refactor)', {noremap=false}) -- <D-w>
+map('n', 'É', '<Plug>(coc-references)', {noremap=false}) -- <D-e>
+map('n', '√', '<Plug>(coc-rename)', {noremap=false}) -- <D-r>
+map('v', '√', '<Plug>NameAssign', {noremap=false}) -- <D-r>
+map('n', 'Θ', '<Plug>(coc-declaration)', {noremap=false}) -- <D-t>
+map('n', 'Ü', '<Plug>(coc-type-definition)', {noremap=false}) -- <D-u>
+map('n', 'ˆ', '<Plug>(coc-implementation)', {noremap=false}) -- <D-i>
+map('n', 'Σ', '<Plug>(coc-format-selected)', {noremap=false}) -- <D-s>
+map('n', '+', '<Plug>(coc-format)', {noremap=false})
+map('v', '◊', '<Plug>(coc-codeaction-selected)', {noremap=false}) -- <D-a>
+map('n', '◊', '<Plug>(coc-codeaction)', {noremap=false}) -- <D-a>
+map('n', 'Δ', '<Plug>(coc-format-selected)', {noremap=false}) -- <D-d>
+map('v', 'Δ', '<Plug>(coc-format-selected)', {noremap=false}) -- <D-d>
+map('n', 'M', '<Plug>(coc-fix-current)', {noremap=false})
+map('n', 'Λ', '<Plug>(coc-codelens-action)', {noremap=false}) -- <D-l>
+-- map('n', 'k', ':CocList symbols<CR>', {noremap=false})
 map('n', 'cl', ':CocList diagnostics<CR>')
 map('n', 'cq', ':CocCommand <Tab>')
 map('n', 'cm', ':CocCommand rust-analyzer.<Tab><S-Tab>')
@@ -186,16 +192,171 @@ map('n', '“', ':CocCommand document.jumpToNextSymbol<CR>') -- <S-C-n>
 map('n', '”', ':CocCommand document.jumpToPrevSymbol<CR>') -- <S-C-b>
 map('n', 'Ç', ':CocCommand editor.action.organizeImport<CR>') -- <D-c>
 map('n', 'Φ', ':CocList <CR>') -- <D-o>
-map('n', '»', ':CocRestart<CR>') -- <D-b>
-map('x', 'if', '<Plug>(coc-funcobj-i)')
-map('x', 'af', '<Plug>(coc-funcobj-a)')
-map('o', 'if', '<Plug>(coc-funcobj-i)')
-map('o', 'af', '<Plug>(coc-funcobj-a)')
-map('x', '<TAB>', '<Plug>(coc-range-select)')
+map('x', 'if', '<Plug>(coc-funcobj-i)', {noremap=false})
+map('x', 'af', '<Plug>(coc-funcobj-a)', {noremap=false})
+map('o', 'if', '<Plug>(coc-funcobj-i)', {noremap=false})
+map('o', 'af', '<Plug>(coc-funcobj-a)', {noremap=false})
+map('x', '<Tab>', '<Plug>(coc-range-select)')
 map('i', '<C-Space>', 'coc#refresh()', { expr = true })
 map('i', '<C-Space>', 'coc#refresh()', { expr = true })
+map('v', 'H',          '<Plug>SchleppLeft', {noremap=false})
+map('v', 'J',          '<Plug>SchleppDown', {noremap=false})
+map('v', 'K',          '<Plug>SchleppUp', {noremap=false})
+map('v', 'L',          '<Plug>SchleppRight', {noremap=false})
+map('v', 'D',          '<Plug>SchleppDup', {noremap=false})
+map('n', '<C-k>',      '<Plug>(coc-diagnostic-prev)', {noremap=false})
+map('n', '<C-j>',      '<Plug>(coc-diagnostic-next)', {noremap=false})
+map('n', 'ö',           '<Plug>(choosewin)', {noremap=false}) -- <C-d>
+map('i', '<BS>',                 '<Plug>(PearTreeBackspace)', {noremap=false})
+map('i', '<CR>',                 '<Plug>(PearTreeExpand)', {noremap=false})
+map('i', '<Esc>',                '<Plug>(PearTreeFinishExpansion)', {noremap=false})
+map('i', '<C-c>',                '<Plug>(PearTreeFinishExpansion)', {noremap=false})
+map('i', '<C-e>',                '<Plug>(PearTreeJump)', {noremap=false})
+map('', 'w',           '<Plug>CamelCaseMotion_w', {noremap=false})
+map('', 'b',           '<Plug>CamelCaseMotion_b', {noremap=false})
+map('', 'e',           '<Plug>CamelCaseMotion_e', {noremap=false})
+map('', 'ge',          '<Plug>CamelCaseMotion_ge', {noremap=false})
+map('v', 'Ç',           '+y') -- <D-S-c>
 
+-- Fixes
+map('n',    '<Tab>',       "col('$') == 1? 'i<Tab>' : '>>'", {expr=true})
+map('v',    'A',           "mode()=~'v' ? '$h' : 'A'", {expr=true})
+map('n',         '<C-q>',     'q') -- " Record with <C-q>
+map('n',         'n',         'nzz')
+map('n',         'N',         'Nzz')
+map('n',         'R',         'gR')
+map('n',         '<S-Tab>',   '<<')
+map('v',         '<Tab>',     '>gv')
+map('v',         '<S-Tab>',   '<gv')
+map('v',         'P',         '"_dp') -- " No yank on paste
+map('v',         'p',         '"_dP')
+map('v',         '<BS>',      '<BS>') -- " Fix defaults
+map('n',         '<C-c>',     '<Esc>')
+map('n',         'gn',        ':cnext<CR>')
+map('n',         'gN',        ':cNext<CR>')
 
+-- Overrides
+map('n',   'C',           "':%s/'.@/.'//g<Left><Left>'", {expr=true})
+map('x',   'C',           "':s/'.@/.'//g<Left><Left>'", {expr=true})
+map('n',          'D',           '"Add')
+map('n',          'B',           '^') -- Go to start of line
+map('n',           'E',           '<C-y>') -- Scroll up
+map('n',           '<Space>',    ':')
+map('i',          '<C-h>',       '<Left>') -- Move in insert mode
+map('i',          '<C-j>',       '<Down>')
+map('i',          '<C-k>',       '<Up>')
+map('i',          '<C-l>',       '<Right>')
+map('n',           '!',           ':!')
+map('n',           '<C-d>',       ':x<CR>')
+map('n',          'S',           ':%s//g<Left><Left>')
+map('n',          '<C-n>',       'gt') -- Tab page management
+map('n',          '<C-b>',       'gT')
+map('n',          'gt',          ':tabnew<CR>')
+map('n',          'gj',          ':bnext<CR>')
+map('n',          '<C-CR>',      'kk<CR>') -- Reverse <CR>
 
-let('conjoin_map_J', '<Leader>z')
+-- Disabled
+map('c',          '<Up>',        '<Nop>')
+map('c',          '<Down>',      '<Nop>')
+map('c',          '<Left>',      '<Nop>')
+map('c',          '<Right>',     '<Nop>')
+map('n',          '<Right>',     'i<Right>')
+map('n',          '<Left>',      'i<Left>')
+map('n',          '<Up>',        'i<Up>')
+map('n',          '<Down>',      'i<Down>')
+
+---- Command line
+map('c', '<C-c>', '<C-u><C-c>')
+map('c', '<C-h>', '<Left>')
+map('c', '<C-l>', '<Right>')
+map('c', '<C-k>', '<Up>')
+map('c', '<C-j>', '<Down>')
+map('c', '<C-b>', '<S-Left><Left>')
+map('c', '<C-e>', '<S-Right>')
+map('c', '<C-v>', '<C-r><C-l>')
+map('c', '<C-f>', '<C-\\>e')
+
+--Toggles / Sliders
+map('n', '<Leader>b', ':set ri!<CR>') -- Write backwards
+map('n', '<Leader>dd', ':set diff!<CR>') -- Diff mode
+map('n', '<Leader>l', ':set cursorbind! scrollbind!<CR>') -- Bind cursor/scroll
+map('n', 'cu', 'gg=G``') -- Format file
+map('n', 'gl', '<C-w>TgT') -- Move to new tab
+
+-- Commands
+map('n', 'cn', ':cn<CR>')
+map('n', 'cN', ':cN<CR>')
+map('n', 'å', ':x<CR>')
+map('n', 'ä', ':%s/\\s\\+$//e<CR>') -- Remove whitespaces
+map('n', '<D-i>', ':terminal ++close<CR>') -- Terminal
+map('n', '<D-b>', ':!cargo build<CR>') -- Cargo
+map('n', '<D-r>', ':!cargo run<CR>')
+map('n', '<D-c>', ':!cargo clean<CR>')
+map('n', '<D-d>', ':!cargo doc --open<CR>')
+map('n', '<D-f>', ':!cargo test<CR>')
+map('n', '<D-e>', ':!cargo search ')
+map('n', '<D-x>', ':!cargo check<CR>')
+map('n', '<D-z>', ':!cargo bench<CR>')
+
+-- Macros
+map('n', '®', '<C-q>') -- <M-r>
+map('n', '©', '@1') -- <M-1>
+
+-- File shortcuts
+map('n', '∏', ':CocConfig<CR>') -- <M-P>
+map('n', 'π', ':tab drop ~/.vim/plugins.vim<CR>') -- <M-p>
+map('n', '⊢', ':tab drop ~/.vim/vimrc<CR>') -- <M-ä>
+map('n', 'Æ', ':tab drop ~/.gvimrc<CR>') -- <M-Ä>
+map('n', 'θ', ':tab drop ~/.vim/plugin-conf.vim<CR>') -- <M-o>
+map('n', 'ø', ':tab drop ~/.vim/bibtex/library.bib<CR>') -- <M-ö>
+
+-- Unmaps
+unmap('n', 'Y')
+unmap('s', 'w')
+unmap('s', 'b')
+unmap('s', 'e')
+unmap('s', 'ge')
+
+-- Syntax
+hl('ColorColumn', {ctermfg='Red', ctermbg='lightred'})
+hl('CocError', {ctermbg=210})
+hl('CocWarning',{ctermbg=216})
+hl('CocInfo',{ctermbg=200})
+hl('CocHint',{ctermbg=226, cterm={italic = true}})
+hl('Pmenu',{ctermbg=253, ctermfg=16})
+
+vim.cmd('hi link CocErrorLine CocError')
+vim.cmd('hi link CocWarningLine CocWarning')
+vim.cmd('hi link CocInfoLine CocInfo')
+vim.cmd('hi link CocHintLine CocHint')
+
+vim.cmd('hi link CocErrorHighlight CocError')
+vim.cmd('hi link CocWarningHighlight CocWarning')
+vim.cmd('hi link CocInfoHighlight CocInfo')
+vim.cmd('hi link CocHintHighlight CocHint')
+
+vim.cmd('hi link CocErrorSign CocError')
+vim.cmd('hi link CocWarningSign CocWarning')
+vim.cmd('hi link CocInfoSign CocInfo')
+vim.cmd('hi link CocHintSign CocHint')
+
+vim.cmd('hi link CocErrorVirtualText CocError')
+vim.cmd('hi link CocWarningVirtualText CocWarning')
+vim.cmd('hi link CocInfoVirtualText CocInfo')
+vim.cmd('hi link CocHintVirtualText CocHint')
+
+vim.cmd('hi link CocFloating CocError')
+vim.cmd('hi link CocErrorFloat CocError')
+vim.cmd('hi link CocWarningFloat CocWarning')
+vim.cmd('hi link CocInfoFloat CocInfo')
+vim.cmd('hi link CocHintFloat CocHint')
 -- map('" nno          cj           :CocList outline<CR>
+-- Spell correction / Abbreviations
+vim.cmd('iab retrun return')
+vim.cmd('iab pritn print')
+vim.cmd('iab teh the')
+vim.cmd('iab liek like')
+vim.cmd('iab liekwise likewise')
+vim.cmd('iab moer more')
+vim.cmd('iab previosu previous')
+vim.cmd('iab pset pest')

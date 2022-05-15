@@ -19,7 +19,6 @@ esac
 # if [ "$TMUX" = "" ]; then tmux -u -2; exit; fi
 #: PATHS
 path=(
-  /Users/klasseg/Workspace/nvim-osx64/bin
   /usr/local/share/dotnet/x64
   /usr/local/opt/ccache/libexec
   /opt/homebrew/opt/llvm/bin

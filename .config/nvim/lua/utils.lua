@@ -15,7 +15,7 @@ function cmd(code)
 end
 
 function termcode(s)
-  vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
+  return vim.api.nvim_replace_termcodes(s, true, true, true)
 end
 
 function removeFirst(tbl, val)
@@ -28,12 +28,18 @@ end
 
 function map(mode, lhs, rhs, opts)
   opts = opts or {}
-  if opts.remap == nil then
+  if opts.noremap == nil then
     opts.noremap = true
-  else
-    opts.remap = nil
-    opts.noremap = false
   end
-  opts.silent = true
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+  if opts.buffer == true then
+    opts.buffer = nil
+    vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+  else
+    opts.buffer = nil
+    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+  end
+end
+
+function hl(name, opts)
+  vim.api.nvim_set_hl(0, name, opts)
 end

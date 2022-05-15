@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 source ~/.vim/plugins.vim
 call plug#end()
 lua require('init')
-lua require('plugins')
 source ~/.vim/vimrc
 source ~/.vim/plugin-conf.vim
 finish

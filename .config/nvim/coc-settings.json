@@ -146,11 +146,11 @@
   "rust-analyzer.highlightRelated.yieldPoints": true,
   "rust-analyzer.lens.enumVariantReferences": true,
   // [Scala] ------------------------------------------------------------------
-  "metals.javaHome": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home",
-  "metals.enable": true,
-  "metals.showInferredType": true,
-  "metals.showImplicitArguments": true,
-  "metals.superMethodLensesEnabled": true,
+  //"metals.javaHome": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home",
+  //"metals.enable": true,
+  //"metals.showInferredType": true,
+  //"metals.showImplicitArguments": true,
+  //"metals.superMethodLensesEnabled": true,
   // [Python] -----------------------------------------------------------------
   "python.analysis.typeCheckingMode": "off",
   "pyright.completion.snippetSupport": true,
@@ -175,16 +175,16 @@
         "racket"
       ]
     },
-    "metals": {
-      "command": "metals-vim",
-      "rootPatterns": [
-        "build.sbt"
-      ],
-      "filetypes": [
-        "scala",
-        "sbt"
-      ]
-    },
+    //"metals": {
+    //  "command": "metals-vim",
+    //  "rootPatterns": [
+    //    "build.sbt"
+    //  ],
+    //  "filetypes": [
+    //    "scala",
+    //    "sbt"
+    //  ]
+    //},
     "ccls": {
       "command": "ccls",
       "filetypes": [
