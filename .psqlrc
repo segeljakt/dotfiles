@@ -7,7 +7,7 @@
 \set VERBOSITY verbose
 
 -- Prompts
-\set PROMPT1 '%[%033[38;5;27m%]%`hostname -s`%[%033[38;5;102m%]/%/ %[%033[31;5;27m%]%`/home/klas/.psql/role.sh`%[%033[0m%] %# '
+\set PROMPT1 '%[%033[38;5;27m%]%`hostname -s`%[%033[38;5;102m%]/%/ %[%033[31;5;27m%]%`/Users/klasseg/.psql/role.sh`%[%033[0m%] %# '
 \set PROMPT2 ''
 
 -- Keep a different history file for each database name you log on to.

@@ -1,43 +1,8 @@
-"+----------------------------------------------------------------------------+
-"|                  Author: Klas Segeljakt <klasseg@kth.se>                   |
-"+----------------------------------------------------------------------------+
-"* Autocmd
+" Autocmd
 aug Autocommands | au!
-  au BufReadPost *
-        \ if line("'\"") > 1
-        \ && line("'\"") <= line("$")
-        \ | exe "normal! g'\""
-        \ | en
-  au BufReadPost .vimrc set nowrap
-"   au focusLost * silent! wall
-  au Syntax * match none
-  au Syntax rust match ColorColumn /\%>120v.\+/
-  au Syntax c,cpp,vim match ColorColumn /\%>80v.\+/
-  au BufReadPost * silent! norm! g`"
   au TabLeave * silent! w
-  au StdinReadPre * silent let s:std_in=1
-  au VimEnter,BufWinEnter *
-    \ if !exists('t:startify_new_tab')
-    \ && !exists('t:goyo_master')
-    \ && empty(expand('%'))
-    \ && empty(&l:buftype)
-    \ && !&previewwindow
-    \ && &l:modifiable
-    \ |   let t:startify_new_tab = 1
-    \ |   Startify
-    \ | en
-  au BufRead,BufNewFile *.mlir set filetype=mlir syntax=llvm
-  au BufRead,BufNewFile *.lalrpop set syntax=rust
-  au BufRead,BufNewFile *.sbt set filetype=scala
-  au BufRead,BufNewFile *.arc set filetype=arc
-  au BufRead,BufNewFile *.tex set filetype=tex
-  au BufRead,BufNewFile .psqlrc set filetype=sql
-  au BufWinEnter * if &previewwindow | wincmd L | en
-  au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  au CursorHold * silent call CocActionAsync('highlight')
-  au BufEnter * silent! lcd %:p:h
 aug END
-"* Scripts
+" Scripts
 function! FloatScroll(forward) abort
   let float = coc#util#get_float()
   if !float | return '' | en
@@ -107,11 +72,11 @@ endfun
 
 fun! GoBackToRecentBuffer()
   let startName = bufname('%')
-  while 1
+  for _ in range(100)
     exe "normal! \<c-o>"
     let nowName = bufname('%')
     if nowName != startName
       break
     en
-  endwhile
+  endfor
 endfun

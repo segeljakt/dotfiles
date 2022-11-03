@@ -6,14 +6,6 @@ function unmap(k, v)
   vim.api.nvim_del_keymap(k, v)
 end
 
-function let(k, v)
-  vim.api.nvim_set_var(k, v)
-end
-
-function cmd(code)
-  vim.cmd(code)
-end
-
 function termcode(s)
   return vim.api.nvim_replace_termcodes(s, true, true, true)
 end

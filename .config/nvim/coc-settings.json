@@ -27,17 +27,14 @@
   "codeLens.enable": true,
   "codeLens.separator": "",
   "codeLens.subseparator": " ",
+  "codeLens.position": "eol",
   // [Suggest] ----------------------------------------------------------------
-  "suggest.enablePreview": true,
   "suggest.enablePreselect": true,
   "suggest.asciiCharactersOnly": false,
   "suggest.removeDuplicateItems": true,
-  "suggest.detailMaxLength": 30,
-  "suggest.detailField": "menu",
+  "suggest.detailField": "abbr",
   "suggest.autoTrigger": "always",
   // "suggest.numberSelect": false,
-  "suggest.disableKind": false,
-  "suggest.disableMenu": false,
   "suggest.snippetIndicator": "📒",
   "suggest.maxCompleteItemCount": 50,
   "suggest.preferCompleteThanJumpPlaceholder": false,
@@ -50,9 +47,7 @@
   //"suggest.echodocSupport": true,
   "suggest.acceptSuggestionOnCommitCharacter": false,
   "suggest.noselect": false,
-  "suggest.keepCompleteopt": false,
   "suggest.completionItemKindLabels": {},
-  "suggest.floatEnable": true,
   // [Diagnostic] -------------------------------------------------------------
   "diagnostic.level": "warning",
   "diagnostic.enable": true,
@@ -66,19 +61,29 @@
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextLineSeparator": "; ",
   "diagnostic.virtualTextLines": 3,
+  "diagnostic.autoRefresh": true,
+  "diagnostic.messageDelay": 100,
+  // [Notifications] ----------------------------------------------------------
+  "notification.timeout": 3000,
+  "notification.marginRight": 5,
+  "notification.winblend": 0,
+  "notification.border": false,
+  "notification.highlightGroup": "Normal",
+  "notification.disabledProgressSources": [
+    "*"
+  ],
   // [Signature] --------------------------------------------------------------
   "signature.triggerSignatureWait": 200,
   // [Preferences] ------------------------------------------------------------
   "coc.preferences.floatActions": true,
   "coc.preferences.enableMarkdown": true,
   "coc.preferences.promptInput": true,
-  "codeLens.position": "eol",
   "coc.preferences.bracketEnterImprove": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": false,
-  "coc.preferences.snippetStatusText": "SNIP",
+  "snippet.statusText": "SNIP",
   "coc.preferences.formatOnType": true,
   "coc.preferences.jumpCommand": "edit",
-  "coc.preferences.enableFloatHighlight": true,
+  //"coc.preferences.enableFloatHighlight": true,
   "coc.preferences.formatOnSaveFiletypes": [],
   // [Emoji] ------------------------------------------------------------------
   "coc.source.emoji.enable": true,
@@ -90,6 +95,10 @@
   ],
   // [Hover] ------------------------------------------------------------------
   "hover.target": "float",
+  "hover.floatConfig": {
+    "border": true,
+    "shadow": true
+  },
   "hover.autoHide": true,
   "hover.previewMaxHeight": 20,
   // [Source] -----------------------------------------------------------------
@@ -97,54 +106,62 @@
   "coc.source.buffer.enable": false,
   "coc.source.around.enable": true,
   // [Rust] -------------------------------------------------------------------
-  "rust-analyzer.cargo.allFeatures": false,
-  "rust-analyzer.completion.addCallParenthesis": true,
-  "rust-analyzer.inlayHints.refreshOnInsertMode": true,
-  "rust-analyzer.completion.addCallArgumentSnippets": true,
-  "rust-analyzer.lens.run": true,
-  "rust-analyzer.callInfo.full": true,
+  "rust-analyzer.enable": true,
+  "rust-analyzer.imports.group.enable": true,
+  "rust-analyzer.completion.callable.snippets": "fill_arguments",
+  "inlayHint.enable": true,
+  "inlayHint.refreshOnInsertMode": true,
+  "inlayHint.enableParameter": true,
+  "rust-analyzer.lens.run.enable": true,
+  "rust-analyzer.lens.implementations.enable": true,
+  "rust-analyzer.lens.references.adt.enable": true,
+  "rust-analyzer.lens.references.trait.enable": true,
+  "rust-analyzer.lens.references.method.enable": true,
+  "rust-analyzer.lens.references.enumVariant.enable": true,
+  "rust-analyzer.signatureInfo.detail": "full",
   "rust-analyzer.cargo.autoreload": true,
   "rust-analyzer.lens.enable": true,
-  "rust-analyzer.lens.implementations": true,
-  "rust-analyzer.lens.references": true,
-  "rust-analyzer.inlayHints.closureReturnTypeHints": true,
+  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
+  "rust-analyzer.inlayHints.typeHints.enable": true,
+  "rust-analyzer.inlayHints.reborrowHints.enable": "always",
+  "rust-analyzer.inlayHints.chainingHints.enable": true,
+  "rust-analyzer.inlayHints.parameterHints.enable": true,
+  "rust-analyzer.inlayHints.bindingModeHints.enable": true,
+  "rust-analyzer.inlayHints.closingBraceHints.enable": true,
+  "rust-analyzer.inlayHints.closingBraceHints.minLines": 25,
   "rust-analyzer.inlayHints.renderColons": true,
-  "rust-analyzer.inlayHints.reborrowHints": true,
   "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "always",
   "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
-  "rust-analyzer.checkOnSave.command": "clippy",
+  //"rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.inlayHints.enable": true,
-  "rust-analyzer.inlayHints.typeHints": true,
   "rust-analyzer.completion.postfix.enable": false,
-  "rust-analyzer.inlayHints.chainingHints": true,
   "rust-analyzer.diagnostics.enable": true,
   "rust-analyzer.diagnostics.disabled": [
     "macro-error"
   ],
-  "rust-analyzer.hoverActions.enable": true,
-  "rust-analyzer.hover.linksInHover": true,
-  "rust-analyzer.hover.documentation": true,
-  "rust-analyzer.assist.importGroup": true,
-  "rust-analyzer.enable": true,
-  "rust-analyzer.highlighting.strings": true,
+  "rust-analyzer.hover.links.enable": true,
+  "rust-analyzer.hover.documentation.enable": true,
+  "rust-analyzer.imports.granularity.group": "item",
+  "rust-analyzer.highlightRelated.exitPoints.enable": true,
+  "rust-analyzer.rustfmt.extraArgs": [
+    "--config",
+    "merge_imports=false"
+  ],
+  "rust-analyzer.highlightRelated.references.enable": true,
+  "rust-analyzer.highlightRelated.breakPoints.enable": true,
+  "rust-analyzer.highlightRelated.yieldPoints.enable": true,
+  "rust-analyzer.semanticHighlighting.strings.enable": true,
   "rust-analyzer.checkOnSave.allTargets": false,
-  "rust-analyzer.inlayHints.typeHintsSeparator": "",
   "rust-analyzer.checkOnSave.extraArgs": [
     "--tests"
   ],
-  "rust-analyzer.assist.importPrefix": "crate",
+  "rust-analyzer.imports.prefix": "crate",
   "rust-analyzer.updates.prompt": false,
   "rust-analyzer.procMacro.enable": true,
-  "rust-analyzer.lens.methodReferences": true,
   "rust-analyzer.completion.autoimport.enable": false,
   "rust-analyzer.completion.autoself.enable": true,
   "rust-analyzer.inlayHints.maxLength": 100,
-  "rust-analyzer.inlayHints.chainingHintsSeparator": "‣",
-  "rust-analyzer.highlightRelated.references": true,
-  "rust-analyzer.highlightRelated.exitPoints": true,
-  "rust-analyzer.highlightRelated.breakPoints": true,
-  "rust-analyzer.highlightRelated.yieldPoints": true,
-  "rust-analyzer.lens.enumVariantReferences": true,
+  "rust-analyzer.procMacro.attributes.enable": true,
   // [Scala] ------------------------------------------------------------------
   //"metals.javaHome": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home",
   //"metals.enable": true,
@@ -249,6 +266,65 @@
       ],
       "ignoredRootPaths": [
         "~"
+      ]
+    },
+    "lua": {
+      "command": "/opt/homebrew/bin/lua-language-server",
+      "filetypes": [
+        "lua"
+      ],
+      "rootPatterns": [
+        ".git/"
+      ],
+      "settings": {
+        "Lua": {
+          "workspace": {
+            "library": [
+              "/opt/homebrew/share/nvim/runtime/lua",
+              "/opt/homebrew/share/nvim/runtime/lua/vim"
+            ],
+            "maxPreload": 2000,
+            "preloadFileSize": 1000
+          },
+          "runtime": {
+            "version": "Lua 5.4"
+          },
+          "diagnostics": {
+            "enable": true,
+            "globals": [
+              "hs",
+              "vim",
+              "it",
+              "describe",
+              "before_each",
+              "after_each"
+            ],
+            "disable": [
+              "lowercase-global"
+            ]
+          },
+          "completion": {
+            "keywordSnippet": "Disable"
+          }
+        }
+      }
+    },
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": [
+        "--lsp"
+      ],
+      "rootPatterns": [
+        ".stack.yaml",
+        ".hie-bios",
+        "BUILD.bazel",
+        "cabal.config",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
       ]
     }
   }

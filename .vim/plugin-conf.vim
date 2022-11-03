@@ -110,23 +110,23 @@ let g:pear_tree_smart_backspace = 1
 let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_map_special_keys = 0
 " Startify
-let g:startify_session_dir = '~/.vim/session'
-let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
-let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
-let g:startify_files_number = 20
-let g:startify_change_to_vcs_root = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_custom_header = map(split(system('fortune -s | cowsay'), '\n'), '"   ". v:val')
-let g:startify_enable_unsafe = 1
-let g:startify_skiplist = [
-      \   '\.vim/',
-      \   '/usr/*',
-      \   '\.todo',
-      \ ]
-let g:startify_lists = [
-      \   { 'header': ['   MRU'], 'type': 'files' },
-      \   { 'header': ['   Sessions'], 'type': 'sessions' },
-      \ ]
+" let g:startify_session_dir = '~/.vim/session'
+" let g:startify_list_order = ['files', 'dir', 'bookmarks', 'sessions', 'commands']
+" let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+" let g:startify_files_number = 20
+" let g:startify_change_to_vcs_root = 1
+" let g:startify_fortune_use_unicode = 1
+" let g:startify_custom_header = map(split(system('fortune -s | cowsay'), '\n'), '"   ". v:val')
+" let g:startify_enable_unsafe = 1
+" let g:startify_skiplist = [
+"       \   '\.vim/',
+"       \   '/usr/*',
+"       \   '\.todo',
+"       \ ]
+" let g:startify_lists = [
+"       \   { 'header': ['   MRU'], 'type': 'files' },
+"       \   { 'header': ['   Sessions'], 'type': 'sessions' },
+"       \ ]
 " Lightline
 let g:lightline = {
       \   'colorscheme': 'PaperColor',

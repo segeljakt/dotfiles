@@ -19,6 +19,7 @@ esac
 # if [ "$TMUX" = "" ]; then tmux -u -2; exit; fi
 #: PATHS
 path=(
+  /opt/homebrew/opt/node@16/bin
   /usr/local/share/dotnet/x64
   /usr/local/opt/ccache/libexec
   /opt/homebrew/opt/llvm/bin
@@ -59,14 +60,14 @@ alias     cs='csvlens'
 alias saxonxq='java -cp "`brew --prefix saxon`/libexec/saxon-he-10.6.jar" net.sf.saxon.Query'
 alias   kth="ssh klas@130.237.202.108"
 alias    wa="watchexec"
-alias     g="nvim ~/.gym.md"
+alias     g="tig origin/master..HEAD"
 alias   tid="python3 ~/Workspace/other/tid/tid.py '$TID'"
 # alias  mlir="rg ~/Workspace/scala/arc/arc-mlir/llvm-project/mlir/include/mlir/IR -e"
 alias mlir-base="~/Workspace/arc/arc-mlir/build/llvm-build/bin/arc-mlir"
 alias mlir="~/Workspace/arc/arc-mlir/build/llvm-build/bin/arc-mlir -arc-to-rust -inline-rust"
 alias mlir-test="ninja -C ~/Workspace/arc/arc-mlir/build/llvm-build/ check-arc-mlir"
 alias mlir-build="~/Workspace/arc/arc-mlir/arc-mlir-build"
-# alias morel="~/Workspace/data-frameworks/morel/morel"
+alias morel="~/Workspace/data-frameworks/morel/morel"
 alias python="python3"
 alias     p="ipython"
 # Files
@@ -106,7 +107,6 @@ alias    ls="lsd --group-dirs=first"
 alias   lst="lsd --tree"
 alias   lsa="lsd --date relative --all"
 alias  grep="rg --no-ignore --hidden"
-alias    rg="rg --no-ignore --hidden"
 #alias  find="fd --no-ignore"
 alias  tree="lsd --tree"
 alias  time="tally"
@@ -138,7 +138,7 @@ alias     u="rustup update; \
              opam update; \
              yes | opam upgrade; \
              brew upgrade; \
-             nvim -c 'PlugUpdate' \
+             nvim -c 'PackerUpdate' \
                   -c 'CocUpdate'"
 alias    uu="sudo apt update -qq && sudo apt upgrade -qq -y"
 alias    gd='nvim -p $(git diff --name-only --relative)'
@@ -181,13 +181,12 @@ alias    gu='open https://github.com/cda-group/arc'
 # ulimit -n 10240
 ulimit -n 1048576
 #: ENV
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/rc
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH="$PATH:$HOME/Workspace/arc/arc-mlir/build/llvm-build/bin/"
 export PATH=$(brew --prefix openssl)/bin:$PATH
-#:: Ripgrep
-export RIPGREP_CONFIG_PATH=~/.ripgreprc
 #:: Brew
 export HOMEBREW_BAT=1
 export HOMEBREW_DISPLAY_INSTALL_TIMES=1
@@ -351,6 +350,10 @@ bindkey '^[[3~' delete-char # <FN-BS>
 bindkey 'ö' zce
 # bindkey Ü w-upgrade-all
 # FUNCTIONS
+function color {
+  set -o pipefail
+  "$@" 2> >(sed $'s,.*,\e[31m&\e[m,'>&2)
+}
 function pdftojpg {
   convert -density 300 -trim -quality 100 $1 +append $(echo $1 | sed "s/\.pdf/\.png")
 }
@@ -426,7 +429,7 @@ export PATH=$GOROOT/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+#[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -449,3 +452,17 @@ function create_arc_tests() {
 export WASMER_DIR="/Users/klasseg/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+[ -f "/Users/klasseg/.ghcup/env" ] && source "/Users/klasseg/.ghcup/env" # ghcup-env
+
+# Python
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/klasseg/Workspace/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/klasseg/Workspace/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/klasseg/Workspace/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/klasseg/Workspace/google-cloud-sdk/completion.zsh.inc'; fi
