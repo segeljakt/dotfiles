@@ -208,7 +208,7 @@ let g:lightline = {
       \     'tabline': 1
       \   },
       \ }
-call lightline#coc#register()
+"call lightline#coc#register()
 fun! LightlineBranch()
   let branch = fugitive#head()
   return branch !=# '' ? ''.branch : ''

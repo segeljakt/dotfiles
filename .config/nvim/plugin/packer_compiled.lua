@@ -96,10 +96,30 @@ _G.packer_plugins = {
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/catppuccin",
     url = "https://github.com/catppuccin/nvim"
   },
-  ["coc.nvim"] = {
+  ["cmp-buffer"] = {
     loaded = true,
-    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/coc.nvim",
-    url = "https://github.com/neoclide/coc.nvim"
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
+  },
+  ["cmp-vsnip"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
+    url = "https://github.com/hrsh7th/cmp-vsnip"
   },
   ["copilot.vim"] = {
     loaded = true,
@@ -112,7 +132,7 @@ _G.packer_plugins = {
     url = "https://github.com/rhysd/git-messenger.vim"
   },
   ["gitsigns.nvim"] = {
-    config = { "\27LJ\2\nW\0\4\n\1\4\0\14\14\0\3\0X\4\1Ä4\3\0\0-\4\0\0=\4\0\0036\4\1\0009\4\2\0049\4\3\4\18\6\0\0\18\a\1\0\18\b\2\0\18\t\3\0B\4\5\1K\0\1\0\0¿\bset\vkeymap\bvim\vbuffer1\0\0\3\1\2\0\5-\0\0\0009\0\0\0005\2\1\0B\0\2\1K\0\1\0\1¿\1\0\1\tfull\2\15blame_line(\0\0\3\1\2\0\5-\0\0\0009\0\0\0'\2\1\0B\0\2\1K\0\1\0\1¿\6~\rdiffthisç\6\1\1\b\0)\0[6\1\0\0009\1\1\0019\1\2\0013\2\3\0\18\3\2\0005\5\4\0'\6\5\0'\a\6\0B\3\4\1\18\3\2\0005\5\a\0'\6\b\0'\a\t\0B\3\4\1\18\3\2\0'\5\n\0'\6\v\0'\a\f\0B\3\4\1\18\3\2\0'\5\n\0'\6\r\0009\a\14\1B\3\4\1\18\3\2\0'\5\n\0'\6\15\0009\a\16\1B\3\4\1\18\3\2\0'\5\n\0'\6\17\0009\a\18\1B\3\4\1\18\3\2\0'\5\n\0'\6\19\0009\a\20\1B\3\4\1\18\3\2\0'\5\n\0'\6\21\0009\a\22\1B\3\4\1\18\3\2\0'\5\n\0'\6\23\0009\a\24\1B\3\4\1\18\3\2\0'\5\n\0'\6\25\0009\a\26\1B\3\4\1\18\3\2\0'\5\n\0'\6\27\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6\29\0003\a\30\0B\3\4\1\18\3\2\0'\5\n\0'\6\31\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6 \0009\a!\1B\3\4\1\18\3\2\0'\5\n\0'\6\"\0003\a#\0B\3\4\1\18\3\2\0'\5\n\0'\6$\0009\a%\1B\3\4\1\18\3\2\0005\5&\0'\6'\0'\a(\0B\3\4\0012\0\0ÄK\0\1\0#:<C-U>Gitsigns select_hunk<CR>\aih\1\3\0\0\6o\6x\19toggle_deleted\15<leader>td\0\15<leader>hD\rdiffthis\15<leader>hd\15<leader>tb\0\15<leader>hb\30toggle_current_line_blame\a¬ª\15stage_hunk\aŒì\14prev_hunk\a¬∫\14next_hunk\a¬¨\17preview_hunk\agp\17reset_buffer\15<leader>hR\20undo_stage_hunk\agu\17stage_buffer\bgfs\28:Gitsigns show_hunk<CR>\agh\6n\29:Gitsigns reset_hunk<CR>\15<leader>hr\1\3\0\0\6n\6v\29:Gitsigns stage_hunk<CR>\15<leader>hs\1\3\0\0\6n\6v\0\rgitsigns\vloaded\fpackage’\a\1\0\5\0\24\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0003\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0=\4\16\3=\3\17\0025\3\18\0=\3\19\0025\3\20\0=\3\21\0025\3\22\0=\3\23\2B\0\2\1K\0\1\0\19preview_config\1\0\5\vborder\vsingle\bcol\3\1\brow\3\0\rrelative\vcursor\nstyle\fminimal\28current_line_blame_opts\1\0\4\22ignore_whitespace\1\ndelay\3Ë\a\18virt_text_pos\beol\14virt_text\2\17watch_gitdir\1\0\2\rinterval\3Ë\a\17follow_files\2\nsigns\17changedelete\1\0\4\vlinehl\21GitSignsChangeLn\nnumhl\21GitSignsChangeNr\ahl\19GitSignsChange\ttext\6~\14topdelete\1\0\4\vlinehl\21GitSignsDeleteLn\nnumhl\21GitSignsDeleteNr\ahl\19GitSignsDelete\ttext\b‚Äæ\vdelete\1\0\4\vlinehl\21GitSignsDeleteLn\nnumhl\21GitSignsDeleteNr\ahl\19GitSignsDelete\ttext\6_\vchange\1\0\4\vlinehl\21GitSignsChangeLn\nnumhl\21GitSignsChangeNr\ahl\19GitSignsChange\ttext\b‚îÇ\badd\1\0\0\1\0\4\vlinehl\18GitSignsAddLn\nnumhl\18GitSignsAddNr\ahl\16GitSignsAdd\ttext\b‚îÇ\14on_attach\1\0\n\nnumhl\1!current_line_blame_formatter1<author>, <author_time:%Y-%m-%d> - <summary>\20max_file_length\3¿∏\2\23current_line_blame\1\24attach_to_untracked\2\vlinehl\1\15signcolumn\2\14word_diff\1\20update_debounce\3d\18sign_priority\3\6\0\nsetup\rgitsigns\frequire\0" },
+    config = { "\27LJ\2\nW\0\4\n\1\4\0\14\14\0\3\0X\4\1Ä4\3\0\0-\4\0\0=\4\0\0036\4\1\0009\4\2\0049\4\3\4\18\6\0\0\18\a\1\0\18\b\2\0\18\t\3\0B\4\5\1K\0\1\0\0¿\bset\vkeymap\bvim\vbuffer1\0\0\3\1\2\0\5-\0\0\0009\0\0\0005\2\1\0B\0\2\1K\0\1\0\1¿\1\0\1\tfull\2\15blame_line(\0\0\3\1\2\0\5-\0\0\0009\0\0\0'\2\1\0B\0\2\1K\0\1\0\1¿\6~\rdiffthisç\6\1\1\b\0)\0[6\1\0\0009\1\1\0019\1\2\0013\2\3\0\18\3\2\0005\5\4\0'\6\5\0'\a\6\0B\3\4\1\18\3\2\0005\5\a\0'\6\b\0'\a\t\0B\3\4\1\18\3\2\0'\5\n\0'\6\v\0'\a\f\0B\3\4\1\18\3\2\0'\5\n\0'\6\r\0009\a\14\1B\3\4\1\18\3\2\0'\5\n\0'\6\15\0009\a\16\1B\3\4\1\18\3\2\0'\5\n\0'\6\17\0009\a\18\1B\3\4\1\18\3\2\0'\5\n\0'\6\19\0009\a\20\1B\3\4\1\18\3\2\0'\5\n\0'\6\21\0009\a\22\1B\3\4\1\18\3\2\0'\5\n\0'\6\23\0009\a\24\1B\3\4\1\18\3\2\0'\5\n\0'\6\25\0009\a\26\1B\3\4\1\18\3\2\0'\5\n\0'\6\27\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6\29\0003\a\30\0B\3\4\1\18\3\2\0'\5\n\0'\6\31\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6 \0009\a!\1B\3\4\1\18\3\2\0'\5\n\0'\6\"\0003\a#\0B\3\4\1\18\3\2\0'\5\n\0'\6$\0009\a%\1B\3\4\1\18\3\2\0005\5&\0'\6'\0'\a(\0B\3\4\0012\0\0ÄK\0\1\0#:<C-U>Gitsigns select_hunk<CR>\aih\1\3\0\0\6o\6x\19toggle_deleted\15<leader>td\0\15<leader>hD\rdiffthis\15<leader>hd\15<leader>tb\0\15<leader>hb\30toggle_current_line_blame\a¬ª\15stage_hunk\aŒì\14prev_hunk\a¬∫\14next_hunk\a¬¨\17preview_hunk\agp\17reset_buffer\15<leader>hR\20undo_stage_hunk\agu\17stage_buffer\bgfs\28:Gitsigns show_hunk<CR>\agh\6n\29:Gitsigns reset_hunk<CR>\15<leader>hr\1\3\0\0\6n\6v\29:Gitsigns stage_hunk<CR>\15<leader>hs\1\3\0\0\6n\6v\0\rgitsigns\vloaded\fpackage’\a\1\0\5\0\24\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0003\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0=\4\16\3=\3\17\0025\3\18\0=\3\19\0025\3\20\0=\3\21\0025\3\22\0=\3\23\2B\0\2\1K\0\1\0\19preview_config\1\0\5\brow\3\0\rrelative\vcursor\nstyle\fminimal\vborder\vsingle\bcol\3\1\28current_line_blame_opts\1\0\4\22ignore_whitespace\1\18virt_text_pos\beol\14virt_text\2\ndelay\3Ë\a\17watch_gitdir\1\0\2\17follow_files\2\rinterval\3Ë\a\nsigns\17changedelete\1\0\4\ahl\19GitSignsChange\nnumhl\21GitSignsChangeNr\ttext\6~\vlinehl\21GitSignsChangeLn\14topdelete\1\0\4\ahl\19GitSignsDelete\nnumhl\21GitSignsDeleteNr\ttext\b‚Äæ\vlinehl\21GitSignsDeleteLn\vdelete\1\0\4\ahl\19GitSignsDelete\nnumhl\21GitSignsDeleteNr\ttext\6_\vlinehl\21GitSignsDeleteLn\vchange\1\0\4\ahl\19GitSignsChange\nnumhl\21GitSignsChangeNr\ttext\b‚îÇ\vlinehl\21GitSignsChangeLn\badd\1\0\0\1\0\4\ahl\16GitSignsAdd\nnumhl\18GitSignsAddNr\ttext\b‚îÇ\vlinehl\18GitSignsAddLn\14on_attach\1\0\n\15signcolumn\2\nnumhl\1\23current_line_blame\1\24attach_to_untracked\2\vlinehl\1\14word_diff\1\20update_debounce\3d\18sign_priority\3\6\20max_file_length\3¿∏\2!current_line_blame_formatter1<author>, <author_time:%Y-%m-%d> - <summary>\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
@@ -163,12 +183,39 @@ _G.packer_plugins = {
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
+  ["mason-lspconfig.nvim"] = {
+    config = { "\27LJ\2\nd\0\0\6\0\6\0\v6\0\0\0006\2\1\0009\2\2\0026\4\1\0009\4\3\0049\4\4\0049\4\5\4B\4\1\0A\2\0\0A\0\0\1K\0\1\0\27list_workspace_folders\bbuf\blsp\finspect\bvim\nprint@\0\0\3\0\5\0\a6\0\0\0009\0\1\0009\0\2\0009\0\3\0005\2\4\0B\0\2\1K\0\1\0\1\0\1\nasync\2\vformat\bbuf\blsp\bvimK\0\0\4\1\5\0\b6\0\0\0009\0\1\0009\0\2\0005\2\3\0-\3\0\0=\3\4\2B\0\2\1K\0\1\0\0\0\nfloat\1\0\0\14goto_prev\15diagnostic\bvimK\0\0\4\1\5\0\b6\0\0\0009\0\1\0009\0\2\0005\2\3\0-\3\0\0=\3\4\2B\0\2\1K\0\1\0\0\0\nfloat\1\0\0\14goto_next\15diagnostic\bvimï\17\1\2\n\2`\0Ñ\0025\2\0\0=\1\1\0026\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\6\0006\a\2\0009\a\a\a9\a\b\a9\a\t\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\n\0006\a\2\0009\a\a\a9\a\b\a9\a\v\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\f\0006\a\2\0009\a\a\a9\a\b\a9\a\r\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\14\0006\a\2\0009\a\a\a9\a\b\a9\a\15\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\16\0006\a\2\0009\a\a\a9\a\b\a9\a\17\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\18\0003\a\19\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\20\0006\a\2\0009\a\a\a9\a\b\a9\a\21\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\22\0006\a\2\0009\a\a\a9\a\b\a9\a\23\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\24\0006\a\2\0009\a\a\a9\a\b\a9\a\25\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\26\0006\a\2\0009\a\a\a9\a\b\a9\a\27\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\28\0003\a\29\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\30\0003\a\31\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6 \0003\a!\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\"\0006\a\2\0009\a#\a9\a$\a\18\b\2\0B\3\5\0016\3\2\0009\3\a\0039\3%\0036\4\2\0009\4\a\0049\4'\0046\6\2\0009\6\a\0069\6#\0069\6(\0065\a)\0B\4\3\2=\4&\3-\3\1\0\a\3*\0X\3\6Ä6\3+\0'\5,\0B\3\2\0029\3-\0034\5\0\0B\3\2\1-\3\1\0\a\3.\0X\3\15Ä6\3+\0'\5/\0B\3\2\0029\3.\0039\3-\0035\0057\0005\0065\0005\a3\0005\b1\0005\t0\0=\t2\b=\b4\a=\a6\6=\0068\5B\3\2\0016\0039\0'\5:\0005\6;\0B\3\3\0016\0039\0'\5<\0005\6=\0B\3\3\0016\0039\0'\5>\0005\6?\0B\3\3\0016\0039\0'\5@\0005\6A\0B\3\3\0016\0039\0'\5B\0005\6C\0B\3\3\0016\0039\0'\5D\0005\6E\0B\3\3\0016\0039\0'\5F\0005\6G\0B\3\3\0016\0039\0'\5H\0005\6I\0B\3\3\0016\0039\0'\5J\0005\6K\0B\3\3\0016\0039\0'\5L\0005\6M\0B\3\3\0016\0039\0'\5N\0005\6O\0B\3\3\0016\0039\0'\5P\0005\6Q\0B\3\3\0016\0039\0'\5R\0005\6S\0B\3\3\0016\0039\0'\5T\0005\6U\0B\3\3\0016\0039\0'\5V\0005\6W\0B\3\3\0016\0039\0'\5X\0005\6Y\0B\3\3\0016\0039\0'\5Z\0005\6[\0B\3\3\0016\0039\0'\5\\\0005\6]\0B\3\3\0016\0039\0'\5^\0005\6_\0B\3\3\1K\0\1\0\1\0\0¿\1\0\1\tlink\nError\19DiagnosticInfo\1\0\1\tlink\nError\19DiagnosticHint\1\0\1\tlink\nError\19DiagnosticWarn\1\0\1\tlink\nError\20DiagnosticError\1\0\1\tlink\nError\28DiagnosticUnderlineInfo\1\0\1\tlink\nError\28DiagnosticUnderlineHint\1\0\1\tlink\nError\28DiagnosticUnderlineWarn\1\0\1\tlink\nError\29DiagnosticUnderlineError\1\0\1\tlink\nError\27DiagnosticFloatingInfo\1\0\1\tlink\nError\27DiagnosticFloatingHint\1\0\1\tlink\nError\27DiagnosticFloatingWarn\1\0\1\tlink\nError\28DiagnosticFloatingError\1\0\1\tlink\nError LspDiagnosticsUnderlineHint\1\0\1\tlink\nError!LspDiagnosticsUnderlineError\1\0\1\tlink\nError#LspDiagnosticsUnderlineWarning\1\0\1\tlink\nError'LspDiagnosticsUnderlineInformation\1\0\1\tlink\nError\22LspReferenceWrite\1\0\1\tlink\nError\21LspReferenceText\1\0\1\tlink\nError\21LspReferenceRead\ahl\rsettings\1\0\0\bLua\1\0\0\16diagnostics\1\0\0\fglobals\1\0\0\1\2\0\0\bvim\14lspconfig\16sumneko_lua\nsetup\15rust-tools\frequire\18rust_analyzer\1\0\2\21update_in_insert\1\14underline\2\27on_publish_diagnostics\twith$textDocument/publishDiagnostics\rhandlers\15setloclist\15diagnostic\acq\0\n<C-j>\0\n<C-k>\0\6+\15references\agr\16code_action\aca\vrename\b‚àö\20type_definition\aŒò\0\bcwl\19signature_help\vc<C-k>\19implementation\agi\nhover\6K\15definition\agd\16declaration\bbuf\blsp\agD\6n\bset\vkeymap\bvim\vbuffer\1\0\2\fnoremap\2\vsilent\2r\1\1\5\2\a\0\r6\1\0\0'\3\1\0B\1\2\0028\1\0\0019\1\2\0015\3\3\0-\4\0\0=\4\4\0033\4\5\0=\4\6\3B\1\2\0012\0\0ÄK\0\1\0\0¿\1¿\14on_attach\0\17capabilities\1\0\0\nsetup\14lspconfig\frequireÖ\2\1\0\6\0\v\0\0246\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\0\0'\2\6\0B\0\2\0029\0\a\0B\0\1\0025\1\b\0006\2\0\0'\4\1\0B\2\2\0029\2\t\0024\4\3\0003\5\n\0>\5\1\4B\2\2\0012\0\0ÄK\0\1\0\0\19setup_handlers\1\0\1\vheader\1\25default_capabilities\17cmp_nvim_lsp\21ensure_installed\1\0\0\1\4\0\0\16sumneko_lua\26rust_analyzer@nightly\rocamllsp\nsetup\20mason-lspconfig\frequire\0" },
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/opt/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    after = { "mason-lspconfig.nvim" },
+    config = { "\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\nmason\frequire\0" },
+    loaded = true,
+    only_config = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
   merlin = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/opt/merlin",
     url = "https://github.com/ocaml/merlin"
+  },
+  ["nvim-cmp"] = {
+    config = { "\27LJ\2\n;\0\1\4\0\4\0\0066\1\0\0009\1\1\0019\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\20vsnip#anonymous\afn\bvim]\0\2\4\0\4\0\0065\2\0\0009\3\2\0009\3\3\0038\3\3\2=\3\1\1L\1\2\0\tname\vsource\tmenu\1\0\4\nvsnip\b‚ãó\tpath\tüñ´\rnvim_lsp\aŒª\vbuffer\aŒ©∆\4\1\0\n\0$\0=6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0034\4\0\0=\4\b\0039\4\t\0009\4\n\0049\4\v\0045\6\r\0009\a\t\0009\a\f\a)\t¸ˇB\a\2\2=\a\14\0069\a\t\0009\a\f\a)\t\4\0B\a\2\2=\a\15\0069\a\t\0009\a\16\aB\a\1\2=\a\17\0069\a\t\0009\a\18\aB\a\1\2=\a\19\0069\a\t\0009\a\20\a5\t\21\0B\a\2\2=\a\22\6B\4\2\2=\4\t\0039\4\23\0009\4\24\0044\6\5\0005\a\25\0>\a\1\0065\a\26\0>\a\2\0065\a\27\0>\a\3\0065\a\28\0>\a\4\6B\4\2\2=\4\29\0035\4\31\0005\5\30\0=\5 \0043\5!\0=\5\"\4=\4#\3B\1\2\1K\0\1\0\15formatting\vformat\0\vfields\1\0\0\1\4\0\0\tmenu\tabbr\tkind\vsource\1\0\2\tname\nvsnip\19keyword_length\3\2\1\0\2\tname\vbuffer\19keyword_length\3\3\1\0\2\tname\rnvim_lsp\19keyword_length\3\3\1\0\1\tname\tpath\fsources\vconfig\t<CR>\1\0\1\vselect\2\fconfirm\n<C-e>\nabort\14<C-Space>\rcomplete\n<C-f>\n<C-b>\1\0\0\16scroll_docs\vinsert\vpreset\fmapping\vwindow\fsnippet\1\0\0\vexpand\1\0\0\0\nsetup\bcmp\frequire\0" },
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -205,6 +252,11 @@ _G.packer_plugins = {
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/rename.vim",
     url = "https://github.com/danro/rename.vim"
   },
+  ["rust-tools.nvim"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
+  },
   ["rust.vim"] = {
     loaded = false,
     needs_bufread = true,
@@ -223,7 +275,7 @@ _G.packer_plugins = {
     url = "https://github.com/godlygeek/tabular"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\n◊\3\0\0\6\0\21\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0005\5\16\0=\5\17\4=\4\18\3=\3\19\0024\3\0\0=\3\20\2B\0\2\1K\0\1\0\15extensions\fpickers\14live_grep\18layout_config\1\0\4\20prompt_position\vbottom\vheight\4ÊÃô≥\6ÊÃπˇ\3\vmirror\2\17scroll_speed\3\1\1\0\1\20layout_strategy\rvertical\14old_files\1\0\1\ntheme\rdropdown\14git_files\1\0\0\1\0\1\ntheme\rdropdown\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\4\a¬™\26cycle_previewers_prev\n<C-j>\24move_selection_next\f<C-s-j>\26cycle_previewers_next\n<C-k>\28move_selection_previous\nsetup\14telescope\frequire\0" },
+    config = { "\27LJ\2\n◊\3\0\0\6\0\21\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0005\5\16\0=\5\17\4=\4\18\3=\3\19\0024\3\0\0=\3\20\2B\0\2\1K\0\1\0\15extensions\fpickers\14live_grep\18layout_config\1\0\4\vmirror\2\17scroll_speed\3\1\20prompt_position\vbottom\vheight\4ÊÃô≥\6ÊÃπˇ\3\1\0\1\20layout_strategy\rvertical\14old_files\1\0\1\ntheme\rdropdown\14git_files\1\0\0\1\0\1\ntheme\rdropdown\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\4\n<C-j>\24move_selection_next\n<C-k>\28move_selection_previous\f<C-s-j>\26cycle_previewers_next\a¬™\26cycle_previewers_prev\nsetup\14telescope\frequire\0" },
     loaded = true,
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -234,15 +286,10 @@ _G.packer_plugins = {
     url = "https://github.com/ron89/thesaurus_query.vim"
   },
   ["twilight.nvim"] = {
-    config = { "\27LJ\2\n‰\1\0\0\5\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\0025\3\b\0=\3\t\0024\3\0\0=\3\n\2B\0\2\1K\0\1\0\fexclude\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\1\0\2\15treesitter\2\fcontext\3\n\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0ÄÄ¿˛\3\nsetup\rtwilight\frequire\0" },
+    config = { "\27LJ\2\n‰\1\0\0\5\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\0025\3\b\0=\3\t\0024\3\0\0=\3\n\2B\0\2\1K\0\1\0\fexclude\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\1\0\2\fcontext\3\n\15treesitter\2\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0ÄÄ¿˛\3\nsetup\rtwilight\frequire\0" },
     loaded = true,
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/twilight.nvim",
     url = "https://github.com/folke/twilight.nvim"
-  },
-  ultisnips = {
-    loaded = true,
-    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/ultisnips",
-    url = "https://github.com/SirVer/ultisnips"
   },
   undotree = {
     loaded = true,
@@ -330,11 +377,6 @@ _G.packer_plugins = {
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-lastplace",
     url = "https://github.com/farmergreg/vim-lastplace"
   },
-  ["vim-lightline-coc"] = {
-    loaded = true,
-    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-lightline-coc",
-    url = "https://github.com/josa42/vim-lightline-coc"
-  },
   ["vim-markdown"] = {
     loaded = false,
     needs_bufread = true,
@@ -374,11 +416,6 @@ _G.packer_plugins = {
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-silicon",
     url = "https://github.com/segeljakt/vim-silicon"
   },
-  ["vim-snippets"] = {
-    loaded = true,
-    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-snippets",
-    url = "https://github.com/honza/vim-snippets"
-  },
   ["vim-table-mode"] = {
     loaded = false,
     needs_bufread = true,
@@ -402,6 +439,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-visual-star-search",
     url = "https://github.com/nelstrom/vim-visual-star-search"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/Users/klasseg/.local/share/nvim/site/pack/packer/start/vim-vsnip",
+    url = "https://github.com/hrsh7th/vim-vsnip"
   },
   ["vim-zsh"] = {
     loaded = false,
@@ -433,52 +475,59 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\2\nW\0\4\n\1\4\0\14\14\0\3\0X\4\1Ä4\3\0\0-\4\0\0=\4\0\0036\4\1\0009\4\2\0049\4\3\4\18\6\0\0\18\a\1\0\18\b\2\0\18\t\3\0B\4\5\1K\0\1\0\0¿\bset\vkeymap\bvim\vbuffer1\0\0\3\1\2\0\5-\0\0\0009\0\0\0005\2\1\0B\0\2\1K\0\1\0\1¿\1\0\1\tfull\2\15blame_line(\0\0\3\1\2\0\5-\0\0\0009\0\0\0'\2\1\0B\0\2\1K\0\1\0\1¿\6~\rdiffthisç\6\1\1\b\0)\0[6\1\0\0009\1\1\0019\1\2\0013\2\3\0\18\3\2\0005\5\4\0'\6\5\0'\a\6\0B\3\4\1\18\3\2\0005\5\a\0'\6\b\0'\a\t\0B\3\4\1\18\3\2\0'\5\n\0'\6\v\0'\a\f\0B\3\4\1\18\3\2\0'\5\n\0'\6\r\0009\a\14\1B\3\4\1\18\3\2\0'\5\n\0'\6\15\0009\a\16\1B\3\4\1\18\3\2\0'\5\n\0'\6\17\0009\a\18\1B\3\4\1\18\3\2\0'\5\n\0'\6\19\0009\a\20\1B\3\4\1\18\3\2\0'\5\n\0'\6\21\0009\a\22\1B\3\4\1\18\3\2\0'\5\n\0'\6\23\0009\a\24\1B\3\4\1\18\3\2\0'\5\n\0'\6\25\0009\a\26\1B\3\4\1\18\3\2\0'\5\n\0'\6\27\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6\29\0003\a\30\0B\3\4\1\18\3\2\0'\5\n\0'\6\31\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6 \0009\a!\1B\3\4\1\18\3\2\0'\5\n\0'\6\"\0003\a#\0B\3\4\1\18\3\2\0'\5\n\0'\6$\0009\a%\1B\3\4\1\18\3\2\0005\5&\0'\6'\0'\a(\0B\3\4\0012\0\0ÄK\0\1\0#:<C-U>Gitsigns select_hunk<CR>\aih\1\3\0\0\6o\6x\19toggle_deleted\15<leader>td\0\15<leader>hD\rdiffthis\15<leader>hd\15<leader>tb\0\15<leader>hb\30toggle_current_line_blame\a¬ª\15stage_hunk\aŒì\14prev_hunk\a¬∫\14next_hunk\a¬¨\17preview_hunk\agp\17reset_buffer\15<leader>hR\20undo_stage_hunk\agu\17stage_buffer\bgfs\28:Gitsigns show_hunk<CR>\agh\6n\29:Gitsigns reset_hunk<CR>\15<leader>hr\1\3\0\0\6n\6v\29:Gitsigns stage_hunk<CR>\15<leader>hs\1\3\0\0\6n\6v\0\rgitsigns\vloaded\fpackage’\a\1\0\5\0\24\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0003\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0=\4\16\3=\3\17\0025\3\18\0=\3\19\0025\3\20\0=\3\21\0025\3\22\0=\3\23\2B\0\2\1K\0\1\0\19preview_config\1\0\5\vborder\vsingle\bcol\3\1\brow\3\0\rrelative\vcursor\nstyle\fminimal\28current_line_blame_opts\1\0\4\22ignore_whitespace\1\ndelay\3Ë\a\18virt_text_pos\beol\14virt_text\2\17watch_gitdir\1\0\2\rinterval\3Ë\a\17follow_files\2\nsigns\17changedelete\1\0\4\vlinehl\21GitSignsChangeLn\nnumhl\21GitSignsChangeNr\ahl\19GitSignsChange\ttext\6~\14topdelete\1\0\4\vlinehl\21GitSignsDeleteLn\nnumhl\21GitSignsDeleteNr\ahl\19GitSignsDelete\ttext\b‚Äæ\vdelete\1\0\4\vlinehl\21GitSignsDeleteLn\nnumhl\21GitSignsDeleteNr\ahl\19GitSignsDelete\ttext\6_\vchange\1\0\4\vlinehl\21GitSignsChangeLn\nnumhl\21GitSignsChangeNr\ahl\19GitSignsChange\ttext\b‚îÇ\badd\1\0\0\1\0\4\vlinehl\18GitSignsAddLn\nnumhl\18GitSignsAddNr\ahl\16GitSignsAdd\ttext\b‚îÇ\14on_attach\1\0\n\nnumhl\1!current_line_blame_formatter1<author>, <author_time:%Y-%m-%d> - <summary>\20max_file_length\3¿∏\2\23current_line_blame\1\24attach_to_untracked\2\vlinehl\1\15signcolumn\2\14word_diff\1\20update_debounce\3d\18sign_priority\3\6\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
--- Config for: twilight.nvim
-time([[Config for twilight.nvim]], true)
-try_loadstring("\27LJ\2\n‰\1\0\0\5\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\0025\3\b\0=\3\t\0024\3\0\0=\3\n\2B\0\2\1K\0\1\0\fexclude\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\1\0\2\15treesitter\2\fcontext\3\n\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0ÄÄ¿˛\3\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
-time([[Config for twilight.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n◊\3\0\0\6\0\21\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0005\5\16\0=\5\17\4=\4\18\3=\3\19\0024\3\0\0=\3\20\2B\0\2\1K\0\1\0\15extensions\fpickers\14live_grep\18layout_config\1\0\4\20prompt_position\vbottom\vheight\4ÊÃô≥\6ÊÃπˇ\3\vmirror\2\17scroll_speed\3\1\1\0\1\20layout_strategy\rvertical\14old_files\1\0\1\ntheme\rdropdown\14git_files\1\0\0\1\0\1\ntheme\rdropdown\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\4\a¬™\26cycle_previewers_prev\n<C-j>\24move_selection_next\f<C-s-j>\26cycle_previewers_next\n<C-k>\28move_selection_previous\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
 -- Config for: Comment.nvim
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\nF\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\rmappings\1\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\2\nW\0\4\n\1\4\0\14\14\0\3\0X\4\1Ä4\3\0\0-\4\0\0=\4\0\0036\4\1\0009\4\2\0049\4\3\4\18\6\0\0\18\a\1\0\18\b\2\0\18\t\3\0B\4\5\1K\0\1\0\0¿\bset\vkeymap\bvim\vbuffer1\0\0\3\1\2\0\5-\0\0\0009\0\0\0005\2\1\0B\0\2\1K\0\1\0\1¿\1\0\1\tfull\2\15blame_line(\0\0\3\1\2\0\5-\0\0\0009\0\0\0'\2\1\0B\0\2\1K\0\1\0\1¿\6~\rdiffthisç\6\1\1\b\0)\0[6\1\0\0009\1\1\0019\1\2\0013\2\3\0\18\3\2\0005\5\4\0'\6\5\0'\a\6\0B\3\4\1\18\3\2\0005\5\a\0'\6\b\0'\a\t\0B\3\4\1\18\3\2\0'\5\n\0'\6\v\0'\a\f\0B\3\4\1\18\3\2\0'\5\n\0'\6\r\0009\a\14\1B\3\4\1\18\3\2\0'\5\n\0'\6\15\0009\a\16\1B\3\4\1\18\3\2\0'\5\n\0'\6\17\0009\a\18\1B\3\4\1\18\3\2\0'\5\n\0'\6\19\0009\a\20\1B\3\4\1\18\3\2\0'\5\n\0'\6\21\0009\a\22\1B\3\4\1\18\3\2\0'\5\n\0'\6\23\0009\a\24\1B\3\4\1\18\3\2\0'\5\n\0'\6\25\0009\a\26\1B\3\4\1\18\3\2\0'\5\n\0'\6\27\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6\29\0003\a\30\0B\3\4\1\18\3\2\0'\5\n\0'\6\31\0009\a\28\1B\3\4\1\18\3\2\0'\5\n\0'\6 \0009\a!\1B\3\4\1\18\3\2\0'\5\n\0'\6\"\0003\a#\0B\3\4\1\18\3\2\0'\5\n\0'\6$\0009\a%\1B\3\4\1\18\3\2\0005\5&\0'\6'\0'\a(\0B\3\4\0012\0\0ÄK\0\1\0#:<C-U>Gitsigns select_hunk<CR>\aih\1\3\0\0\6o\6x\19toggle_deleted\15<leader>td\0\15<leader>hD\rdiffthis\15<leader>hd\15<leader>tb\0\15<leader>hb\30toggle_current_line_blame\a¬ª\15stage_hunk\aŒì\14prev_hunk\a¬∫\14next_hunk\a¬¨\17preview_hunk\agp\17reset_buffer\15<leader>hR\20undo_stage_hunk\agu\17stage_buffer\bgfs\28:Gitsigns show_hunk<CR>\agh\6n\29:Gitsigns reset_hunk<CR>\15<leader>hr\1\3\0\0\6n\6v\29:Gitsigns stage_hunk<CR>\15<leader>hs\1\3\0\0\6n\6v\0\rgitsigns\vloaded\fpackage’\a\1\0\5\0\24\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0003\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0=\4\16\3=\3\17\0025\3\18\0=\3\19\0025\3\20\0=\3\21\0025\3\22\0=\3\23\2B\0\2\1K\0\1\0\19preview_config\1\0\5\brow\3\0\rrelative\vcursor\nstyle\fminimal\vborder\vsingle\bcol\3\1\28current_line_blame_opts\1\0\4\22ignore_whitespace\1\18virt_text_pos\beol\14virt_text\2\ndelay\3Ë\a\17watch_gitdir\1\0\2\17follow_files\2\rinterval\3Ë\a\nsigns\17changedelete\1\0\4\ahl\19GitSignsChange\nnumhl\21GitSignsChangeNr\ttext\6~\vlinehl\21GitSignsChangeLn\14topdelete\1\0\4\ahl\19GitSignsDelete\nnumhl\21GitSignsDeleteNr\ttext\b‚Äæ\vlinehl\21GitSignsDeleteLn\vdelete\1\0\4\ahl\19GitSignsDelete\nnumhl\21GitSignsDeleteNr\ttext\6_\vlinehl\21GitSignsDeleteLn\vchange\1\0\4\ahl\19GitSignsChange\nnumhl\21GitSignsChangeNr\ttext\b‚îÇ\vlinehl\21GitSignsChangeLn\badd\1\0\0\1\0\4\ahl\16GitSignsAdd\nnumhl\18GitSignsAddNr\ttext\b‚îÇ\vlinehl\18GitSignsAddLn\14on_attach\1\0\n\15signcolumn\2\nnumhl\1\23current_line_blame\1\24attach_to_untracked\2\vlinehl\1\14word_diff\1\20update_debounce\3d\18sign_priority\3\6\20max_file_length\3¿∏\2!current_line_blame_formatter1<author>, <author_time:%Y-%m-%d> - <summary>\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+try_loadstring("\27LJ\2\n;\0\1\4\0\4\0\0066\1\0\0009\1\1\0019\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\20vsnip#anonymous\afn\bvim]\0\2\4\0\4\0\0065\2\0\0009\3\2\0009\3\3\0038\3\3\2=\3\1\1L\1\2\0\tname\vsource\tmenu\1\0\4\nvsnip\b‚ãó\tpath\tüñ´\rnvim_lsp\aŒª\vbuffer\aŒ©∆\4\1\0\n\0$\0=6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0034\4\0\0=\4\b\0039\4\t\0009\4\n\0049\4\v\0045\6\r\0009\a\t\0009\a\f\a)\t¸ˇB\a\2\2=\a\14\0069\a\t\0009\a\f\a)\t\4\0B\a\2\2=\a\15\0069\a\t\0009\a\16\aB\a\1\2=\a\17\0069\a\t\0009\a\18\aB\a\1\2=\a\19\0069\a\t\0009\a\20\a5\t\21\0B\a\2\2=\a\22\6B\4\2\2=\4\t\0039\4\23\0009\4\24\0044\6\5\0005\a\25\0>\a\1\0065\a\26\0>\a\2\0065\a\27\0>\a\3\0065\a\28\0>\a\4\6B\4\2\2=\4\29\0035\4\31\0005\5\30\0=\5 \0043\5!\0=\5\"\4=\4#\3B\1\2\1K\0\1\0\15formatting\vformat\0\vfields\1\0\0\1\4\0\0\tmenu\tabbr\tkind\vsource\1\0\2\tname\nvsnip\19keyword_length\3\2\1\0\2\tname\vbuffer\19keyword_length\3\3\1\0\2\tname\rnvim_lsp\19keyword_length\3\3\1\0\1\tname\tpath\fsources\vconfig\t<CR>\1\0\1\vselect\2\fconfirm\n<C-e>\nabort\14<C-Space>\rcomplete\n<C-f>\n<C-b>\1\0\0\16scroll_docs\vinsert\vpreset\fmapping\vwindow\fsnippet\1\0\0\vexpand\1\0\0\0\nsetup\bcmp\frequire\0", "config", "nvim-cmp")
+time([[Config for nvim-cmp]], false)
 -- Config for: alpha-nvim
 time([[Config for alpha-nvim]], true)
 try_loadstring("\27LJ\2\nÉ\1\0\0\5\0\b\0\0146\0\0\0'\2\1\0B\0\2\0026\1\0\0'\3\2\0B\1\2\0029\2\3\0019\2\4\0024\3\0\0=\3\5\0029\2\6\0009\4\a\1B\2\2\1K\0\1\0\vconfig\nsetup\bval\vheader\fsection\26alpha.themes.startify\nalpha\frequire\0", "config", "alpha-nvim")
 time([[Config for alpha-nvim]], false)
+-- Config for: mason.nvim
+time([[Config for mason.nvim]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\nmason\frequire\0", "config", "mason.nvim")
+time([[Config for mason.nvim]], false)
+-- Config for: twilight.nvim
+time([[Config for twilight.nvim]], true)
+try_loadstring("\27LJ\2\n‰\1\0\0\5\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\0025\3\b\0=\3\t\0024\3\0\0=\3\n\2B\0\2\1K\0\1\0\fexclude\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\1\0\2\fcontext\3\n\15treesitter\2\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\1\nalpha\4\0ÄÄ¿˛\3\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
+time([[Config for twilight.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\2\n◊\3\0\0\6\0\21\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\f\0035\4\r\0=\4\14\0035\4\15\0005\5\16\0=\5\17\4=\4\18\3=\3\19\0024\3\0\0=\3\20\2B\0\2\1K\0\1\0\15extensions\fpickers\14live_grep\18layout_config\1\0\4\vmirror\2\17scroll_speed\3\1\20prompt_position\vbottom\vheight\4ÊÃô≥\6ÊÃπˇ\3\1\0\1\20layout_strategy\rvertical\14old_files\1\0\1\ntheme\rdropdown\14git_files\1\0\0\1\0\1\ntheme\rdropdown\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\4\n<C-j>\24move_selection_next\n<C-k>\28move_selection_previous\f<C-s-j>\26cycle_previewers_next\a¬™\26cycle_previewers_prev\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd mason-lspconfig.nvim ]]
+
+-- Config for: mason-lspconfig.nvim
+try_loadstring("\27LJ\2\nd\0\0\6\0\6\0\v6\0\0\0006\2\1\0009\2\2\0026\4\1\0009\4\3\0049\4\4\0049\4\5\4B\4\1\0A\2\0\0A\0\0\1K\0\1\0\27list_workspace_folders\bbuf\blsp\finspect\bvim\nprint@\0\0\3\0\5\0\a6\0\0\0009\0\1\0009\0\2\0009\0\3\0005\2\4\0B\0\2\1K\0\1\0\1\0\1\nasync\2\vformat\bbuf\blsp\bvimK\0\0\4\1\5\0\b6\0\0\0009\0\1\0009\0\2\0005\2\3\0-\3\0\0=\3\4\2B\0\2\1K\0\1\0\0\0\nfloat\1\0\0\14goto_prev\15diagnostic\bvimK\0\0\4\1\5\0\b6\0\0\0009\0\1\0009\0\2\0005\2\3\0-\3\0\0=\3\4\2B\0\2\1K\0\1\0\0\0\nfloat\1\0\0\14goto_next\15diagnostic\bvimï\17\1\2\n\2`\0Ñ\0025\2\0\0=\1\1\0026\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\6\0006\a\2\0009\a\a\a9\a\b\a9\a\t\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\n\0006\a\2\0009\a\a\a9\a\b\a9\a\v\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\f\0006\a\2\0009\a\a\a9\a\b\a9\a\r\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\14\0006\a\2\0009\a\a\a9\a\b\a9\a\15\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\16\0006\a\2\0009\a\a\a9\a\b\a9\a\17\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\18\0003\a\19\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\20\0006\a\2\0009\a\a\a9\a\b\a9\a\21\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\22\0006\a\2\0009\a\a\a9\a\b\a9\a\23\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\24\0006\a\2\0009\a\a\a9\a\b\a9\a\25\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\26\0006\a\2\0009\a\a\a9\a\b\a9\a\27\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\28\0003\a\29\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\30\0003\a\31\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6 \0003\a!\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\"\0006\a\2\0009\a#\a9\a$\a\18\b\2\0B\3\5\0016\3\2\0009\3\a\0039\3%\0036\4\2\0009\4\a\0049\4'\0046\6\2\0009\6\a\0069\6#\0069\6(\0065\a)\0B\4\3\2=\4&\3-\3\1\0\a\3*\0X\3\6Ä6\3+\0'\5,\0B\3\2\0029\3-\0034\5\0\0B\3\2\1-\3\1\0\a\3.\0X\3\15Ä6\3+\0'\5/\0B\3\2\0029\3.\0039\3-\0035\0057\0005\0065\0005\a3\0005\b1\0005\t0\0=\t2\b=\b4\a=\a6\6=\0068\5B\3\2\0016\0039\0'\5:\0005\6;\0B\3\3\0016\0039\0'\5<\0005\6=\0B\3\3\0016\0039\0'\5>\0005\6?\0B\3\3\0016\0039\0'\5@\0005\6A\0B\3\3\0016\0039\0'\5B\0005\6C\0B\3\3\0016\0039\0'\5D\0005\6E\0B\3\3\0016\0039\0'\5F\0005\6G\0B\3\3\0016\0039\0'\5H\0005\6I\0B\3\3\0016\0039\0'\5J\0005\6K\0B\3\3\0016\0039\0'\5L\0005\6M\0B\3\3\0016\0039\0'\5N\0005\6O\0B\3\3\0016\0039\0'\5P\0005\6Q\0B\3\3\0016\0039\0'\5R\0005\6S\0B\3\3\0016\0039\0'\5T\0005\6U\0B\3\3\0016\0039\0'\5V\0005\6W\0B\3\3\0016\0039\0'\5X\0005\6Y\0B\3\3\0016\0039\0'\5Z\0005\6[\0B\3\3\0016\0039\0'\5\\\0005\6]\0B\3\3\0016\0039\0'\5^\0005\6_\0B\3\3\1K\0\1\0\1\0\0¿\1\0\1\tlink\nError\19DiagnosticInfo\1\0\1\tlink\nError\19DiagnosticHint\1\0\1\tlink\nError\19DiagnosticWarn\1\0\1\tlink\nError\20DiagnosticError\1\0\1\tlink\nError\28DiagnosticUnderlineInfo\1\0\1\tlink\nError\28DiagnosticUnderlineHint\1\0\1\tlink\nError\28DiagnosticUnderlineWarn\1\0\1\tlink\nError\29DiagnosticUnderlineError\1\0\1\tlink\nError\27DiagnosticFloatingInfo\1\0\1\tlink\nError\27DiagnosticFloatingHint\1\0\1\tlink\nError\27DiagnosticFloatingWarn\1\0\1\tlink\nError\28DiagnosticFloatingError\1\0\1\tlink\nError LspDiagnosticsUnderlineHint\1\0\1\tlink\nError!LspDiagnosticsUnderlineError\1\0\1\tlink\nError#LspDiagnosticsUnderlineWarning\1\0\1\tlink\nError'LspDiagnosticsUnderlineInformation\1\0\1\tlink\nError\22LspReferenceWrite\1\0\1\tlink\nError\21LspReferenceText\1\0\1\tlink\nError\21LspReferenceRead\ahl\rsettings\1\0\0\bLua\1\0\0\16diagnostics\1\0\0\fglobals\1\0\0\1\2\0\0\bvim\14lspconfig\16sumneko_lua\nsetup\15rust-tools\frequire\18rust_analyzer\1\0\2\21update_in_insert\1\14underline\2\27on_publish_diagnostics\twith$textDocument/publishDiagnostics\rhandlers\15setloclist\15diagnostic\acq\0\n<C-j>\0\n<C-k>\0\6+\15references\agr\16code_action\aca\vrename\b‚àö\20type_definition\aŒò\0\bcwl\19signature_help\vc<C-k>\19implementation\agi\nhover\6K\15definition\agd\16declaration\bbuf\blsp\agD\6n\bset\vkeymap\bvim\vbuffer\1\0\2\fnoremap\2\vsilent\2r\1\1\5\2\a\0\r6\1\0\0'\3\1\0B\1\2\0028\1\0\0019\1\2\0015\3\3\0-\4\0\0=\4\4\0033\4\5\0=\4\6\3B\1\2\0012\0\0ÄK\0\1\0\0¿\1¿\14on_attach\0\17capabilities\1\0\0\nsetup\14lspconfig\frequireÖ\2\1\0\6\0\v\0\0246\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\0\0'\2\6\0B\0\2\0029\0\a\0B\0\1\0025\1\b\0006\2\0\0'\4\1\0B\2\2\0029\2\t\0024\4\3\0003\5\n\0>\5\1\4B\2\2\0012\0\0ÄK\0\1\0\0\19setup_handlers\1\0\1\vheader\1\25default_capabilities\17cmp_nvim_lsp\21ensure_installed\1\0\0\1\4\0\0\16sumneko_lua\26rust_analyzer@nightly\rocamllsp\nsetup\20mason-lspconfig\frequire\0", "config", "mason-lspconfig.nvim")
+
+time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType json ++once lua require("packer.load")({'vim-json'}, { ft = "json" }, _G.packer_plugins)]]
-vim.cmd [[au FileType llvm ++once lua require("packer.load")({'llvm.vim'}, { ft = "llvm" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'limelight.vim', 'vim-illuminate', 'vim-markdown', 'vim-table-mode', 'goyo.vim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType ocaml ++once lua require("packer.load")({'merlin'}, { ft = "ocaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'limelight.vim', 'vim-illuminate', 'vim-table-mode', 'goyo.vim'}, { ft = "tex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType latex ++once lua require("packer.load")({'limelight.vim', 'vim-illuminate', 'vim-table-mode', 'goyo.vim'}, { ft = "latex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'goyo.vim', 'vim-illuminate', 'limelight.vim', 'vim-table-mode'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType latex ++once lua require("packer.load")({'goyo.vim', 'vim-illuminate', 'limelight.vim', 'vim-table-mode'}, { ft = "latex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType menhir ++once lua require("packer.load")({'vim-menhir'}, { ft = "menhir" }, _G.packer_plugins)]]
 vim.cmd [[au FileType rust ++once lua require("packer.load")({'vim-argwrap', 'rust.vim'}, { ft = "rust" }, _G.packer_plugins)]]
 vim.cmd [[au FileType zsh ++once lua require("packer.load")({'vim-zsh'}, { ft = "zsh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType json ++once lua require("packer.load")({'vim-json'}, { ft = "json" }, _G.packer_plugins)]]
+vim.cmd [[au FileType llvm ++once lua require("packer.load")({'llvm.vim'}, { ft = "llvm" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'goyo.vim', 'vim-illuminate', 'vim-markdown', 'limelight.vim', 'vim-table-mode'}, { ft = "markdown" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]], true)
-vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]]
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]], false)
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]], true)
-vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]]
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]], false)
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]], true)
-vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]]
-time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]], false)
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], true)
 vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]]
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], false)
@@ -488,6 +537,15 @@ time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/p
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-menhir/after/ftdetect/menhir.vim]], true)
 vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-menhir/after/ftdetect/menhir.vim]]
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-menhir/after/ftdetect/menhir.vim]], false)
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]], true)
+vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]]
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm-lit.vim]], false)
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]], true)
+vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]]
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/llvm.vim]], false)
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]], true)
+vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]]
+time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/llvm.vim/ftdetect/tablegen.vim]], false)
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], true)
 vim.cmd [[source /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]]
 time([[Sourcing ftdetect script at: /Users/klasseg/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], false)

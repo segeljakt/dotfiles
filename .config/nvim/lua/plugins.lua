@@ -3,7 +3,7 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use {
@@ -263,7 +263,7 @@ return require('packer').startup(function()
   -- }
 
   -- [General-purpose]
-  use 'josa42/vim-lightline-coc'
+  -- use 'josa42/vim-lightline-coc'
   use 'itchyny/vim-highlighturl'
   use 'flwyd/vim-conjoin'
   use 'vim-utils/vim-troll-stopper'
@@ -298,14 +298,13 @@ return require('packer').startup(function()
     "catppuccin/nvim",
     as = "catppuccin",
   }
-  --   use 'tomtom/tcomment_vim' -- Commenting usein
   use 'github/copilot.vim' -- AI Overlords
   use 'itchyny/lightline.vim'
   use 'andymass/vim-matchup' -- Better matching
   use 'lervag/vimtex'
   use 'ron89/thesaurus_query.vim'
-  use 'SirVer/ultisnips'
-  use 'honza/vim-snippets'
+  -- use 'SirVer/ultisnips'
+  -- use 'honza/vim-snippets'
 
   use 'andrewradev/sideways.vim' -- Move arguments sideways
   use 'rktjmp/highlight-current-n.nvim'
@@ -324,8 +323,156 @@ return require('packer').startup(function()
   use { ft = { 'llvm' }, 'tie/llvm.vim' }
   use { ft = { 'ocaml' }, 'ocaml/merlin' }
   use { ft = { 'zsh' }, 'chrisbra/vim-zsh' }
-  use { 'neoclide/coc.nvim', branch = 'release' }
+  -- use { 'neoclide/coc.nvim', branch = 'release' }
   use { ft = { 'rust' }, 'foosoft/vim-argwrap' } -- Wrap/unwrap arguments
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use {
+    'hrsh7th/nvim-cmp',
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end
+        },
+        window = {
+          -- completion = cmp.config.window.bordered(),
+          -- documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        source = cmp.config.sources({
+          { name = 'path' },
+          { name = 'nvim_lsp', keyword_length = 3 },
+          { name = 'buffer', keyword_length = 3 },
+          { name = 'vsnip', keyword_length = 2 },
+        }),
+        formatting = {
+          fields = { 'menu', 'abbr', 'kind' },
+          format = function(entry, item)
+            local menu_icon = {
+              nvim_lsp = 'λ',
+              vsnip = '⋗',
+              buffer = 'Ω',
+              path = '🖫',
+            }
+
+            item.menu = menu_icon[entry.source.name]
+            return item
+          end,
+        },
+      })
+      -- cmp.setup.cmdline('/', {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     { name = 'buffer' }
+      --   }
+      -- })
+      -- cmp.setup.cmdline(':', {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = cmp.config.sources({
+      --     { name = 'path' }
+      --   }, {
+      --     { name = 'cmdline' }
+      --   })
+      -- })
+    end
+  }
+
+  use 'simrat39/rust-tools.nvim'
+
+  -- use { 'ms-jpq/coq_nvim', run = 'python3 -m coq deps' }
+  -- use 'ms-jpq/coq.artifacts'
+  -- use 'ms-jpq/coq.thirdparty'
+  use {
+    'williamboman/mason.nvim',
+    config = function()
+      require('mason').setup()
+    end
+  }
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    after = 'mason.nvim',
+    config = function()
+
+      require('mason-lspconfig').setup({
+        ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'ocamllsp' }
+      })
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local float_opts = { header = false }
+      require('mason-lspconfig').setup_handlers({
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = capabilities,
+            on_attach = function(client_name, bufnr)
+              local bufopts = { noremap = true, silent = true, buffer = bufnr }
+              vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+              vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+              vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+              vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+              vim.keymap.set('n', 'c<C-k>', vim.lsp.buf.signature_help, bufopts)
+              vim.keymap.set('n', 'cwl', function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+              end, bufopts)
+              vim.keymap.set('n', 'Θ', vim.lsp.buf.type_definition, bufopts)
+              vim.keymap.set('n', '√', vim.lsp.buf.rename, bufopts)
+              vim.keymap.set('n', 'ca', vim.lsp.buf.code_action, bufopts)
+              vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+              vim.keymap.set('n', '+', function() vim.lsp.buf.format { async = true } end, bufopts)
+              vim.keymap.set('n', '<C-k>', function() vim.diagnostic.goto_prev({ float = float_opts }) end, bufopts)
+              vim.keymap.set('n', '<C-j>', function() vim.diagnostic.goto_next({ float = float_opts }) end, bufopts)
+              vim.keymap.set('n', 'cq', vim.diagnostic.setloclist, bufopts)
+              vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics,
+                {
+                  underline = true,
+                  update_in_insert = false,
+                }
+              )
+              if server_name == 'rust_analyzer' then
+                require("rust-tools").setup {}
+              end
+              if server_name == 'sumneko_lua' then
+                require('lspconfig')['sumneko_lua'].setup { settings = { Lua = { diagnostics = { globals = { 'vim' } } } } }
+              end
+
+              hl('LspReferenceRead', { link = 'Error' })
+              hl('LspReferenceText', { link = 'Error' })
+              hl('LspReferenceWrite', { link = 'Error' })
+              hl('LspDiagnosticsUnderlineInformation', { link = 'Error' })
+              hl('LspDiagnosticsUnderlineWarning', { link = 'Error' })
+              hl('LspDiagnosticsUnderlineError', { link = 'Error' })
+              hl('LspDiagnosticsUnderlineHint', { link = 'Error' })
+              hl('DiagnosticFloatingError', { link = 'Error' })
+              hl('DiagnosticFloatingWarn', { link = 'Error' })
+              hl('DiagnosticFloatingHint', { link = 'Error' })
+              hl('DiagnosticFloatingInfo', { link = 'Error' })
+              hl('DiagnosticUnderlineError', { link = 'Error' })
+              hl('DiagnosticUnderlineWarn', { link = 'Error' })
+              hl('DiagnosticUnderlineHint', { link = 'Error' })
+              hl('DiagnosticUnderlineInfo', { link = 'Error' })
+              hl('DiagnosticError', { link = 'Error' })
+              hl('DiagnosticWarn', { link = 'Error' })
+              hl('DiagnosticHint', { link = 'Error' })
+              hl('DiagnosticInfo', { link = 'Error' })
+            end,
+          }
+        end,
+      })
+    end
+  }
+  use 'neovim/nvim-lspconfig'
 
   -- [Teaching]
   -- use 'hyhugh/coc-erlang_ls', {'do': 'yarn install --frozen-lockfile'}
