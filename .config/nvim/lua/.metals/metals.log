@@ -1,7 +1,0 @@
-2022.05.13 00:32:13 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/klasseg/.config/nvim/lua/.metals/lsp.trace.json or /Users/klasseg/Library/Caches/org.scalameta.metals/lsp.trace.json[0m
-2022.05.13 00:32:14 INFO  logging to file /Users/klasseg/.config/nvim/lua/.metals/metals.log[0m
-2022.05.13 00:32:14 INFO  Started: Metals version 0.11.2 in workspace '/Users/klasseg/.config/nvim/lua' for client coc.nvim 0.0.80.[0m
-2022.05.13 00:32:14 INFO  Parse release: 1.8.0_292[0m
-2022.05.13 00:32:16 INFO  time: initialize in 2.48s[0m
-2022.05.13 00:32:17 WARN  Build server is not auto-connectable.[0m
-2022.05.13 00:32:17 WARN  no build tool detected in workspace '/Users/klasseg/.config/nvim/lua'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
