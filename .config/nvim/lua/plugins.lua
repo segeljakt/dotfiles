@@ -23,17 +23,6 @@ return require('packer').startup(function(use)
       }
     end
   }
-  -- use {
-  --   "folke/noice.nvim",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require("noice").setup()
-  --   end,
-  --   requires = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --   }
-  -- }
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -201,18 +190,18 @@ return require('packer').startup(function(use)
   use {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup({
+      require('Comment').setup {
         mappings = false
-      })
+      }
     end
   }
   use {
     "catppuccin/nvim",
     as = "catppuccin",
   }
-  use 'github/copilot.vim' -- AI Overlords
+  use 'github/copilot.vim'
   use 'itchyny/lightline.vim'
-  use 'andymass/vim-matchup' -- Better matching
+  use 'andymass/vim-matchup' -- Better matchings
   use 'lervag/vimtex'
   use 'ron89/thesaurus_query.vim'
   -- use 'SirVer/ultisnips'
@@ -247,29 +236,22 @@ return require('packer').startup(function(use)
     'hrsh7th/nvim-cmp',
     config = function()
       local cmp = require('cmp')
-      cmp.setup({
+      cmp.setup {
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body)
           end
         },
         window = {
-          -- completion = cmp.config.window.bordered(),
-          -- documentation = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        }),
-        source = cmp.config.sources({
+        sources = cmp.config.sources {
           { name = 'path' },
           { name = 'nvim_lsp', keyword_length = 3 },
-          { name = 'buffer', keyword_length = 3 },
+          { name = 'buffer' },
           { name = 'vsnip', keyword_length = 2 },
-        }),
+        },
         formatting = {
           fields = { 'menu', 'abbr', 'kind' },
           format = function(entry, item)
@@ -284,21 +266,7 @@ return require('packer').startup(function(use)
             return item
           end,
         },
-      })
-      -- cmp.setup.cmdline('/', {
-      --   mapping = cmp.mapping.preset.cmdline(),
-      --   sources = {
-      --     { name = 'buffer' }
-      --   }
-      -- })
-      -- cmp.setup.cmdline(':', {
-      --   mapping = cmp.mapping.preset.cmdline(),
-      --   sources = cmp.config.sources({
-      --     { name = 'path' }
-      --   }, {
-      --     { name = 'cmdline' }
-      --   })
-      -- })
+      }
     end
   }
 
@@ -318,33 +286,63 @@ return require('packer').startup(function(use)
     after = 'mason.nvim',
     config = function()
 
-      require('mason-lspconfig').setup({
+      require('mason-lspconfig').setup {
         ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'ocamllsp' }
-      })
+      }
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local float_opts = { header = false }
-      require('mason-lspconfig').setup_handlers({
+      require('mason-lspconfig').setup_handlers {
         function(server_name)
           require('lspconfig')[server_name].setup {
             capabilities = capabilities,
-            on_attach = function(client_name, bufnr)
-              local bufopts = { noremap = true, silent = true, buffer = bufnr }
-              vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-              vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-              vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-              vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-              vim.keymap.set('n', 'c<C-k>', vim.lsp.buf.signature_help, bufopts)
-              vim.keymap.set('n', 'cwl', function()
-                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-              end, bufopts)
-              vim.keymap.set('n', 'Θ', vim.lsp.buf.type_definition, bufopts)
-              vim.keymap.set('n', '√', vim.lsp.buf.rename, bufopts)
-              vim.keymap.set('n', 'ca', vim.lsp.buf.code_action, bufopts)
-              vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-              vim.keymap.set('n', '+', function() vim.lsp.buf.format { async = true } end, bufopts)
-              vim.keymap.set('n', '<C-k>', function() vim.diagnostic.goto_prev({ float = float_opts }) end, bufopts)
-              vim.keymap.set('n', '<C-j>', function() vim.diagnostic.goto_next({ float = float_opts }) end, bufopts)
-              vim.keymap.set('n', 'cq', vim.diagnostic.setloclist, bufopts)
+            on_attach = function(_, bufnr)
+              local opts = { noremap = true, silent = true, buffer = bufnr }
+              vim.keymap.set('n', 't', vim.lsp.buf.definition, opts)
+              vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+              vim.keymap.set('n', 'É', vim.lsp.buf.references, opts) -- <D-e>
+              vim.keymap.set('n', 'Θ', vim.lsp.buf.declaration, opts) -- <D-u>
+              vim.keymap.set('n', 'Ü', vim.lsp.buf.type_definition, opts) -- <D-u>
+              vim.keymap.set('n', 'ˆ', vim.lsp.buf.implementation, opts) -- <D-i>
+              vim.keymap.set('n', '˘', vim.lsp.buf.signature_help, opts) -- <D-h>
+              vim.keymap.set('n', '◊', vim.lsp.buf.code_action, opts) -- <D-a>
+              vim.keymap.set('n', '+', function() vim.lsp.buf.format { async = true } end, opts)
+              vim.keymap.set('n', '<C-k>', function() vim.diagnostic.goto_prev { float = { header = false } } end, opts)
+              vim.keymap.set('n', '<C-j>', function() vim.diagnostic.goto_next { float = { header = false } } end, opts)
+              vim.keymap.set('n', 'cl', function()
+                vim.diagnostic.setloclist()
+                vim.cmd('wincmd p')
+              end, opts)
+              local cmp = require('cmp')
+              vim.keymap.set('i', '∧', function() cmp.scroll_docs(-4) end, opts)
+              vim.keymap.set('i', '¬', function() cmp.scroll_docs(4) end, opts)
+              -- vim.keymap.set('i', '<CR>', function() cmp.confirm { select = false } end, opts)
+              vim.keymap.set('i', '<C-j>', function() cmp.select_next_item() end, opts)
+              vim.keymap.set('i', '<C-k>', function() cmp.select_prev_item() end, opts)
+              vim.keymap.set('i', '<C-e>', function() cmp.abort() end, opts)
+              vim.keymap.set('i', '<CR>', function()
+                if cmp.visible() then
+                  cmp.confirm { select = true }
+                else
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n")
+                end
+              end, opts)
+              vim.keymap.set('i', '<Tab>', function()
+                if cmp.visible() then
+                  cmp.select_next_item()
+                else
+                  vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true))
+                    , 'n', true)
+                  -- fallback()
+                  -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n")
+                end
+              end, opts)
+              vim.keymap.set('i', '<S-Tab>', function()
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                else
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<BS>", true, true, true), "n")
+                end
+              end, opts)
+
               vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics,
                 {
@@ -381,11 +379,17 @@ return require('packer').startup(function(use)
             end,
           }
         end,
-      })
+      }
     end
   }
   use 'neovim/nvim-lspconfig'
-
-  -- [Teaching]
-  -- use 'hyhugh/coc-erlang_ls', {'do': 'yarn install --frozen-lockfile'}
+  use {
+    'Aadv1k/gdoc.vim',
+    run = "./install.py",
+    config = function()
+      vim.api.nvim_set_var('path_to_creds', '~/.config/nvim/google-docs.apps.googleusercontent.com.json')
+      vim.api.nvim_set_var('gdoc_file_path', '~/.config/nvim/')
+      vim.api.nvim_set_var('token_directory', '~/.config/nvim/')
+    end
+  }
 end)
