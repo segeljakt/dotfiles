@@ -1,9 +1,6 @@
 
-no <silent> ∃       :CocCommand rust-analyzer.moveItemDown<CR>
-no <silent> °       :CocCommand rust-analyzer.moveItemUp<CR>
-nno  <buffer>  <     a<><C-c>i|         " Generics
-vmap <buffer>  »     sa<hiBox<C-c>|     " Box
-nmap <buffer>  <C-a> <Plug>(coc-fix-current)
+nno  <buffer> < a<><C-c>i|     " Generics
+vmap <buffer> » sa<hiBox<C-c>| " Box
 " set foldmethod=manual             " manual,indent,expr,marker,syntax,diff
 
 let g:rustfmt_fail_silently = 1

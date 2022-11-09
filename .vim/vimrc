@@ -1,67 +1,7 @@
 " Autocmd
-aug Autocommands | au!
-  au TabLeave * silent! w
-aug END
-" Scripts
-function! FloatScroll(forward) abort
-  let float = coc#util#get_float()
-  if !float | return '' | en
-  let buf = nvim_win_get_buf(float)
-  let buf_height = nvim_buf_line_count(buf)
-  let win_height = nvim_win_get_height(float)
-  if buf_height < win_height | return '' | en
-  let pos = nvim_win_get_cursor(float)
-  if a:forward
-    if pos[0] == 1
-      let pos[0] += 3 * win_height / 4
-    elseif pos[0] + win_height / 2 + 1 < buf_height
-      let pos[0] += win_height / 2 + 1
-    el
-      let pos[0] = buf_height
-    en
-  el
-    if pos[0] == buf_height
-      let pos[0] -= 3 * win_height / 4
-    elseif pos[0] - win_height / 2 + 1  > 1
-      let pos[0] -= win_height / 2 + 1
-    el
-      let pos[0] = 1
-    en
-  en
-  call nvim_win_set_cursor(float, pos)
-  return ''
-endfunction
-
-" nno <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
-" nno <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) : "\<up>"
-
-fun! CheckBackSpace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfun
-
-fun! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  el
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  en
-endfun
-
 function! SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
-" if &term =~ "xterm"
-    " SecureCRT versions prior to 6.1.x do not support 4-digit DECSET
-    "     let &t_ti = "\<Esc>[?1049h"
-    "     let &t_te = "\<Esc>[?1049l"
-    " Use 2-digit DECSET instead
-set t_ti="\<Esc>[?47h"
-set t_te="\<Esc>[?47l"
-" en
 
 fun! SynStack()
   if !exists("*synstack")
@@ -80,3 +20,40 @@ fun! GoBackToRecentBuffer()
     en
   endfor
 endfun
+"" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+"let s:opam_share_dir = system("opam var share")
+"let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+"
+"let s:opam_configuration = {}
+"
+"function! OpamConfOcpIndent()
+"  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+"endfunction
+"let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+"
+"function! OpamConfOcpIndex()
+"  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+"endfunction
+"let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+"
+"function! OpamConfMerlin()
+"  let l:dir = s:opam_share_dir . "/merlin/vim"
+"  execute "set rtp+=" . l:dir
+"endfunction
+"let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+"
+"let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+"let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+"let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+"for tool in s:opam_packages
+"  " Respect package order (merlin should be after ocp-index)
+"  if count(s:opam_available_tools, tool) > 0
+"    call s:opam_configuration[tool]()
+"  endif
+"endfor
+"" ## end of OPAM user-setup addition for vim / base ## keep this line
+"" ## added by OPAM user-setup for vim / ocp-indent ## e8a12ea17e7d6c0cc090c60367dc5255 ## you can edit, but keep this line
+"if count(s:opam_available_tools,"ocp-indent") == 0
+"  source "/Users/klasseg/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+"endif
+"" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line

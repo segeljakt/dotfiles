@@ -134,6 +134,7 @@ return require('packer').startup(function(use)
           }
         },
         extensions = {},
+        file_ignore_patterns = { "%.o" }
       }
     end
   }
@@ -222,7 +223,7 @@ return require('packer').startup(function(use)
   use { ft = { 'json' }, 'elzr/vim-json' }
   use { ft = { 'toml' }, 'cespare/vim-toml' }
   use { ft = { 'llvm' }, 'tie/llvm.vim' }
-  use { ft = { 'ocaml' }, 'ocaml/merlin' }
+  -- use { ft = { 'ocaml' }, 'ocaml/merlin' }
   use { ft = { 'zsh' }, 'chrisbra/vim-zsh' }
   -- use { 'neoclide/coc.nvim', branch = 'release' }
   use { ft = { 'rust' }, 'foosoft/vim-argwrap' } -- Wrap/unwrap arguments
@@ -237,6 +238,10 @@ return require('packer').startup(function(use)
     config = function()
       local cmp = require('cmp')
       cmp.setup {
+        enabled = function()
+          return (not (require("cmp.config.context").in_treesitter_capture("comment")))
+              and (not (require("cmp.config.context").in_syntax_group("Comment")))
+        end,
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body)
@@ -287,7 +292,11 @@ return require('packer').startup(function(use)
     config = function()
 
       require('mason-lspconfig').setup {
-        ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'ocamllsp' }
+        ensure_installed = {
+          'sumneko_lua',
+          'rust_analyzer@nightly',
+          'ocamllsp'
+        }
       }
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       require('mason-lspconfig').setup_handlers {
@@ -305,10 +314,22 @@ return require('packer').startup(function(use)
               vim.keymap.set('n', '˘', vim.lsp.buf.signature_help, opts) -- <D-h>
               vim.keymap.set('n', '◊', vim.lsp.buf.code_action, opts) -- <D-a>
               vim.keymap.set('n', '+', function() vim.lsp.buf.format { async = true } end, opts)
-              vim.keymap.set('n', '<C-k>', function() vim.diagnostic.goto_prev { float = { header = false } } end, opts)
-              vim.keymap.set('n', '<C-j>', function() vim.diagnostic.goto_next { float = { header = false } } end, opts)
-              vim.keymap.set('n', 'cl', function()
-                vim.diagnostic.setloclist()
+              vim.keymap.set('n', '<C-k>',
+                function() vim.diagnostic.goto_prev { float = { header = false, border = "rounded" }, wrap = false } end
+                , opts)
+              vim.keymap.set('n', '<C-j>',
+                function() vim.diagnostic.goto_next { float = { header = false, border = "rounded" }, wrap = false } end
+                , opts)
+              vim.keymap.set('n', 'Λ', function()
+                for _, win in pairs(vim.fn.getwininfo()) do
+                  if win['quickfix'] == 1 then
+                    -- If quickfix is already open, close it
+                    vim.cmd 'cclose'
+                    return
+                  end
+                end
+                -- Otherwise, open it
+                vim.diagnostic.setqflist()
                 vim.cmd('wincmd p')
               end, opts)
               local cmp = require('cmp')
@@ -345,37 +366,38 @@ return require('packer').startup(function(use)
 
               vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics,
-                {
-                  underline = true,
-                  update_in_insert = false,
-                }
+                { underline = true, update_in_insert = false, }
+              )
+              vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+                vim.lsp.handlers.hover,
+                { border = 'rounded' }
               )
               if server_name == 'rust_analyzer' then
-                require("rust-tools").setup {}
-              end
-              if server_name == 'sumneko_lua' then
+                require('rust-tools').setup {}
+              elseif server_name == 'sumneko_lua' then
                 require('lspconfig')['sumneko_lua'].setup { settings = { Lua = { diagnostics = { globals = { 'vim' } } } } }
               end
 
-              hl('LspReferenceRead', { link = 'Error' })
-              hl('LspReferenceText', { link = 'Error' })
-              hl('LspReferenceWrite', { link = 'Error' })
-              hl('LspDiagnosticsUnderlineInformation', { link = 'Error' })
-              hl('LspDiagnosticsUnderlineWarning', { link = 'Error' })
-              hl('LspDiagnosticsUnderlineError', { link = 'Error' })
-              hl('LspDiagnosticsUnderlineHint', { link = 'Error' })
-              hl('DiagnosticFloatingError', { link = 'Error' })
-              hl('DiagnosticFloatingWarn', { link = 'Error' })
-              hl('DiagnosticFloatingHint', { link = 'Error' })
-              hl('DiagnosticFloatingInfo', { link = 'Error' })
-              hl('DiagnosticUnderlineError', { link = 'Error' })
-              hl('DiagnosticUnderlineWarn', { link = 'Error' })
-              hl('DiagnosticUnderlineHint', { link = 'Error' })
-              hl('DiagnosticUnderlineInfo', { link = 'Error' })
-              hl('DiagnosticError', { link = 'Error' })
-              hl('DiagnosticWarn', { link = 'Error' })
-              hl('DiagnosticHint', { link = 'Error' })
-              hl('DiagnosticInfo', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspReferenceRead', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspReferenceText', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspReferenceWrite', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspDiagnosticsUnderlineInformation', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspDiagnosticsUnderlineWarning', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspDiagnosticsUnderlineError', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'LspDiagnosticsUnderlineHint', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticFloatingError', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticFloatingWarn', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticFloatingHint', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticFloatingInfo', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticError', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticWarn', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticHint', { link = 'Error' })
+              --vim.api.nvim_set_hl(0, 'DiagnosticInfo', { link = 'Error' })
+              vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'Float' })
             end,
           }
         end,
@@ -383,13 +405,4 @@ return require('packer').startup(function(use)
     end
   }
   use 'neovim/nvim-lspconfig'
-  use {
-    'Aadv1k/gdoc.vim',
-    run = "./install.py",
-    config = function()
-      vim.api.nvim_set_var('path_to_creds', '~/.config/nvim/google-docs.apps.googleusercontent.com.json')
-      vim.api.nvim_set_var('gdoc_file_path', '~/.config/nvim/')
-      vim.api.nvim_set_var('token_directory', '~/.config/nvim/')
-    end
-  }
 end)

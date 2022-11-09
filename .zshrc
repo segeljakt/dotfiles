@@ -138,8 +138,7 @@ alias     u="rustup update; \
              opam update; \
              yes | opam upgrade; \
              brew upgrade; \
-             nvim -c 'PackerUpdate' \
-                  -c 'CocUpdate'"
+             nvim -c 'PackerUpdate'"
 alias    uu="sudo apt update -qq && sudo apt upgrade -qq -y"
 alias    gd='nvim -p $(git diff --name-only --relative)'
 alias     a="brew search"

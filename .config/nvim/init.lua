@@ -12,7 +12,8 @@ vim.opt.runtimepath:append(vim.fn.expand('~/.vim/after'))
 
 require('plugins')
 
--- set('filetype', {'plugin', 'indent', 'on'})
+-- vim.opt.t_ti = "\\<Esc>[?47h"
+-- vim.opt.t_te = "\\<Esc>[?47l"
 vim.diagnostic.config {
   virtual_text = false,
   signs = false,
@@ -59,8 +60,9 @@ vim.opt.ignorecase = true -- Ignore case when searching
 vim.opt.incsearch = true -- Highlight pattern while searching
 vim.opt.infercase = true -- Adjust completion to match case
 vim.opt.joinspaces = false -- Insert only one space when joining
+vim.opt.jumpoptions = 'stack' -- Jump to previous location
 vim.opt.laststatus = 2 -- Always show statusline
-vim.opt.lazyredraw = true -- Do not redraw while executing macros
+-- vim.opt.lazyredraw = true -- Do not redraw while executing macros
 vim.opt.linebreak = true -- Break by word instead of char
 vim.opt.matchpairs = '(:),{:},[:],<:>,":"' -- Separators
 vim.opt.maxmempattern = 2000000 -- Max memory for pattern matching
@@ -70,28 +72,29 @@ vim.opt.number = true -- Row numbers
 vim.opt.preserveindent = true -- Preserve indent structure
 vim.opt.pumheight = 25 -- Only show 25 completion items max
 vim.opt.redrawtime = 200 -- timeout for 'hlsearch' and :match highlighting
+vim.opt.scrollback = 100000 -- Scrollback lines
 vim.opt.scrolloff = 0 -- Show at least X lines above/below cursor
 vim.opt.selection = 'inclusive'
 vim.opt.shada = "'1000,n" .. vim.fn.expand('~/.vim/nviminfo')
 vim.opt.shell = '/opt/homebrew/bin/zsh'
 vim.opt.shellcmdflag = '-c'
 vim.opt.shiftround = true -- Indent to round number of spaces
-vim.opt.shiftwidth = 2 -- Number of spaces for each autoindent
 vim.opt.shortmess = 'aoOstTWAIcF'
+vim.opt.showbreak = '↪ ' -- Show break as arrow
 vim.opt.showcmd = true -- Show visual selection
 vim.opt.showfulltag = true -- Show full tag when matching from tagfile
 vim.opt.showmode = false -- Do not bother showing current mode
 vim.opt.showtabline = 2 -- Always show tabline
 vim.opt.signcolumn = 'yes' -- Always show signcolumn
+-- vim.opt.smarttab = true
 vim.opt.softtabstop = 2 -- ?
--- vim.opt.spell = true -- Spell check
 vim.opt.spelllang = 'en_us' -- We speak American
 vim.opt.splitright = true -- Puts splits on right hand side
 vim.opt.swapfile = false -- I've had enough of this
 vim.opt.syntax = 'enable'
+vim.opt.synmaxcol = 0 -- Don't limit syntax highlighting
 vim.opt.tabstop = 2 -- Number of spaces per tab
 vim.opt.tagcase = 'match' -- Case-sensitive tag search
--- vim.opt.terse = true -- Shorten messages
 vim.opt.title = false -- Do not display title
 vim.opt.titleold = '' -- Do not display title
 vim.opt.ttyfast = true -- Faster
@@ -99,7 +102,6 @@ vim.opt.undodir = vim.fn.expand('~/.vimundo') -- Stored here
 vim.opt.undofile = true -- Use persistent undo
 vim.opt.undolevels = 2000 -- Max number of changes that can be undone
 vim.opt.updatetime = 100 -- Write to disk after 150 ms
--- vim.opt.verbose                    -- Lengthen messages
 vim.opt.virtualedit = 'block' -- Select whitespaces
 vim.opt.whichwrap = 'b,s,h,l' -- Allow these keys to move past EOL
 vim.opt.wildcharm = string.byte(termcode('<Tab>')) -- Allow macros to tabcomplete
@@ -108,9 +110,6 @@ vim.opt.wildignorecase = true -- Ignore case when completing filenames
 vim.opt.wildmenu = true -- Tabcompletion for commandline
 vim.opt.winminheight = 0 -- Squeeze win height
 vim.opt.winminwidth = 0 -- Squeeze win width
--- vim.opt.wrap = true
-
--- vim.opt.spell = false
 
 -- Disabled plugins
 vim.api.nvim_set_var('loaded_matchparen', 1)
@@ -143,8 +142,6 @@ vim.cmd('syn sync minlines=256') -- Less syntax lagging
 -- vim.opt.background = 'light'
 
 map('n', 'c,', ':cd %:p:h|pwd<CR>')
--- map('n', 'Ç', ':CocCommand editor.action.organizeImport<CR>') -- <D-c>
--- map('n', '∏', ':CocConfig<CR>') -- <M-P>
 map('n', '´', '/HEAD<CR>')
 map('n', 'q', '<Plug>(comment_toggle_linewise_current)', { noremap = false })
 map('v', 'q', '<Plug>(comment_toggle_linewise_visual)', { noremap = false })
@@ -163,6 +160,7 @@ map('n', '<C-H>', ':SidewaysLeft<CR>')
 map('n', '<C-L>', ':SidewaysRight<CR>')
 map('n', '<F5>', ':UndotreeToggle<CR>')
 map('n', '<C-o>', ':call GoBackToRecentBuffer()<CR>zz')
+map('n', '<C-s-o>', '<C-o>')
 -- map('n', '<C-w>m', ':WinResizerStartMove<CR>', { }, true)
 map('x', '?', "mode()=~'V' ? ':Tabularize' : '?'", { expr = true })
 map('n', '<C-t>', '<C-^>')
@@ -292,8 +290,7 @@ unmap('s', 'ge')
 
 -- Syntax
 -- hl('ColorColumn', { ctermfg = 'Red', ctermbg = 'lightred' })
-hl('Pmenu', { ctermbg = 253, ctermfg = 16 })
--- map('" nno          cj           :CocList outline<CR>
+-- hl('Pmenu', { ctermbg = 253, ctermfg = 16 })
 -- Spell correction / Abbreviations
 vim.cmd('iab retrun return')
 vim.cmd('iab pritn print')
@@ -318,7 +315,6 @@ Autocmd('BufRead,BufNewFile', '*.mlir', 'set filetype=mlir syntax=llvm')
 Autocmd('BufRead,BufNewFile', '*.lalrpop', 'set syntax=rust')
 Autocmd('BufRead,BufNewFile', '*.sbt', 'set syntax=scala')
 Autocmd('BufRead,BufNewFile', '*.arc', 'set filetype=arc')
--- Autocmd('User', 'CocJumpPlaceholder', 'call CocActionAsync(\"showSignatureHelp\")')
--- Autocmd('CursorHold', '*', 'silent call CocActionAsync("highlight")')
 Autocmd('BufEnter', '*', 'silent! lcd %:p:h')
 Autocmd('BufWritePost', 'plugins.lua', 'source <afile> | PackerCompile')
+Autocmd('TabLeave', '*', 'silent! w')
