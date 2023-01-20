@@ -1,22 +1,15 @@
 vim.opt.compatible = false -- Don't be compatible
 
-require('utils')
-
-vim.cmd('source ~/.vim/vimrc')
-vim.cmd('source ~/.vim/plugin-conf.vim')
-
-vim.cmd('let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1')
-vim.opt.runtimepath:append(vim.fn.expand('~/.vim'))
-vim.opt.runtimepath:append(vim.fn.expand('~/.vim/after'))
--- vim.opt.packpath = vim.opt.runtimepath
-
 require('plugins')
+
+vim.cmd('filetype plugin indent on') -- Detect filetypes
+vim.cmd('syn sync minlines=256') -- Less syntax lagging
 
 -- vim.opt.t_ti = "\\<Esc>[?47h"
 -- vim.opt.t_te = "\\<Esc>[?47l"
 vim.diagnostic.config {
   virtual_text = false,
-  signs = false,
+  signs = true,
   underline = false,
   update_in_insert = true,
 }
@@ -24,14 +17,13 @@ vim.opt.autochdir = false -- Change directory to file in buffer !WARNING!
 vim.opt.autoread = true -- Automatically read changes
 vim.opt.autoindent = true -- Copy indent from current line
 vim.opt.autowriteall = true -- Automatically write when changing file
-vim.opt.background = 'light'
 vim.opt.backspace = 'indent,eol,start' -- Allow backspace over indent,eol,start
 vim.opt.belloff = 'all' -- STOP IT
 vim.opt.bufhidden = 'hide' -- Delete buffer when closing window
 vim.opt.buflisted = true -- Show in buffer list
 vim.opt.breakindent = true -- Indent wrapped lines
 vim.opt.cdhome = true -- Change directory to home when opening vim
-vim.opt.cindent = true -- Automatic C indentation
+-- vim.opt.cindent = true -- Automatic C indentation
 vim.opt.cinkeys:remove('0#,:') -- Comments don't fiddle with indenting
 vim.opt.cinoptions = 'l1,c0,C0,\0' -- Do not indent switch-cases
 vim.opt.cmdheight = 1 -- Height of command line
@@ -39,7 +31,7 @@ vim.opt.completeopt = 'noinsert,menuone,noselect,preview'
 vim.opt.concealcursor = '' -- Conceal only when on a different line
 vim.opt.conceallevel = 0 -- Replace concealed text with char, if any
 vim.opt.cpoptions:remove('aA') -- Read and write shouldn't set #
-vim.opt.dict:append(vim.fn.expand('~/.vim/dict/basic'))
+vim.opt.dict:append(vim.fn.expand('~/.config/nvim/dict/basic'))
 vim.opt.diffopt = 'iwhite,internal,filler,closeoff,vertical,algorithm:patience'
 vim.opt.display = 'lastline' -- Show as much as possible of paragraphs
 vim.opt.emoji = true -- Emoji characters are full-width
@@ -62,6 +54,7 @@ vim.opt.infercase = true -- Adjust completion to match case
 vim.opt.joinspaces = false -- Insert only one space when joining
 vim.opt.jumpoptions = 'stack' -- Jump to previous location
 vim.opt.laststatus = 2 -- Always show statusline
+vim.opt.shiftwidth = 2 -- Shift width
 -- vim.opt.lazyredraw = true -- Do not redraw while executing macros
 vim.opt.linebreak = true -- Break by word instead of char
 vim.opt.matchpairs = '(:),{:},[:],<:>,":"' -- Separators
@@ -80,7 +73,7 @@ vim.opt.shell = '/opt/homebrew/bin/zsh'
 vim.opt.shellcmdflag = '-c'
 vim.opt.shiftround = true -- Indent to round number of spaces
 vim.opt.shortmess = 'aoOstTWAIcF'
-vim.opt.showbreak = '↪ ' -- Show break as arrow
+vim.opt.showbreak = '' -- No break symbol
 vim.opt.showcmd = true -- Show visual selection
 vim.opt.showfulltag = true -- Show full tag when matching from tagfile
 vim.opt.showmode = false -- Do not bother showing current mode
@@ -104,7 +97,7 @@ vim.opt.undolevels = 2000 -- Max number of changes that can be undone
 vim.opt.updatetime = 100 -- Write to disk after 150 ms
 vim.opt.virtualedit = 'block' -- Select whitespaces
 vim.opt.whichwrap = 'b,s,h,l' -- Allow these keys to move past EOL
-vim.opt.wildcharm = string.byte(termcode('<Tab>')) -- Allow macros to tabcomplete
+vim.opt.wildcharm = string.byte(vim.api.nvim_replace_termcodes('<Tab>', true, true, true)) -- Allow macros to tabcomplete
 vim.opt.wildignore = '*.class,*.o,*~,*.pyc,.git,*.lock,target,*.out'
 vim.opt.wildignorecase = true -- Ignore case when completing filenames
 vim.opt.wildmenu = true -- Tabcompletion for commandline
@@ -112,185 +105,147 @@ vim.opt.winminheight = 0 -- Squeeze win height
 vim.opt.winminwidth = 0 -- Squeeze win width
 
 -- Disabled plugins
-vim.api.nvim_set_var('loaded_matchparen', 1)
-vim.api.nvim_set_var('loaded_matchit', 1)
-vim.api.nvim_set_var('loaded_tarPlugin', 1)
-vim.api.nvim_set_var('loaded_tar', 1)
-vim.api.nvim_set_var('loaded_zipPlugin', 1)
-vim.api.nvim_set_var('loaded_zip', 1)
-vim.api.nvim_set_var('loaded_gzip', 1)
--- vim.api.nvim_set_var('loaded_netrw', 0)
--- vim.api.nvim_set_var('loaded_netrwPlugin', 0)
-vim.api.nvim_set_var('loaded_vimballPlugin', 1)
-vim.api.nvim_set_var('loaded_vimball', 1)
-vim.api.nvim_set_var('loaded_logiPat', 1)
-vim.api.nvim_set_var('loaded_getscriptPlugin', 1)
-vim.api.nvim_set_var('loaded_2html_plugin', 1)
-vim.api.nvim_set_var('loaded_rrhelper', 1)
-vim.api.nvim_set_var('loaded_spellfile_plugin', 1)
-vim.api.nvim_set_var('no_pdf_maps', 1)
+vim.g.loaded_matchparen = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_spellfile_plugin = 1
+vim.g.no_pdf_maps = 1
 
-vim.api.nvim_set_var('maplocalleader', ',')
-vim.api.nvim_set_var('mapleader', '§')
-vim.api.nvim_set_var('author', 'Klas Segeljakt')
-vim.api.nvim_set_var('email', 'klasseg@kth.se')
-vim.api.nvim_set_var('conjoin_map_J', '<Leader>z')
+vim.g.maplocalleader = ','
+vim.g.mapleader = '§'
 
-vim.cmd('colorscheme PaperColor')
-vim.cmd('filetype plugin indent on') -- Detect filetypes
-vim.cmd('syn sync minlines=256') -- Less syntax lagging
--- vim.opt.background = 'light'
+-- vim.cmd('set background = light')
 
-map('n', 'c,', ':cd %:p:h|pwd<CR>')
-map('n', '´', '/HEAD<CR>')
-map('n', 'q', '<Plug>(comment_toggle_linewise_current)', { noremap = false })
-map('v', 'q', '<Plug>(comment_toggle_linewise_visual)', { noremap = false })
--- map('n', '<C-p>', ':w|RG<CR>')
--- map('n', '<C-u>', ':History<CR>')
-map('n', '<C-g>v', ':GH<CR>')
-map('n', 'ı', ':Telescope git_files<CR>')
-map('n', '<C-u>', ':Telescope oldfiles<CR>')
-map('n', '<C-p>', ':Telescope live_grep<CR>')
-map('n', '<C-Space>', ':Telescope buffers<CR>')
--- map('n', 'ı', ':w|GitFiles<CR>') -- <C-i>
-map('n', 'ª', ':ArgWrap<CR>')
-map('n', 'Å', ':Bdelete!<CR>')
-map('n', 'ü', ':PlugUpdate<CR>') -- <M-u>
-map('n', '<C-H>', ':SidewaysLeft<CR>')
-map('n', '<C-L>', ':SidewaysRight<CR>')
-map('n', '<F5>', ':UndotreeToggle<CR>')
-map('n', '<C-o>', ':call GoBackToRecentBuffer()<CR>zz')
-map('n', '<C-s-o>', '<C-o>')
--- map('n', '<C-w>m', ':WinResizerStartMove<CR>', { }, true)
-map('x', '?', "mode()=~'V' ? ':Tabularize' : '?'", { expr = true })
-map('n', '<C-t>', '<C-^>')
-map('i', '<C-p>', '|> ') -- OCAML
-map('i', '<C-o>', '-> ') -- OCAML
-map('i', 'ı', '| ')
-map('n', '<C-w>+', ':tab split<CR>')
-map('n', '<C-w>-', '<C-w><C-q>')
-map('v', 'E', '<C-y>')
-map('n', '*', '*N')
-map('v', '(', 'sa(i', { noremap = false })
-map('v', ')', 'sa)i', { noremap = false })
-map('n', '-', ':noa w<CR>')
-map('v', 'H', '<Plug>SchleppLeft', { noremap = false })
-map('v', 'J', '<Plug>SchleppDown', { noremap = false })
-map('v', 'K', '<Plug>SchleppUp', { noremap = false })
-map('v', 'L', '<Plug>SchleppRight', { noremap = false })
-map('v', 'D', '<Plug>SchleppDup', { noremap = false })
-map('v', 'D', '<Plug>SchleppDup', { noremap = false })
-map('i', '<BS>', '<Plug>(PearTreeBackspace)', { noremap = false })
--- map('i', '<CR>', '<Plug>(PearTreeExpand)', { noremap = false })
-map('i', '<Esc>', '<Plug>(PearTreeFinishExpansion)', { noremap = false })
-map('i', '<C-c>', '<Plug>(PearTreeFinishExpansion)', { noremap = false })
--- map('i', '<C-e>', '<Plug>(PearTreeJump)', { noremap = false })
-map('', 'w', '<Plug>CamelCaseMotion_w', { noremap = false })
-map('', 'b', '<Plug>CamelCaseMotion_b', { noremap = false })
-map('', 'e', '<Plug>CamelCaseMotion_e', { noremap = false })
-map('', 'ge', '<Plug>CamelCaseMotion_ge', { noremap = false })
-map('v', 'Ç', '"+y') -- <D-S-c>
+local opt = { noremap = true, silent = false, nowait = true }
+local opt_plug = { noremap = false, silent = true, nowait = true }
+local opt_expr = { noremap = true, silent = false, nowait = true, expr = true }
+
+vim.keymap.set('n', 'c,', '<Cmd>cd %:p:h|pwd<CR>', opt)
+vim.keymap.set('n', '´', '/HEAD<CR>', opt)
+vim.keymap.set('n', '<C-t>', '<C-^>', opt)
+vim.keymap.set('n', '<C-o>', '<Cmd>call GoBackToRecentBuffer()<CR>zz', opt)
+vim.keymap.set('n', '<C-s-o>', '<C-o>', opt)
+vim.keymap.set('n', '<C-w>+', '<Cmd>tab split<CR>', opt)
+vim.keymap.set('n', '<C-w>-', '<C-w><C-q>', opt)
+vim.keymap.set('v', 'E', '<C-y>', opt)
+vim.keymap.set('n', '*', '*N', opt)
+vim.keymap.set('v', '(', 'sa(i', opt_plug)
+vim.keymap.set('v', ')', 'sa)i', opt_plug)
+vim.keymap.set('n', '-', '<Cmd>noa w<CR>', opt)
+vim.keymap.set('v', 'Ç', '"+y', opt) -- <D-S-c>
+
+vim.cmd('map θ vAsa(biSome<C-c>b')
+vim.cmd('map ® vAsa(biOk<C-c>b')
 
 -- Fixes
-map('n', '<Tab>', "col('$') == 1? 'i<Tab>' : '>>'", { expr = true })
-map('v', 'A', "mode()=~'v' ? '$h' : 'A'", { expr = true })
-map('n', '<C-q>', 'q') -- " Record with <C-q>
-map('n', 'n', 'nzz')
-map('n', 'N', 'Nzz')
-map('n', 'R', 'gR')
-map('n', '<S-Tab>', '<<')
-map('v', '<Tab>', '>gv')
-map('v', '<S-Tab>', '<gv')
-map('v', 'P', '"_dp') -- " No yank on paste
-map('v', 'p', '"_dP')
-map('v', '<BS>', '<BS>') -- " Fix defaults
-map('n', '<C-c>', '<Esc>')
-map('n', 'gn', ':cnext<CR>')
-map('n', 'gN', ':cNext<CR>')
+vim.keymap.set('n', '<Tab>', "col('$') == 1? 'i<Tab>' : '>>'", opt_expr)
+vim.keymap.set('v', 'A', "mode()=~'v' ? '$h' : 'A'", opt_expr)
+vim.keymap.set('n', '<C-q>', 'q', opt) -- " Record with <C-q>
+vim.keymap.set('n', 'n', 'nzz', opt)
+vim.keymap.set('n', 'N', 'Nzz', opt)
+vim.keymap.set('n', 'R', 'gR', opt)
+vim.keymap.set('n', '<S-Tab>', '<<', opt)
+vim.keymap.set('v', '<Tab>', '>gv', opt)
+vim.keymap.set('v', '<S-Tab>', '<gv', opt)
+vim.keymap.set('v', 'P', '"_dp', opt) -- " No yank on paste
+vim.keymap.set('v', 'p', '"_dP', opt)
+vim.keymap.set('v', '<BS>', '<BS>', opt) -- " Fix defaults
+vim.keymap.set({ 'n', 'v', 'i' }, '<C-c>', '<Esc>', opt)
+vim.keymap.set({ 'n', 'v', 's' }, '<Space>', ':', opt)
+vim.keymap.set('n', 'gn', '<Cmd>cnext<CR>', opt)
+vim.keymap.set('n', 'gN', '<Cmd>cNext<CR>', opt)
+vim.keymap.set('n', 's<C-c>', '<Nop>')
 
 -- Overrides
-map('n', 'C', "':%s/'.@/.'//g<Left><Left>'", { expr = true })
-map('x', 'C', "':s/'.@/.'//g<Left><Left>'", { expr = true })
-map('n', 'D', '"Add')
-map('n', 'B', '^') -- Go to start of line
-map('n', 'E', '<C-y>') -- Scroll up
-map('n', '<Space>', ':')
-map('v', '<Space>', ':')
-map('i', '<C-h>', '<Left>') -- Move in insert mode
-map('i', '<C-l>', '<Right>')
-map('n', '!', ':!')
-map('n', '<C-d>', ':x<CR>')
-map('n', 'S', ':%s//g<Left><Left>')
-map('n', '<C-n>', 'gt') -- Tab page management
-map('n', '<C-b>', 'gT')
-map('n', 'gt', ':tabnew<CR>')
-map('n', 'gj', ':bnext<CR>')
-map('n', '<C-CR>', 'kk<CR>') -- Reverse <CR>
+vim.keymap.set('n', 'C', "':%s/'.@/.'/'", opt_expr)
+vim.keymap.set('x', 'C', "':s/'.@/.'/'", opt_expr)
+vim.keymap.set('n', 'D', '"Add', opt)
+vim.keymap.set('n', 'B', '^', opt) -- Go to start of line
+vim.keymap.set('n', 'E', '<C-y>', opt) -- Scroll up
+vim.keymap.set('i', '<C-h>', '<Left>', opt) -- Move in insert mode
+vim.keymap.set('i', '<C-l>', '<Right>', opt)
+vim.keymap.set('n', '!', ':!', opt)
+vim.keymap.set('n', '<C-d>', '<Cmd>x<CR>', opt)
+vim.keymap.set('n', 'S', ':%s//g<Left><Left>', opt)
+vim.keymap.set('n', '<C-n>', 'gt', opt) -- Tab page management
+vim.keymap.set('n', '<C-b>', 'gT', opt)
+vim.keymap.set('n', 'gt', '<Cmd>tabnew<CR>', opt)
+vim.keymap.set('n', '<C-CR>', 'kk<CR>', opt) -- Reverse <CR>
+vim.keymap.set('n', 'f', '/', opt)
+vim.keymap.set('n', '/', 'f', opt)
 
 -- Disabled
-map('c', '<Up>', '<Nop>')
-map('c', '<Down>', '<Nop>')
-map('c', '<Left>', '<Nop>')
-map('c', '<Right>', '<Nop>')
-map('n', '<Right>', 'i<Right>')
-map('n', '<Left>', 'i<Left>')
-map('n', '<Up>', 'i<Up>')
-map('n', '<Down>', 'i<Down>')
+vim.keymap.set('c', '<Up>', '<Nop>', opt)
+vim.keymap.set('c', '<Down>', '<Nop>', opt)
+vim.keymap.set('c', '<Left>', '<Nop>', opt)
+vim.keymap.set('c', '<Right>', '<Nop>', opt)
+vim.keymap.set('n', '<Right>', 'i<Right>', opt)
+vim.keymap.set('n', '<Left>', 'i<Left>', opt)
+vim.keymap.set('n', '<Up>', 'i<Up>', opt)
+vim.keymap.set('n', '<Down>', 'i<Down>', opt)
 
 ---- Command line
-map('c', '<C-c>', '<C-u><C-c>')
-map('c', '<C-h>', '<Left>')
-map('c', '<C-l>', '<Right>')
-map('c', '<C-k>', '<Up>')
-map('c', '<C-j>', '<Down>')
-map('c', '<C-b>', '<S-Left><Left>')
-map('c', '<C-e>', '<S-Right>')
-map('c', '<C-v>', '<C-r><C-l>')
-map('c', '<C-f>', '<C-\\>e')
+vim.keymap.set('c', '<C-c>', '<C-u><C-c>', opt)
+vim.keymap.set('c', '<C-h>', '<Left>', opt)
+vim.keymap.set('c', '<C-l>', '<Right>', opt)
+vim.keymap.set('c', '<C-k>', '<Up>', opt)
+vim.keymap.set('c', '<C-j>', '<Down>', opt)
+vim.keymap.set('c', '<C-b>', '<S-Left><Left>', opt)
+vim.keymap.set('c', '<C-e>', '<S-Right>', opt)
+vim.keymap.set('c', '<C-v>', '<C-r><C-l>', opt)
+vim.keymap.set('c', '<C-f>', '<C-\\>e', opt)
 
 --Toggles / Sliders
-map('n', '<Leader>b', ':set ri!<CR>') -- Write backwards
-map('n', '<Leader>dd', ':set diff!<CR>') -- Diff mode
-map('n', '<Leader>l', ':set cursorbind! scrollbind!<CR>') -- Bind cursor/scroll
-map('n', 'cu', 'gg=G``') -- Format file
-map('n', 'gl', '<C-w>TgT') -- Move to new tab
+vim.keymap.set('n', '<Leader>b', '<Cmd>set ri!<CR>', opt) -- Write backwards
+vim.keymap.set('n', '<Leader>dd', '<Cmd>set diff!<CR>', opt) -- Diff mode
+vim.keymap.set('n', '<Leader>l', '<Cmd>set cursorbind! scrollbind!<CR>', opt) -- Bind cursor/scroll
+vim.keymap.set('n', 'cu', 'gg=G``', opt) -- Format file
+vim.keymap.set('n', 'gl', '<C-w>TgT', opt) -- Move to new tab
 
 -- Commands
-map('n', 'cn', ':cn<CR>')
-map('n', 'cN', ':cN<CR>')
-map('n', 'å', ':x<CR>')
-map('n', 'ä', ':%s/\\s\\+$//e<CR>') -- Remove whitespaces
-map('n', '<D-i>', ':terminal ++close<CR>') -- Terminal
-map('n', '<D-b>', ':!cargo build<CR>') -- Cargo
-map('n', '<D-r>', ':!cargo run<CR>')
-map('n', '<D-c>', ':!cargo clean<CR>')
-map('n', '<D-d>', ':!cargo doc --open<CR>')
-map('n', '<D-f>', ':!cargo test<CR>')
-map('n', '<D-e>', ':!cargo search ')
-map('n', '<D-x>', ':!cargo check<CR>')
-map('n', '<D-z>', ':!cargo bench<CR>')
+vim.keymap.set('n', 'cn', '<Cmd>cn<CR>', opt)
+vim.keymap.set('n', 'cN', '<Cmd>cN<CR>', opt)
+vim.keymap.set('n', 'å', '<Cmd>x<CR>', opt)
+vim.keymap.set('n', 'ä', '<Cmd>%s/\\s\\+$//e<CR>', opt) -- Remove whitespaces
+vim.keymap.set('n', '<D-i>', '<Cmd>terminal ++close<CR>', opt) -- Terminal
+vim.keymap.set('n', '<D-b>', '<Cmd>!cargo build<CR>', opt) -- Cargo
+vim.keymap.set('n', '<D-r>', '<Cmd>!cargo run<CR>', opt)
+vim.keymap.set('n', '<D-c>', '<Cmd>!cargo clean<CR>', opt)
+vim.keymap.set('n', '<D-d>', '<Cmd>!cargo doc --open<CR>', opt)
+vim.keymap.set('n', '<D-f>', '<Cmd>!cargo test<CR>', opt)
+vim.keymap.set('n', '<D-e>', '<Cmd>!cargo search ', opt)
+vim.keymap.set('n', '<D-x>', '<Cmd>!cargo check<CR>', opt)
+vim.keymap.set('n', '<D-z>', '<Cmd>!cargo bench<CR>', opt)
 
 -- Macros
-map('n', '®', '<C-q>') -- <M-r>
-map('n', '©', '@1') -- <M-1>
+vim.keymap.set('n', '©', '@1', opt) -- <M-1>
 
 -- File shortcuts
-map('n', 'π', ':tab drop ~/.config/nvim/lua/plugins.lua<CR>') -- <M-p>
-map('n', '→', ':tab drop ~/.config/nvim/init.lua<CR>')
-map('n', '⊢', ':tab drop ~/.vim/vimrc<CR>') -- <M-ä>
-map('n', 'Æ', ':tab drop ~/.gvimrc<CR>') -- <M-Ä>
-map('n', 'ø', ':tab drop ~/.vim/bibtex/library.bib<CR>') -- <M-ö>
+vim.keymap.set('n', 'π', '<Cmd>tab drop ~/.config/nvim/lua/plugins.lua<CR>', opt) -- <M-p>
+vim.keymap.set('n', '→', '<Cmd>tab drop ~/.config/nvim/init.lua<CR>', opt)
+vim.keymap.set('n', '⊢', '<Cmd>tab drop ~/.vim/vimrc<CR>', opt) -- <M-ä>
+vim.keymap.set('n', 'Æ', '<Cmd>tab drop ~/.gvimrc<CR>', opt) -- <M-Ä>
+vim.keymap.set('n', 'ø', '<Cmd>tab drop ~/.vim/bibtex/library.bib<CR>', opt) -- <M-ö>
 
 -- Unmaps
-unmap('n', 'Y')
-unmap('s', 'w')
-unmap('s', 'b')
-unmap('s', 'e')
-unmap('s', 'ge')
+vim.keymap.del('n', 'Y')
+-- vim.keymap.del('s', 'w')
+-- vim.keymap.del('s', 'b')
+-- vim.keymap.del('s', 'e')
+-- vim.keymap.del('s', 'ge')
 
--- Syntax
--- hl('ColorColumn', { ctermfg = 'Red', ctermbg = 'lightred' })
--- hl('Pmenu', { ctermbg = 253, ctermfg = 16 })
 -- Spell correction / Abbreviations
 vim.cmd('iab retrun return')
 vim.cmd('iab pritn print')
@@ -301,20 +256,66 @@ vim.cmd('iab moer more')
 vim.cmd('iab previosu previous')
 vim.cmd('iab pset pest')
 
+-- Functions
+
+function OpenDiagFloat()
+  for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_config(winid).zindex then
+      return
+    end
+  end
+  -- vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'CocErrorHighlight' })
+  -- vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'CocErrorHighlight' })
+  vim.diagnostic.open_float { focusable = true, header = false, border = "rounded", prefix = "", wrap = true }
+end
+
+vim.cmd([[
+fun! SynStack()
+  if !exists("*synstack")
+    return
+  en
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfun
+
+fun! GoBackToRecentBuffer()
+  let startName = bufname('%')
+  for _ in range(100)
+    exe "normal! \<C-o>"
+    let nowName = bufname('%')
+    if nowName != startName
+      break
+    en
+  endfor
+endfun
+
+function! GetPreCursorChar()
+  if col('.') <= 1
+    return ''
+  endif
+  let before_cursor = getline('.')[:col('.')-2]
+  return strcharpart(before_cursor, strchars(before_cursor)-1)
+endfunction
+]])
+
 -- Autocmd
 local group = vim.api.nvim_create_augroup('AutoCommands', { clear = true })
 
-function Autocmd(event, pattern, command)
-  vim.api.nvim_create_autocmd(event, { pattern = pattern, group = group, command = command })
+function Autocmd(event, pattern, action)
+  if type(action) == 'function' then
+    vim.api.nvim_create_autocmd(event, { pattern = pattern, group = group, callback = action })
+  else
+    vim.api.nvim_create_autocmd(event, { pattern = pattern, group = group, command = action })
+  end
 end
 
--- Return to last position when opening file
 Autocmd('BufReadPost', '*', 'if line("\'\\"") > 1 && line("\'\\"") <= line("$") | exe "normal! g\'\\"" | en')
--- Autocmd('TabLeave', '*', 'silent! w')
-Autocmd('BufRead,BufNewFile', '*.mlir', 'set filetype=mlir syntax=llvm')
-Autocmd('BufRead,BufNewFile', '*.lalrpop', 'set syntax=rust')
-Autocmd('BufRead,BufNewFile', '*.sbt', 'set syntax=scala')
-Autocmd('BufRead,BufNewFile', '*.arc', 'set filetype=arc')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.mlir', 'set filetype=mlir syntax=llvm')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.lalrpop', 'set syntax=rust')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.sbt', 'set syntax=scala')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.arc', 'set filetype=arc')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.mll', 'set filetype=ocamllex syntax=ocaml')
 Autocmd('BufEnter', '*', 'silent! lcd %:p:h')
 Autocmd('BufWritePost', 'plugins.lua', 'source <afile> | PackerCompile')
 Autocmd('TabLeave', '*', 'silent! w')
+Autocmd('CursorHold', '*', OpenDiagFloat)
+Autocmd('BufEnter', '*.txt', 'if &buftype == "help" | wincmd L | endif')

@@ -1,16 +1,14 @@
-function set(k, v)
+local M = {}
+
+function M.set(k, v)
   vim.api.nvim_set_option_value(k, v, {})
 end
 
-function unmap(k, v)
+function M.unmap(k, v)
   vim.api.nvim_del_keymap(k, v)
 end
 
-function termcode(s)
-  return vim.api.nvim_replace_termcodes(s, true, true, true)
-end
-
-function removeFirst(tbl, val)
+function M.removeFirst(tbl, val)
   for i, v in ipairs(tbl) do
     if v == val then
       return table.remove(tbl, i)
@@ -18,7 +16,7 @@ function removeFirst(tbl, val)
   end
 end
 
-function map(mode, lhs, rhs, opts)
+function M.map(mode, lhs, rhs, opts)
   opts = opts or {}
   if opts.noremap == nil then
     opts.noremap = true
@@ -32,6 +30,8 @@ function map(mode, lhs, rhs, opts)
   end
 end
 
-function hl(name, opts)
+function M.hl(name, opts)
   vim.api.nvim_set_hl(0, name, opts)
 end
+
+return M
