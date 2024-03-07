@@ -1,12 +1,19 @@
-vim.opt.compatible = false -- Don't be compatible
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- Unmaps
+vim.keymap.del('n', 'Y')
+vim.keymap.del('n', '<C-l>')
+-- vim.keymap.del('s', 'w')
+-- vim.keymap.del('s', 'b')
+-- vim.keymap.del('s', 'e')
+-- vim.keymap.del('s', 'ge')
 
 require('plugins')
 
-vim.cmd('filetype plugin indent on') -- Detect filetypes
-vim.cmd('syn sync minlines=256') -- Less syntax lagging
+vim.cmd [[filetype plugin indent on]] -- Detect filetypes
+-- vim.cmd [[syntax off]] -- Use treesitter instead
+vim.cmd [[syn sync minlines=256]]
 
--- vim.opt.t_ti = "\\<Esc>[?47h"
--- vim.opt.t_te = "\\<Esc>[?47l"
 vim.diagnostic.config {
   virtual_text = false,
   signs = true,
@@ -39,9 +46,9 @@ vim.opt.encoding = 'utf-8' --
 vim.opt.expandtab = true -- Expand tabs to spaces
 vim.opt.fileformats = 'unix,mac,dos' -- Handle all, but prefer unix
 vim.opt.fileignorecase = false -- Always do the above
--- vim.opt.foldexpr='nvim_treesitter#foldexpr()'
-vim.opt.foldnestmax = 4
--- vim.opt.foldmethod='expr'             -- manual,indent,expr,marker,syntax,diff
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldnestmax = 4
+-- vim.opt.foldmethod = 'expr' -- manual,indent,expr,marker,syntax,diff
 vim.opt.formatoptions = 'rownlj'
 vim.opt.grepformat:prepend('%f:%l:%c:%m')
 vim.opt.grepprg = 'rg --vimgrep'
@@ -53,7 +60,7 @@ vim.opt.incsearch = true -- Highlight pattern while searching
 vim.opt.infercase = true -- Adjust completion to match case
 vim.opt.joinspaces = false -- Insert only one space when joining
 vim.opt.jumpoptions = 'stack' -- Jump to previous location
-vim.opt.laststatus = 2 -- Always show statusline
+vim.opt.laststatus = 3 -- Global statusline
 vim.opt.shiftwidth = 2 -- Shift width
 -- vim.opt.lazyredraw = true -- Do not redraw while executing macros
 vim.opt.linebreak = true -- Break by word instead of char
@@ -74,7 +81,7 @@ vim.opt.shellcmdflag = '-c'
 vim.opt.shiftround = true -- Indent to round number of spaces
 vim.opt.shortmess = 'aoOstTWAIcF'
 vim.opt.showbreak = '' -- No break symbol
-vim.opt.showcmd = true -- Show visual selection
+vim.opt.showcmd = false -- Hide command in statusline
 vim.opt.showfulltag = true -- Show full tag when matching from tagfile
 vim.opt.showmode = false -- Do not bother showing current mode
 vim.opt.showtabline = 2 -- Always show tabline
@@ -84,7 +91,7 @@ vim.opt.softtabstop = 2 -- ?
 vim.opt.spelllang = 'en_us' -- We speak American
 vim.opt.splitright = true -- Puts splits on right hand side
 vim.opt.swapfile = false -- I've had enough of this
-vim.opt.syntax = 'enable'
+vim.opt.syntax = 'on'
 vim.opt.synmaxcol = 0 -- Don't limit syntax highlighting
 vim.opt.tabstop = 2 -- Number of spaces per tab
 vim.opt.tagcase = 'match' -- Case-sensitive tag search
@@ -122,6 +129,8 @@ vim.g.loaded_2html_plugin = 1
 vim.g.loaded_rrhelper = 1
 vim.g.loaded_spellfile_plugin = 1
 vim.g.no_pdf_maps = 1
+vim.g.loaded_node_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 vim.g.maplocalleader = ','
 vim.g.mapleader = '§'
@@ -130,61 +139,64 @@ vim.g.mapleader = '§'
 
 local opt = { noremap = true, silent = false, nowait = true }
 local opt_plug = { noremap = false, silent = true, nowait = true }
-local opt_expr = { noremap = true, silent = false, nowait = true, expr = true }
+local opt_expr = { noremap = true, silent = false, nowait = true, expr = true, replace_keycodes = false }
 
 vim.keymap.set('n', 'c,', '<Cmd>cd %:p:h|pwd<CR>', opt)
 vim.keymap.set('n', '´', '/HEAD<CR>', opt)
 vim.keymap.set('n', '<C-t>', '<C-^>', opt)
 vim.keymap.set('n', '<C-o>', '<Cmd>call GoBackToRecentBuffer()<CR>zz', opt)
-vim.keymap.set('n', '<C-s-o>', '<C-o>', opt)
+vim.keymap.set('n', '<C-S-o>', '<C-o>', opt)
 vim.keymap.set('n', '<C-w>+', '<Cmd>tab split<CR>', opt)
 vim.keymap.set('n', '<C-w>-', '<C-w><C-q>', opt)
 vim.keymap.set('v', 'E', '<C-y>', opt)
-vim.keymap.set('n', '*', '*N', opt)
 vim.keymap.set('v', '(', 'sa(i', opt_plug)
 vim.keymap.set('v', ')', 'sa)i', opt_plug)
 vim.keymap.set('n', '-', '<Cmd>noa w<CR>', opt)
 vim.keymap.set('v', 'Ç', '"+y', opt) -- <D-S-c>
-
-vim.cmd('map θ vAsa(biSome<C-c>b')
-vim.cmd('map ® vAsa(biOk<C-c>b')
+vim.keymap.set('v', '⁄', '"+x', opt) -- <D-S-x>
+vim.keymap.set('n', '<C-s>', "&modified ? ':w<CR>' : ''", opt_expr)
+vim.keymap.set('n', '<C-S-s>', ":wa<CR>", opt)
 
 -- Fixes
 vim.keymap.set('n', '<Tab>', "col('$') == 1? 'i<Tab>' : '>>'", opt_expr)
 vim.keymap.set('v', 'A', "mode()=~'v' ? '$h' : 'A'", opt_expr)
 vim.keymap.set('n', '<C-q>', 'q', opt) -- " Record with <C-q>
-vim.keymap.set('n', 'n', 'nzz', opt)
-vim.keymap.set('n', 'N', 'Nzz', opt)
 vim.keymap.set('n', 'R', 'gR', opt)
 vim.keymap.set('n', '<S-Tab>', '<<', opt)
 vim.keymap.set('v', '<Tab>', '>gv', opt)
 vim.keymap.set('v', '<S-Tab>', '<gv', opt)
-vim.keymap.set('v', 'P', '"_dp', opt) -- " No yank on paste
-vim.keymap.set('v', 'p', '"_dP', opt)
+vim.keymap.set('v', 'P', '\"_dp', opt) -- " No yank on paste
+vim.keymap.set('v', 'p', '\"_dP', opt)
 vim.keymap.set('v', '<BS>', '<BS>', opt) -- " Fix defaults
 vim.keymap.set({ 'n', 'v', 'i' }, '<C-c>', '<Esc>', opt)
 vim.keymap.set({ 'n', 'v', 's' }, '<Space>', ':', opt)
-vim.keymap.set('n', 'gn', '<Cmd>cnext<CR>', opt)
-vim.keymap.set('n', 'gN', '<Cmd>cNext<CR>', opt)
+-- vim.keymap.set('n', 'gn', '<Cmd>cnext<CR>', opt)
+-- vim.keymap.set('n', 'gN', '<Cmd>cNext<CR>', opt)
 vim.keymap.set('n', 's<C-c>', '<Nop>')
+vim.keymap.set('n', 'J', 'mzJ`z', opt)
+vim.keymap.set('v', 'P', 'p', opt)
+vim.keymap.set('v', 'p', 'P', opt)
+-- vim.keymap.set('i', '¥', '', opt)
 
 -- Overrides
-vim.keymap.set('n', 'C', "':%s/'.@/.'/'", opt_expr)
-vim.keymap.set('x', 'C', "':s/'.@/.'/'", opt_expr)
+vim.keymap.set('n', 'C', "':%s/'.@/.'//g<Left><Left>'", opt_expr)
+vim.keymap.set('x', 'C', "':s/'.@/.'//g<Left><Left>'", opt_expr)
+vim.keymap.set('n', '<C-S-C>', "':%S/\\C'.@/.'//g<Left><Left>'", opt_expr)
+vim.keymap.set('x', '<C-S-C>', "':S/\\C'.@/.'//g<Left><Left>'", opt_expr)
 vim.keymap.set('n', 'D', '"Add', opt)
-vim.keymap.set('n', 'B', '^', opt) -- Go to start of line
+vim.keymap.set({ 'n', 'v' }, 'B', '^', opt) -- Go to start of line
 vim.keymap.set('n', 'E', '<C-y>', opt) -- Scroll up
 vim.keymap.set('i', '<C-h>', '<Left>', opt) -- Move in insert mode
 vim.keymap.set('i', '<C-l>', '<Right>', opt)
 vim.keymap.set('n', '!', ':!', opt)
 vim.keymap.set('n', '<C-d>', '<Cmd>x<CR>', opt)
-vim.keymap.set('n', 'S', ':%s//g<Left><Left>', opt)
+vim.keymap.set('n', 'S', ':%S//g<Left><Left>', opt)
 vim.keymap.set('n', '<C-n>', 'gt', opt) -- Tab page management
 vim.keymap.set('n', '<C-b>', 'gT', opt)
 vim.keymap.set('n', 'gt', '<Cmd>tabnew<CR>', opt)
 vim.keymap.set('n', '<C-CR>', 'kk<CR>', opt) -- Reverse <CR>
 vim.keymap.set('n', 'f', '/', opt)
-vim.keymap.set('n', '/', 'f', opt)
+vim.keymap.set('n', '/', '/\\v', opt)
 
 -- Disabled
 vim.keymap.set('c', '<Up>', '<Nop>', opt)
@@ -206,13 +218,13 @@ vim.keymap.set('c', '<C-b>', '<S-Left><Left>', opt)
 vim.keymap.set('c', '<C-e>', '<S-Right>', opt)
 vim.keymap.set('c', '<C-v>', '<C-r><C-l>', opt)
 vim.keymap.set('c', '<C-f>', '<C-\\>e', opt)
+vim.keymap.set('c', '~', '~/', opt)
 
 --Toggles / Sliders
 vim.keymap.set('n', '<Leader>b', '<Cmd>set ri!<CR>', opt) -- Write backwards
 vim.keymap.set('n', '<Leader>dd', '<Cmd>set diff!<CR>', opt) -- Diff mode
 vim.keymap.set('n', '<Leader>l', '<Cmd>set cursorbind! scrollbind!<CR>', opt) -- Bind cursor/scroll
 vim.keymap.set('n', 'cu', 'gg=G``', opt) -- Format file
-vim.keymap.set('n', 'gl', '<C-w>TgT', opt) -- Move to new tab
 
 -- Commands
 vim.keymap.set('n', 'cn', '<Cmd>cn<CR>', opt)
@@ -233,18 +245,13 @@ vim.keymap.set('n', '<D-z>', '<Cmd>!cargo bench<CR>', opt)
 vim.keymap.set('n', '©', '@1', opt) -- <M-1>
 
 -- File shortcuts
-vim.keymap.set('n', 'π', '<Cmd>tab drop ~/.config/nvim/lua/plugins.lua<CR>', opt) -- <M-p>
-vim.keymap.set('n', '→', '<Cmd>tab drop ~/.config/nvim/init.lua<CR>', opt)
-vim.keymap.set('n', '⊢', '<Cmd>tab drop ~/.vim/vimrc<CR>', opt) -- <M-ä>
-vim.keymap.set('n', 'Æ', '<Cmd>tab drop ~/.gvimrc<CR>', opt) -- <M-Ä>
-vim.keymap.set('n', 'ø', '<Cmd>tab drop ~/.vim/bibtex/library.bib<CR>', opt) -- <M-ö>
-
--- Unmaps
-vim.keymap.del('n', 'Y')
--- vim.keymap.del('s', 'w')
--- vim.keymap.del('s', 'b')
--- vim.keymap.del('s', 'e')
--- vim.keymap.del('s', 'ge')
+vim.keymap.set('n', '<Leader>p', '<Cmd>tab drop ~/.config/nvim/lua/plugins.lua<CR>', opt) -- <D-p>
+vim.keymap.set('n', '<Leader>ö', '<Cmd>tab drop ~/.config/nvim/init.lua<CR>', opt) -- <D-ö>
+vim.keymap.set('n', '<Leader>P', '<Cmd>tab drop ~/.config/nvim/after/queries/rust/highlights.scm<CR>', opt) -- <D-S-p>
+vim.keymap.set('n', '<Leader>Ö', '<Cmd>tab drop ~/.config/nvim/after/queries/rust/textobjects.scm<CR>', opt) -- <D-S-ö>
+vim.keymap.set('n', '<Leader>l', '<Cmd>tab drop ~/Workspace/nvim/papercolor-theme-slim/colors/PaperColorSlim.vim<CR>',
+  opt) -- <D-S-l>
+vim.keymap.set('n', '<Leader>L', '<Cmd>TSPlaygroundToggle<CR>', opt) -- <D-S-l>
 
 -- Spell correction / Abbreviations
 vim.cmd('iab retrun return')
@@ -258,23 +265,12 @@ vim.cmd('iab pset pest')
 
 -- Functions
 
-function OpenDiagFloat()
-  for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.api.nvim_win_get_config(winid).zindex then
-      return
-    end
-  end
-  -- vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'CocErrorHighlight' })
-  -- vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'CocErrorHighlight' })
-  vim.diagnostic.open_float { focusable = true, header = false, border = "rounded", prefix = "", wrap = true }
-end
-
-vim.cmd([[
+vim.cmd [[
 fun! SynStack()
-  if !exists("*synstack")
-    return
-  en
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+if !exists("*synstack")
+  return
+en
+echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfun
 
 fun! GoBackToRecentBuffer()
@@ -287,15 +283,7 @@ fun! GoBackToRecentBuffer()
     en
   endfor
 endfun
-
-function! GetPreCursorChar()
-  if col('.') <= 1
-    return ''
-  endif
-  let before_cursor = getline('.')[:col('.')-2]
-  return strcharpart(before_cursor, strchars(before_cursor)-1)
-endfunction
-]])
+]]
 
 -- Autocmd
 local group = vim.api.nvim_create_augroup('AutoCommands', { clear = true })
@@ -309,13 +297,26 @@ function Autocmd(event, pattern, action)
 end
 
 Autocmd('BufReadPost', '*', 'if line("\'\\"") > 1 && line("\'\\"") <= line("$") | exe "normal! g\'\\"" | en')
-Autocmd({ 'BufRead', 'BufNewFile' }, '*.mlir', 'set filetype=mlir syntax=llvm')
-Autocmd({ 'BufRead', 'BufNewFile' }, '*.lalrpop', 'set syntax=rust')
-Autocmd({ 'BufRead', 'BufNewFile' }, '*.sbt', 'set syntax=scala')
-Autocmd({ 'BufRead', 'BufNewFile' }, '*.arc', 'set filetype=arc')
+Autocmd({ 'BufReadPost', 'FileReadPost' }, '*', 'normal zR')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.mlir', 'set filetype=mlir')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.lalrpop', 'set filetype=lalrpop')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.sbt', 'set filetype=scala')
 Autocmd({ 'BufRead', 'BufNewFile' }, '*.mll', 'set filetype=ocamllex syntax=ocaml')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.coq', 'set filetype=coq syntax=coq')
+Autocmd({ 'BufRead', 'BufNewFile' }, '*.mojo', 'set filetype=mojo syntax=mojo')
 Autocmd('BufEnter', '*', 'silent! lcd %:p:h')
-Autocmd('BufWritePost', 'plugins.lua', 'source <afile> | PackerCompile')
 Autocmd('TabLeave', '*', 'silent! w')
-Autocmd('CursorHold', '*', OpenDiagFloat)
+Autocmd('CursorHold', '*', function()
+  for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_config(winid).zindex then
+      return
+    end
+  end
+  vim.diagnostic.open_float { focusable = true, header = false, border = "rounded", prefix = "", wrap = true }
+end)
 Autocmd('BufEnter', '*.txt', 'if &buftype == "help" | wincmd L | endif')
+Autocmd('CmdlineLeave', '*', function() vim.opt.scrolloff = 0 end)
+Autocmd('CmdlineEnter', '*', function() vim.opt.scrolloff = 999 end)
+Autocmd('FileType', 'aqua', function()
+  vim.opt.commentstring = '# %s'
+end)

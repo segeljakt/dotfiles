@@ -39,7 +39,7 @@ vim.cmd [[
   endfun
 
   nno <silent> •     :TableModeToggle<CR>:Goyo<CR>:Limelight<CR>| " <M-q>
-  nno <expr> o       Newline()
+  "nno <expr> o       Newline()
   ino <expr> <Tab>   Indent()
   ino <expr> <S-Tab> Dedent()
   vm ˆ               sa*|                                         " <M-i>

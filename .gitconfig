@@ -6,10 +6,14 @@
 	helper = cache
 [core]
   editor = nvim
-  pager = /bin/cat #delta --light --theme GitHub --highlight-removed --tabs 2 --paging always
+  pager = delta --light --syntax-theme=GitHub
   hooksPath = ~/.githooks
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
   excludesfile = ~/.gitignore_global
+[interactive]
+  diffFilter = delta --color-only --light --syntax-theme=GitHub
+[delta]
+  navigate = true
 [web]
   browser = google-chrome
 [github]
@@ -21,6 +25,7 @@
   renames = true
   wordRegex = .
   color = always
+  colorMoved = default
 #   submodule = log
 #   recurseSubmodules = on-demand
   ignoreSubmodules = dirty
@@ -64,6 +69,7 @@
   prompt = true
 [merge]
   tool = vimdiff
+  conflictstyle = diff3
 [mergetool "vimdiff"]
   cmd = nvim -d $MERGED
 [push]
@@ -73,3 +79,8 @@
   ignoreSubmodules = all
 [pull]
 	rebase = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

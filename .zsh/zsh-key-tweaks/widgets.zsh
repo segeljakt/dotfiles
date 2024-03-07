@@ -69,7 +69,7 @@ zle -N w-fzf-bin
 # -----------------------------------------------------------------------------
 
 function w-fg {
-  if [ $(jobs | head -c1 | wc -c) -ne 0 ]; then
+  if [ $(jobs | head -c1 | /usr/bin/wc -c) -ne 0 ]; then
     zle -I
     fg >/dev/null 2>&1
   fi
@@ -210,23 +210,23 @@ zle -N w-cd-or-expand
 
 function w-fzf-file {
   RESULT=$(
-    rg --color=never                                                    \
-       --no-ignore                                                      \
-       --files                                                          \
-       --hidden                                                         \
-       --glob ${FZF_FILTERS}                                            \
-       . |                                                              \
-    fzf --multi                                                         \
-        -i                                                              \
-        ${FZF_EXACT}                                                    \
-        --inline-info                                                   \
-        --height=$FZF_HEIGHT                                            \
-        --reverse                                                       \
-        --tabstop=2                                                     \
-        --color=hl+:1,hl:1                                              \
-        --algo=v2                                                       \
-        --bind="ctrl-a:select-all"                                      \
-        --bind="ctrl-o:execute(vim -p {+} < /dev/tty > /dev/tty)" | \
+    rg --color=never                                                 \
+       --no-ignore                                                   \
+       --files                                                       \
+       --hidden                                                      \
+       --glob ${FZF_FILTERS}                                         \
+       . |                                                           \
+    fzf --multi                                                      \
+        -i                                                           \
+        ${FZF_EXACT}                                                 \
+        --inline-info                                                \
+        --height=$FZF_HEIGHT                                         \
+        --reverse                                                    \
+        --tabstop=2                                                  \
+        --color=hl+:1,hl:1                                           \
+        --algo=v2                                                    \
+        --bind="ctrl-a:select-all"                                   \
+        --bind="ctrl-o:execute(nvim -p {+} < /dev/tty > /dev/tty)" | \
     tr '\n' ' '
   )
   if [[ "$RESULT" != "" ]]; then
